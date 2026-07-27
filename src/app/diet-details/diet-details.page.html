@@ -1,0 +1,84 @@
+<!-- diet-details.page.html -->
+<div class="diet-container" [style.padding-top]="safeAreaTop">
+  <header class="header">
+    <button class="back-btn" (click)="goBack()">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    </button>
+    <h1>Diet Details</h1>
+  </header>
+
+  <main class="content">
+    <!-- Main Meal Card with dynamic active green tag changing based on user selection -->
+    <div class="main-meal-card">
+      <h2>{{ meal?.name || 'Brown Rice & Grilled Chicken Bowl' }}</h2>
+      <div class="meal-badges">
+        <button class="badge-item interactive" [class.active]="activeBadge === 'time'" (click)="onBadgeClick('time')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          {{ meal?.time || '25m' }}
+        </button>
+        <button class="badge-item interactive" [class.active]="activeBadge === 'calories'" (click)="onBadgeClick('calories')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18.36 6.64a9 9 0 1 1-12.73 0"></path><line x1="12" y1="2" x2="12" y2="12"></line></svg>
+          {{ meal?.calories || '540 kcal' }}
+        </button>
+        <button class="badge-item interactive" [class.active]="activeBadge === 'category'" (click)="onBadgeClick('category')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+          {{ meal?.category || 'High Protein' }}
+        </button>
+      </div>
+    </div>
+
+    <!-- Macronutrients Grid -->
+    <div class="macros-grid">
+      <div class="macro-card">
+        <span class="macro-title">Protein</span>
+        <strong class="macro-value">{{ meal?.macros?.protein || '142g' }}</strong>
+        <div class="progress-bar"><div class="fill" style="width: 70%;"></div></div>
+      </div>
+      <div class="macro-card">
+        <span class="macro-title">Carbs</span>
+        <strong class="macro-value">{{ meal?.macros?.carbs || '198g' }}</strong>
+        <div class="progress-bar"><div class="fill" style="width: 55%;"></div></div>
+      </div>
+      <div class="macro-card">
+        <span class="macro-title">Fat</span>
+        <strong class="macro-value">{{ meal?.macros?.fat || '48g' }}</strong>
+        <div class="progress-bar"><div class="fill" style="width: 40%;"></div></div>
+      </div>
+    </div>
+
+    <!-- Micronutrients Section -->
+    <h3 class="section-title">Micronutrients</h3>
+    <div class="micro-grid">
+      <div class="micro-card" *ngFor="let micro of micronutrients">
+        <div class="micro-header">
+          <span class="micro-name">{{ micro.name }}</span>
+          <span class="micro-percent" [style.color]="micro.color">{{ micro.percent }}</span>
+        </div>
+        <div class="progress-bar small">
+          <div class="fill" [style.width]="micro.percent" [style.background]="micro.color"></div>
+        </div>
+        <span class="micro-sub">{{ micro.sub }}</span>
+      </div>
+    </div>
+
+    <!-- Ingredients Box -->
+    <div class="ingredients-container">
+      <div class="ingredients-header">
+        <h3>Ingredients</h3>
+        <span class="serving-text">{{ meal?.serving || '1 serving' }}</span>
+      </div>
+      <div class="ingredient-item" *ngFor="let ing of ingredients">
+        <span class="ing-name">{{ ing.name }}</span>
+        <span class="ing-amount">{{ ing.amount }}</span>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer Action Button -->
+  <footer class="footer-action" [style.padding-bottom]="safeAreaBottom">
+    <button class="action-btn" [class.completed]="isCompleted" (click)="markAsDone()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+      {{ isCompleted ? 'Meal completed!' : 'Mark lunch as done' }}
+    </button>
+  </footer>
+</div>

@@ -145,4 +145,16 @@ ion-modal.bottom-sheet-modal {
     --overflow: visible;
     overflow: visible;
   }
+  /* Global Modal Styling for Bottom Sheet Presentation */
+.custom-bottom-sheet-modal {
+  --background: rgba(0, 0, 0, 0.4); /* Dim background backdrop */
+  align-items: flex-end;
+
+  // .ion-page {
+  //   position: relative;
+  //   display: block;
+  //   contain: initial;
+  //   background: transparent !important;
+  // }
+}
 }

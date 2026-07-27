@@ -1,0 +1,60 @@
+<!-- how-did-you.page.html -->
+<div class="overlay-container">
+  <!-- Background Dashboard Snapshot -->
+  <div class="dashboard-background">
+    <header class="header">
+      <div class="greeting-box">
+        <h2>Good morning, Aryan</h2>
+        <p>You're making great progress this week!</p>
+      </div>
+    </header>
+  </div>
+
+  <!-- Bottom Sheet Overlay -->
+  <div class="bottom-sheet" [style.padding-bottom]="safeAreaBottom">
+    <div class="sheet-handle"></div>
+    
+    <div class="sheet-header">
+      <h3>How did You Have?</h3>
+      <button class="close-btn" (click)="closeSheet()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+
+    <!-- Planned Meal Box -->
+    <div class="planned-meal-box">
+      <span class="label">PLANNED MEAL</span>
+      <strong>{{ currentMeal?.name || 'Brown rice + chicken + salad' }}</strong>
+      <span class="calories">{{ currentMeal?.calories || '620 kcal' }}</span>
+    </div>
+
+    <!-- You Had Dropdown / Selector -->
+    <div class="input-group">
+      <label class="label">YOU HAD</label>
+      <div class="dropdown-box">
+        <span>john@example.com</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+    </div>
+
+    <!-- Swapped Meal Details Card with Functional Edit Button -->
+    <div class="swapped-meal-card">
+      <div class="swapped-info">
+        <strong>{{ swappedMealName }}</strong>
+        <span class="rough-cal">{{ swappedMealCalories }}</span>
+      </div>
+      <button class="edit-btn" (click)="editMealDetails()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+      </button>
+    </div>
+
+    <!-- Note Input -->
+    <div class="input-group">
+      <label class="label">Note for Rohan (optional)</label>
+      <textarea class="note-input" [(ngModel)]="mealNote" placeholder="Explain why you swapped or add details..."></textarea>
+    </div>
+
+    <!-- Log Swap Button -->
+    <button class="primary-btn" (click)="logSwap()">Log Swap for Lunch</button>
+  </div>
+</div>
