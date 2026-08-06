@@ -1,0 +1,94 @@
+<ion-content class="mobile-viewport-container" [scrollY]="false">
+  <div class="signup-container">
+
+    <!-- Header -->
+    <div class="header-block">
+      <h2>Create Account</h2>
+      <p>Join our community of high-performance athletes today.</p>
+    </div>
+
+    <!-- Form -->
+    <div class="form-fields">
+
+      <!-- Full Name -->
+      <div class="form-group">
+        <label>Full Name</label>
+        <div class="input-box">
+          <input
+            type="text"
+            [(ngModel)]="fullName"
+            placeholder="John Doe"
+          />
+        </div>
+      </div>
+
+      <!-- Email -->
+      <div class="form-group">
+        <label>Email Address</label>
+        <div class="input-box">
+          <input
+            type="email"
+            [(ngModel)]="email"
+            placeholder="john@example.com"
+          />
+        </div>
+      </div>
+
+      <!-- Phone -->
+      <div class="form-group">
+        <label>Phone Number</label>
+
+        <div class="input-box">
+          <input
+            type="tel"
+            [(ngModel)]="phone"
+            placeholder="1234567890"
+            maxlength="10"
+            inputmode="numeric"
+            (input)="onPhoneInput($event)"
+          />
+        </div>
+
+        <!-- Phone Error -->
+        <div class="error-message" *ngIf="showPhoneError">
+          Invalid phone number
+        </div>
+      </div>
+
+      <!-- Terms -->
+      <div class="terms-row">
+        <input
+          type="checkbox"
+          id="terms"
+          [(ngModel)]="acceptedTerms"
+        />
+
+        <label for="terms">
+          I accept the
+          <span class="emerald-link">Terms &amp; Conditions</span>
+        </label>
+      </div>
+
+    </div>
+
+    <!-- Footer -->
+    <div class="footer-action">
+
+      <ion-button
+        expand="block"
+        class="brand-dark-btn"
+        [disabled]="!isFormValid"
+        (click)="sendOtpAction()"
+      >
+        Send OTP
+      </ion-button>
+
+      <!-- Progress -->
+      <div class="progress-bar-wrap">
+        <div class="progress-fill" style="width: 35%;"></div>
+      </div>
+
+    </div>
+
+  </div>
+</ion-content>

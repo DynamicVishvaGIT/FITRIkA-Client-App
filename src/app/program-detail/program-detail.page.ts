@@ -12,6 +12,8 @@ export class ProgramDetailPage implements OnInit {
   safeAreaBottom = 'env(safe-area-inset-bottom)';
 
   program: any;
+  selectedPlan: string = 'personal';
+  currentPrice: number = 18000;
 
   weeks = [
     {
@@ -52,10 +54,14 @@ export class ProgramDetailPage implements OnInit {
       this.program = {
         name: '12-Week Strength Builder',
         trainer: 'Rohan Kapoor',
-        price: 2500,
-        level: 'Inter..',
+        location: 'Mumbai, India',
         duration: '12wk',
-        tags: ['Muscle Gain', 'Powerlifting']
+        frequency: '4d/wk',
+        level: 'Inter..',
+        rating: '4.6',
+        price: 2500,
+        tags: ['Muscle Gain', 'Powerlifting', 'Hypertrophy', 'Fat Loss'],
+        description: 'A comprehensive training program designed to push your limits, build functional strength, and optimize muscle hypertrophy.'
       };
     }
   }
@@ -72,8 +78,13 @@ export class ProgramDetailPage implements OnInit {
     this.router.navigate(['/coaches-details']);
   }
 
+  selectPlan(planKey: string, price: number) {
+    this.selectedPlan = planKey;
+    this.currentPrice = price;
+  }
+
   subscribe() {
-    alert(`Successfully subscribed to ${this.program.name} for ₹${this.program.price}/mo!`);
+    alert(`Successfully subscribed to ${this.program?.name || 'Program'} (${this.selectedPlan} plan) for ₹${this.currentPrice}/mo!`);
     this.router.navigate(['/programs']);
   }
 }

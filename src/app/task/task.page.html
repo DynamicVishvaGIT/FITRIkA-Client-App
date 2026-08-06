@@ -1,0 +1,107 @@
+<ion-content [fullscreen]="true" class="task-content">
+  <div class="task-wrapper">
+    
+    <!-- Top Header -->
+    <div class="header-row">
+      <button class="menu-btn" (click)="openMenu()">
+        <ion-icon name="menu-outline"></ion-icon>
+      </button>
+      <h2>{{ getHeaderTitle() }}</h2>
+    </div>
+
+    <!-- Horizontal Date Strip -->
+    <div class="date-strip-scroll">
+      <div 
+        class="date-item" 
+        *ngFor="let item of weekDays"
+        [class.active-date]="selectedDate === item.dayNum"
+        (click)="selectDate(item.dayNum)">
+        <span class="day-name">{{ item.dayName }}</span>
+        <span class="day-num">{{ item.dayNum }}</span>
+        <div class="active-dot" *ngIf="selectedDate === item.dayNum"></div>
+      </div>
+    </div>
+
+    <!-- Filter Pills Bar -->
+    <div class="filter-pills-scroll">
+      <button 
+        class="filter-pill" 
+        [class.active]="activeFilter === 'All Task'"
+        (click)="setFilter('All Task')">
+        All Task
+      </button>
+      <button 
+        class="filter-pill" 
+        [class.active]="activeFilter === 'Rohan'"
+        (click)="setFilter('Rohan')">
+        Rohan
+      </button>
+      <button 
+        class="filter-pill" 
+        [class.active]="activeFilter === 'Priya'"
+        (click)="setFilter('Priya')">
+        Priya
+      </button>
+      <button 
+        class="filter-pill" 
+        [class.active]="activeFilter === 'Food'"
+        (click)="setFilter('Food')">
+        Food
+      </button>
+    </div>
+
+    <!-- Tasks Section Header -->
+    <div class="section-header-row">
+      <h3>{{ getSectionHeaderTitle() }}</h3>
+      <span class="link-action">{{ getSectionActionText() }}</span>
+    </div>
+
+    <!-- Tasks Stack with Smart Navigation Handler -->
+    <div class="tasks-stack">
+      <div 
+        class="task-card" 
+        *ngFor="let task of getFilteredTasks()" 
+        [class.active-task-card]="task.isActive"
+        [class.completed]="task.completed" 
+        (click)="handleTaskClick(task, $event)">
+        
+        <div class="task-info">
+          <div class="title-row">
+            <h4 [class.strikethrough]="task.completed">{{ task.title }}</h4>
+            <span class="task-time" *ngIf="task.time">{{ task.time }}</span>
+          </div>
+          <p>{{ task.subtitle }}</p>
+        </div>
+
+        <div class="task-meta-right">
+          <span class="coach-badge">{{ task.coach }}</span>
+          <div class="status-indicator" [class.checked]="task.completed" (click)="toggleTask(task.id, $event)">
+            <ion-icon *ngIf="task.completed" name="checkmark"></ion-icon>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Bottom Tabs Bar -->
+  <div class="custom-bottom-tabs">
+    <button class="tab-item" routerLink="/dashboard">
+      <ion-icon name="home-outline"></ion-icon>
+      <span>Home</span>
+    </button>
+    <button class="tab-item active" routerLink="/task">
+      <ion-icon name="calendar"></ion-icon>
+      <span>Task</span>
+    </button>
+    <button class="tab-item" routerLink="/coaches">
+      <ion-icon name="fitness-outline"></ion-icon>
+      <span>Coaches</span>
+    </button>
+    <button class="tab-item" (click)="switchTab('profile')">
+      <ion-icon name="person-outline"></ion-icon>
+      <span>Profile</span>
+    </button>
+  </div>
+</ion-content>

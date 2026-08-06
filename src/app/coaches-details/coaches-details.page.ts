@@ -13,12 +13,10 @@ export class CoachesDetailsPage implements OnInit {
 
   constructor(private router: Router) {}
 
-  ngOnInit(): void {
-    // Coach details initialization
-  }
+  ngOnInit(): void {}
 
   goBack() {
-    this.router.navigate(['../']);
+    this.router.navigate(['/programs']);
   }
 
   subscribe() {

@@ -1,0 +1,181 @@
+$brand-emerald: #00df9a;
+
+.mobile-viewport-container {
+  --background: #ffffff;
+  background: #ffffff;
+}
+
+.auth-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100%;
+  /* Fine-tuned padding to match the exact vertical proportions and safe area insets */
+  padding: 16px 20px calc(env(safe-area-inset-bottom) + 24px) 20px;
+  max-width: 410px;
+  width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+/* Brand Header */
+.brand-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 12px;
+  margin-bottom: 8px;
+
+  .brand-logo-graphic {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .brand-logo-img {
+      max-width: 150px;
+      height: 80px;
+      object-fit: contain;
+    }
+  }
+}
+
+/* Hero Section */
+.hero-section {
+  margin-top: 16px;
+  margin-bottom: 24px;
+
+  .hero-heading {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1.15;
+    color: #0f172a;
+    margin: 0 0 10px 0;
+    letter-spacing: -0.5px;
+        margin-top: 41px;
+  }
+
+  .hero-subtitle {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 13.5px;
+    font-weight: 400;
+    color: #64748b;
+    line-height: 1.45;
+    margin: 0;
+    max-width: 320px;
+  }
+}
+
+/* Feature Cards Row */
+.features-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+
+  .feature-card {
+    flex: 1;
+    background: #ffffff;
+    border: 1px solid #f1f5f9;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.02);
+    border-radius: 16px;
+    /* Adjusted internal card padding to match the reference height and airy look */
+    padding: 18px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+        margin-top: 80px;
+
+    .icon-wrap {
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+
+      .feature-icon-img {
+        width: 22px;
+        height: 22px;
+        object-fit: contain;
+      }
+    }
+
+    .feature-text {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 13.5px;
+      font-weight: 700;
+      color: #0f172a;
+    }
+  }
+}
+
+/* Form Section */
+.form-section {
+  margin-bottom: auto;
+
+  .input-label {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: #334155;
+    display: block;
+    margin-bottom: 8px;
+        margin-top: 12px;
+  }
+
+  .input-box {
+    border: 1.5px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 0 14px;
+    background: #ffffff;
+    transition: border-color 0.2s ease;
+
+    &:focus-within {
+      border-color: $brand-emerald;
+    }
+
+    .custom-text-input {
+      width: 100%;
+      border: none;
+      outline: none;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 15px;
+      font-weight: 500;
+      padding: 12px 0;
+      color: #0f172a;
+      background: transparent;
+
+      &::placeholder {
+        color: #cbd5e1;
+        font-weight: 400;
+      }
+    }
+  }
+
+  .error-message {
+    color: #ef4444;
+    font-size: 12px;
+    font-weight: 500;
+    margin-top: 6px;
+    margin-left: 2px;
+  }
+}
+
+/* Action Footer */
+.action-footer {
+  margin-top: 24px;
+
+  .brand-solid-btn {
+    --background: #00df9a;
+    --background-activated: #00c486;
+    --color: #ffffff;
+    --border-radius: 14px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    height: 48px;
+    margin: 0;
+    box-shadow: 0 6px 16px rgba(0, 223, 154, 0.25);
+    text-transform: none;
+      margin-bottom: 45px;
+  }
+}

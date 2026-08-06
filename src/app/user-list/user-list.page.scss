@@ -1,0 +1,111 @@
+// User Card Styles
+.user-card {
+  margin: 0 0 0.85rem 0;
+  border-radius: 14px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+
+  .card-body {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+  }
+
+  .user-info {
+    display: flex;
+    align-items: center;
+
+    .user-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--ion-color-primary-tint);
+      color: var(--ion-color-primary);
+      font-weight: 700;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 0.85rem;
+      flex-shrink: 0;
+    }
+
+    .details {
+      .user-name {
+        margin: 0 0 0.2rem 0;
+        font-size: 1.05rem;
+        font-weight: 600;
+        color: var(--ion-color-dark);
+      }
+
+      .user-age {
+        margin: 0;
+        font-size: 0.85rem;
+        color: var(--ion-color-medium);
+
+        span {
+          font-weight: 600;
+          color: var(--ion-color-dark);
+        }
+      }
+    }
+  }
+
+  .action-buttons {
+    display: flex;
+    align-items: center;
+
+    ion-button {
+      --padding-start: 6px;
+      --padding-end: 6px;
+      height: 36px;
+    }
+  }
+}
+
+// -------------------------------------------------------------
+// OVAL BOTTOM SHEET & MODAL STYLES
+// -------------------------------------------------------------
+ion-modal.oval-bottom-sheet {
+  --border-radius: 28px 28px 0 0; // Curved top corners for oval sheet
+  --background: #ffffff;
+
+  &::part(content) {
+    border-radius: 28px 28px 0 0;
+    overflow: hidden;
+  }
+
+  .sheet-header {
+    padding-top: 0.5rem;
+    
+    ion-toolbar {
+      --background: transparent;
+    }
+
+    .close-icon {
+      font-size: 1.6rem;
+      color: var(--ion-color-dark);
+    }
+  }
+
+  .sheet-content {
+    .custom-input {
+      --background: #f4f5f8;
+      --border-radius: 12px;
+      margin-bottom: 1rem;
+      padding-left: 0.5rem;
+
+      ion-label {
+        font-weight: 600;
+        color: var(--ion-color-medium);
+        margin-bottom: 0.25rem;
+      }
+    }
+
+    .submit-btn {
+      --border-radius: 12px;
+      height: 48px;
+      font-weight: 600;
+    }
+  }
+}

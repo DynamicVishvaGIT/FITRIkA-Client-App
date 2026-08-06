@@ -1,0 +1,373 @@
+/*==================================================
+            BASIC INFO PAGE
+==================================================*/
+
+.basic-info-content {
+  --background: #ffffff;
+
+  --padding-top: calc(env(safe-area-inset-top) + 12px);
+  --padding-bottom: calc(env(safe-area-inset-bottom) + 16px);
+  --padding-start: 20px;
+  --padding-end: 20px;
+}
+
+.page-wrapper {
+  height: 100%;
+  max-width: 390px;
+  margin: auto;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/*==================================================
+              Progress
+==================================================*/
+
+.progress-section {
+  margin-top: 4px;
+}
+
+.progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 8px;
+}
+
+.step-text {
+  font-size: 17px;
+  font-weight: 600;
+  color: #00DF9A;
+}
+
+.progress-text {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #00DF9A;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 5px;
+
+  background: #E2E8F0;
+
+  border-radius: 10px;
+  overflow: hidden;
+
+  margin-bottom: 18px;
+}
+
+.progress-fill {
+  height: 100%;
+  width: 66%;
+
+  background: #00DF9A;
+
+  border-radius: 10px;
+}
+
+/*==================================================
+              Heading
+==================================================*/
+
+.heading-section {
+  margin-bottom: 16px;
+}
+
+.heading-section h1 {
+  margin: 0;
+
+  font-size: 26px;
+  font-weight: 700;
+
+  line-height: 1.2;
+
+  letter-spacing: -.3px;
+
+  color: #111111;
+}
+
+.heading-section p {
+  margin-top: 6px;
+
+  color: #64748B;
+
+  font-size: 13.5px;
+
+  line-height: 1.4;
+}
+
+/*==================================================
+            Labels
+==================================================*/
+
+.field-title {
+  display: block;
+
+  margin-bottom: 6px;
+
+  font-size: 15px;
+
+  font-weight: 600;
+
+  color: #334155;
+}
+
+/*==================================================
+            Gender
+==================================================*/
+
+.gender-selector {
+  background: #F1F5F9;
+
+  border-radius: 16px;
+
+  padding: 3px;
+
+  display: flex;
+
+  height: 48px;
+}
+
+.gender-btn {
+  flex: 1;
+
+  border: none;
+
+  background: transparent;
+
+  border-radius: 13px;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  color: #64748B;
+
+  transition: .2s;
+}
+
+.gender-btn.active {
+  background: #0B132B;
+
+  color: white;
+
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+/*==================================================
+            Form
+==================================================*/
+
+.form-section {
+  margin-bottom: 12px;
+}
+
+.input-box {
+  height: 50px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  border: 1.5px solid #CBD5E1;
+
+  border-radius: 14px;
+
+  padding: 0 14px;
+
+  background: white;
+
+  transition: .2s;
+}
+
+.input-box:focus-within {
+  border-color: #00DF9A;
+  box-shadow: 0 0 0 3px rgba(0, 223, 154, 0.12);
+}
+
+.input-box input {
+  width: 100%;
+
+  border: none;
+
+  outline: none;
+
+  background: transparent;
+
+  font-size: 16px;
+
+  font-weight: 600;
+
+  color: #0F172A;
+}
+
+.input-box input::placeholder {
+  color: #94A3B8;
+}
+
+.suffix {
+  font-size: 14px;
+
+  color: #94A3B8;
+
+  font-weight: 600;
+}
+
+/*==================================================
+         Weight Height
+==================================================*/
+
+.row-fields {
+  display: flex;
+
+  gap: 12px;
+}
+
+.flex-field {
+  flex: 1;
+}
+
+/*==================================================
+          Privacy Card
+==================================================*/
+
+.privacy-card {
+  display: flex;
+
+  align-items: flex-start;
+
+  margin-top: 4px;
+
+  padding: 12px 14px;
+
+  border-radius: 14px;
+
+  border: 1px solid #E2E8F0;
+
+  background: #FAFBFC;
+}
+
+.privacy-icon {
+  width: 32px;
+
+  height: 32px;
+
+  border-radius: 10px;
+
+  background: #E6F9F2;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  margin-right: 12px;
+
+  flex-shrink: 0;
+}
+
+.privacy-icon ion-icon {
+  color: #00DF9A;
+
+  font-size: 16px;
+}
+
+.privacy-content h4 {
+  margin: 0;
+
+  font-size: 15px;
+
+  font-weight: 700;
+
+  color: #1E293B;
+}
+
+.privacy-content p {
+  margin-top: 2px;
+
+  color: #64748B;
+
+  font-size: 13px;
+
+  line-height: 1.35;
+}
+
+/*==================================================
+          Bottom
+==================================================*/
+
+.bottom-actions {
+  margin-top: 8px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 130px;
+}
+
+.back-btn {
+  width: 48px;
+
+  height: 48px;
+
+  border: 1.5px solid #CBD5E1;
+
+  border-radius: 14px;
+
+  background: white;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  color: #64748B;
+
+  font-size: 18px;
+}
+
+.continue-btn {
+  flex: 1;
+
+  height: 48px;
+
+  --border-radius: 14px;
+
+  --background: linear-gradient(135deg, #00E696 0%, #00BC71 100%);
+
+  --box-shadow: 0 6px 16px rgba(0, 223, 154, 0.35);
+
+  font-size: 16px;
+
+  font-weight: 600;
+
+  text-transform: none;
+
+  margin: 0;
+}
+
+.continue-btn ion-icon {
+  margin-left: 8px;
+
+  font-size: 18px;
+}
+
+/*==================================================
+        Responsive
+==================================================*/
+
+@media (max-width: 360px) {
+  .heading-section h1 {
+    font-size: 24px;
+  }
+}

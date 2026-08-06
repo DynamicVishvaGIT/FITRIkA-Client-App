@@ -1,0 +1,98 @@
+<ion-content [fullscreen]="true" class="onboarding-content">
+  <div class="onboarding-wrapper">
+    
+    <!-- Top Progress Bar -->
+    <div class="progress-container">
+      <div class="progress-info">
+        <span class="step-text">Step 2 of 3</span>
+        <span class="percentage-text">66% Complete</span>
+      </div>
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fill" style="width: 66%;"></div>
+      </div>
+    </div>
+
+    <!-- Title Section -->
+    <div class="header-section">
+      <h2>What's your Current Fitness Level?</h2>
+      <p>Be honest - it helps us find the right difficulty.</p>
+    </div>
+
+    <!-- Options List -->
+    <div class="options-list">
+      
+      <div 
+        class="option-card" 
+        [class.selected]="selectedFitness === 'Beginner'"
+        (click)="selectFitness('Beginner')">
+        <div class="option-left">
+          <div class="icon-box">
+             <img src="assets/images/leaf.png" alt="Swap Task" class="feature-icon-img" style="width: 22px; height: 22px; object-fit: contain;" />
+          </div>
+          <span class="option-title">Beginner</span>
+        </div>
+        <div class="radio-indicator">
+          <ion-icon *ngIf="selectedFitness === 'Beginner'" name="checkmark"></ion-icon>
+        </div>
+      </div>
+
+      <div 
+        class="option-card" 
+        [class.selected]="selectedFitness === 'Intermediate'"
+        (click)="selectFitness('Intermediate')">
+        <div class="option-left">
+          <div class="icon-box">
+             <img src="assets/images/fire.png" alt="Swap Task" class="feature-icon-img"  style="width: 22px; height: 22px; object-fit: contain;"/>
+          </div>
+          <span class="option-title">Intermediate</span>
+        </div>
+        <div class="radio-indicator">
+          <ion-icon *ngIf="selectedFitness === 'Intermediate'" name="checkmark"></ion-icon>
+        </div>
+      </div>
+
+      <div 
+        class="option-card" 
+        [class.selected]="selectedFitness === 'Advanced'"
+        (click)="selectFitness('Advanced')">
+        <div class="option-left">
+          <div class="icon-box">
+             <img src="assets/images/fast.png" alt="Swap Task" class="feature-icon-img" style="width: 22px; height: 22px; object-fit: contain;" />
+          </div>
+          <span class="option-title">Advanced</span>
+        </div>
+        <div class="radio-indicator">
+          <ion-icon *ngIf="selectedFitness === 'Advanced'" name="checkmark"></ion-icon>
+        </div>
+      </div>
+
+      <div 
+        class="option-card" 
+        [class.selected]="selectedFitness === 'Elite'"
+        (click)="selectFitness('Elite')">
+        <div class="option-left">
+          <div class="icon-box">
+              <img src="assets/images/fast.png" alt="Swap Task" class="feature-icon-img" style="width: 22px; height: 22px; object-fit: contain;" />
+          </div>
+          <span class="option-title">Elite</span>
+        </div>
+        <div class="radio-indicator">
+          <ion-icon *ngIf="selectedFitness === 'Elite'" name="checkmark"></ion-icon>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Footer Actions -->
+    <div class="footer-actions">
+      <button class="back-btn" (click)="goBack()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </button>
+      <button class="continue-btn" (click)="goToDietPreference()">
+        <span>Continue</span>
+        <ion-icon name="arrow-forward-outline"></ion-icon>
+      </button>
+    </div>
+
+  </div>
+</ion-content>

@@ -3,73 +3,127 @@
     <button class="back-btn" (click)="goBack()">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
     </button>
-    <h1>Program Detail</h1>
+    <h1>Program Details</h1>
   </header>
 
   <main class="content">
+    <!-- Trending Badge -->
     <div class="trending-badge">Trending Program</div>
-    <h2>{{ program?.name }}</h2>
-    <p class="author-info">by {{ program?.trainer }} • Mumbai, India</p>
 
-    <div class="metrics-bar">
-      <div class="metric"><strong>{{ program?.duration || '12wk' }}</strong><span>Duration</span></div>
-      <div class="metric"><strong>4d/wk</strong><span>PERK</span></div>
-      <div class="metric"><strong>{{ program?.level || 'Inter..' }}</strong><span>Level</span></div>
-      <div class="metric"><strong>4.6</strong><span>Rating</span></div>
+    <!-- Title -->
+    <h2>{{ program?.name || '12-Week Strength Builder' }}</h2>
+
+    <!-- Author & Location Info -->
+    <div class="author-info">
+      <span class="author-name">by {{ program?.trainer || 'Rohan Kapoor' }}</span>
+      <span class="dot-separator">•</span>
+      <span class="location-badge">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+          <circle cx="12" cy="10" r="3"></circle>
+        </svg>
+        {{ program?.location || 'Mumbai, India' }}
+      </span>
     </div>
 
-    <section class="about-section">
+    <!-- Separate 4-Column Metrics Card Grid -->
+    <div class="metrics-bar">
+      <div class="metric">
+        <strong>{{ program?.duration || '12wk' }}</strong>
+        <span>Duration</span>
+      </div>
+      <div class="metric">
+        <strong>{{ program?.frequency || '4d/wk' }}</strong>
+        <span>FREQ.</span>
+      </div>
+      <div class="metric">
+        <strong>{{ program?.level || 'Inter..' }}</strong>
+        <span>Level</span>
+      </div>
+      <div class="metric">
+        <strong>{{ program?.rating || '4.6' }}</strong>
+        <span>Rating</span>
+      </div>
+    </div>
+
+    <!-- About Section -->
+    <div class="about-section">
       <h3>About Program</h3>
-      <p>Progressive overload program designed to build foundational strength through high-intensity compound movements.</p>
+      <p>{{ program?.description || 'A comprehensive training program designed to push your limits, build functional strength, and optimize muscle hypertrophy.' }}</p>
       <h4>AREA OF EXPERTISE</h4>
       <div class="tags">
-        <span class="tag" *ngFor="let t of program?.tags">{{ t }}</span>
-      </div>
-    </section>
-
-    <div class="coach-card" (click)="openCoachDetails()">
-      <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100" alt="Rohan">
-      <div class="info">
-        <h4>{{ program?.trainer }}</h4>
-        <span>Strength & Hypertrophy</span>
-        <a class="profile-link">View Profile</a>
+        <span class="tag" *ngFor="let tag of program?.tags">{{ tag }}</span>
       </div>
     </div>
 
+    <!-- Coach Card -->
+    <div class="coach-card" (click)="openCoachDetails()">
+      <div class="coach-indicator-bar"></div>
+      <img [src]="program?.coachImage || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150'" alt="Coach">
+      <div class="info">
+        <h4>{{ program?.trainer || 'Rohan Kapoor' }}</h4>
+        <span>Lead Strength Coach</span>
+        <a class="profile-link">View Profile </a>
+      </div>
+    </div>
+
+    <!-- Weeks Accordion -->
     <div class="weeks-accordion">
       <div class="week-box" *ngFor="let week of weeks; let i = index">
         <div class="week-header" (click)="toggleWeek(i)">
           <div>
-            <h4>Week {{ i + 1 }}</h4>
-            <span class="sub">{{ week.title }}</span>
+            <span class="sub">Week {{ i + 1 }}</span>
+            <h4>{{ week.title }}</h4>
           </div>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2" [style.transform]="week.open ? 'rotate(180deg)' : 'rotate(0deg)'">
-            <path d="M6 9l6 6 6-6"/>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline [attr.points]="week.open ? '18 15 12 9 6 15' : '6 9 12 15 18 9'"></polyline>
           </svg>
         </div>
         <div class="week-body" *ngIf="week.open">
-          <div class="workout-item" *ngFor="let w of week.workouts">
-            <span class="day-icon" [style.background]="w.color">{{ w.day }}</span>
-            <div class="details">
-              <strong>{{ w.name }}</strong>
-              <small>{{ w.desc }}</small>
+          <div class="timeline-container">
+            <div class="vertical-connector-line"></div>
+            <div class="workout-item" *ngFor="let w of week.workouts">
+              <div class="day-icon" [style.background]="w.color">{{ w.day }}</div>
+              <div class="details">
+                <strong>{{ w.name }}</strong>
+                <small>{{ w.desc }}</small>
+              </div>
             </div>
           </div>
-          <div class="empty-workouts" *ngIf="week.workouts.length === 0">
-            <small class="no-data">Workouts loading soon...</small>
+        </div>
+      </div>
+    </div>
+
+    <!-- Choose Your Plan Section -->
+    <div class="choose-plan-section">
+      <div class="section-title-heading">CHOOSE YOUR PLAN</div>
+      
+      <div class="plan-selectable-card" [class.selected]="selectedPlan === 'personal'" (click)="selectPlan('personal', 2500)">
+        <div class="plan-left-indicator"></div>
+        <div class="plan-card-content">
+          <div class="plan-radio-title-group">
+            <div class="custom-radio-circle">
+              <div class="inner-dot" *ngIf="selectedPlan === 'personal'"></div>
+            </div>
+            <span class="plan-name">Personalized Guidance</span>
+          </div>
+          <div class="plan-price-group">
+            <span class="price-val">₹2500</span>
+            <span class="price-per">/month</span>
           </div>
         </div>
       </div>
     </div>
   </main>
 
+  <!-- Footer Action -->
   <footer class="footer-action" [style.padding-bottom]="safeAreaBottom">
     <button class="subscribe-btn" (click)="subscribe()">
       <div class="left-content">
         <span class="sub-label">START PROGRAM</span>
-        <span class="sub-title">Subscribe & Start</span>
+        <span class="sub-title">Subscribe Now</span>
       </div>
-      <span class="price-tag">₹{{ program?.price || 2500 }}<small>/mo</small></span>
+      <div class="price-tag">₹{{ currentPrice | number }} <small>/mo</small></div>
     </button>
   </footer>
 </div>

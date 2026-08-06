@@ -1,0 +1,214 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar class="custom-toolbar">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/dashboard" text="" icon="arrow-back-outline"></ion-back-button>
+    </ion-buttons>
+    <ion-title>User Profile</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="profile-content">
+  <div class="profile-container">
+    
+    <!-- Profile Hero Section -->
+    <div class="profile-hero">
+      <div class="avatar-wrapper">
+        <img src="assets/images/rohan.jpg" alt="Rohan Kapoor" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300'" />
+      </div>
+      <div class="hero-info">
+        <h2>Rohan Kapoor</h2>
+        <span class="badge-elite">Elite Coach</span>
+      </div>
+    </div>
+
+    <!-- Quick Stats Grid Box -->
+    <div class="stats-overview-box">
+      <div class="stat-item">
+        <span class="stat-value">12</span>
+        <span class="stat-label">Streak Days</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-value">48</span>
+        <span class="stat-label">Workout Session</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-value">24,500</span>
+        <span class="stat-label">calories</span>
+      </div>
+    </div>
+
+    <!-- Details Grid (Mobile, Email, Weight, Height) -->
+    <div class="details-grid-box">
+      <div class="detail-row">
+        <div class="detail-group">
+          <span class="label-title">MOBILE NUMBER</span>
+          <span class="label-data">+91 9876543210</span>
+        </div>
+        <div class="detail-group">
+          <span class="label-title">EMAIL ADDRESS</span>
+          <span class="label-data">Sarahg@GMAIL.COM</span>
+        </div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-group">
+          <span class="label-title">WEIGHT</span>
+          <span class="label-data">55 KG</span>
+        </div>
+        <div class="detail-group">
+          <span class="label-title">HEIGHT</span>
+          <span class="label-data">175 CM</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Workout Log Section 1 -->
+    <div class="card-section">
+      <div class="card-header-row">
+        <h3>Workout Log</h3>
+        <span class="view-all-link">View All &rarr;</span>
+      </div>
+      <div class="sub-log-item">
+        <div class="sub-log-info">
+          <h4>Upper Body Strength</h4>
+          <div class="tags-row">
+            <span class="tag-blue">60 min</span>
+            <span class="tag-green-outline">Upcoming</span>
+          </div>
+        </div>
+        <span class="date-text">Feb 17</span>
+      </div>
+      <div class="sub-log-item border-top-sub">
+        <div class="sub-log-info">
+          <h4>HIIT Cardio Blast</h4>
+          <div class="tags-row">
+            <span class="tag-blue">30 min</span>
+            <span class="tag-green-outline">Upcoming</span>
+          </div>
+        </div>
+        <span class="date-text">Feb 17</span>
+      </div>
+    </div>
+
+    <!-- Workout Log Matrix Calendar View -->
+    <div class="card-section">
+      <div class="card-header-row">
+        <h3>Workout Log</h3>
+        <span class="view-all-link">View All &rarr;</span>
+      </div>
+      <div class="calendar-heat-grid">
+        <div class="heat-block-group">
+          <div class="heat-grid">
+            <span class="dot muted"></span><span class="dot active"></span><span class="dot active"></span><span class="dot active"></span>
+            <span class="dot active"></span><span class="dot muted"></span><span class="dot active"></span><span class="dot active"></span>
+            <span class="dot active"></span><span class="dot active"></span><span class="dot active"></span><span class="dot active"></span>
+            <span class="dot active"></span><span class="dot active"></span><span class="dot muted"></span><span class="dot active"></span>
+          </div>
+        </div>
+        <div class="heat-block-group">
+          <div class="heat-grid">
+            <span class="dot muted"></span><span class="dot active"></span><span class="dot muted"></span><span class="dot active"></span>
+            <span class="dot active"></span><span class="dot active"></span><span class="dot muted"></span><span class="dot active"></span>
+            <span class="dot active"></span><span class="dot muted"></span><span class="dot active"></span><span class="dot active"></span>
+            <span class="dot active"></span><span class="dot active"></span><span class="dot active"></span><span class="dot active"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Progress Tracking Metrics -->
+    <div class="card-section">
+      <div class="card-header-row">
+        <h3>Progress Tracking Metrics</h3>
+        <span class="view-all-link">View All</span>
+      </div>
+      <div class="metric-bar-group">
+        <div class="metric-label-row"><span>Strength Score</span><span>78/100</span></div>
+        <div class="progress-track"><div class="progress-fill orange-fill" style="width: 78%;"></div></div>
+      </div>
+      <div class="metric-bar-group">
+        <div class="metric-label-row"><span>Muscular Strength</span><span>78/100</span></div>
+        <div class="progress-track"><div class="progress-fill green-fill" style="width: 78%;"></div></div>
+      </div>
+      <div class="metric-bar-group">
+        <div class="metric-label-row"><span>Cardiovascular Endurance</span><span>78/100</span></div>
+        <div class="progress-track"><div class="progress-fill blue-fill" style="width: 78%;"></div></div>
+      </div>
+      <div class="metric-bar-group">
+        <div class="metric-label-row"><span>Body Composition</span><span>78/100</span></div>
+        <div class="progress-track"><div class="progress-fill lime-fill" style="width: 78%;"></div></div>
+      </div>
+      <div class="metric-bar-group">
+        <div class="metric-label-row"><span>Flexibility</span><span>78/100</span></div>
+        <div class="progress-track"><div class="progress-fill pink-fill" style="width: 78%;"></div></div>
+      </div>
+    </div>
+
+    <!-- Assigned Workout Card -->
+    <div class="card-section">
+      <h3 class="single-card-title">Assigned Workout</h3>
+      <div class="program-info-row">
+        <span class="program-title">Beginner weight loss program</span>
+        <span class="progress-stat-text">Progress <strong class="green-num">60/90</strong></span>
+      </div>
+      <span class="date-range-text">12/02/2026 - 2/06/2025</span>
+      <div class="progress-track thick-track">
+        <div class="progress-fill green-fill" style="width: 66%;"></div>
+      </div>
+    </div>
+
+    <!-- Diet Card -->
+    <div class="card-section">
+      <h3 class="single-card-title">Diet</h3>
+      <div class="program-info-row">
+        <span class="program-title">Calorie control program.</span>
+        <span class="progress-stat-text">Meals <strong class="green-num">20/100</strong></span>
+      </div>
+      <span class="date-range-text">12/02/2026 - 12/06/2025</span>
+      <div class="progress-track thick-track">
+        <div class="progress-fill green-fill" style="width: 20%;"></div>
+      </div>
+    </div>
+
+    <!-- Assigned Package Card -->
+    <div class="card-section">
+      <h3 class="single-card-title">Assigned Package</h3>
+      <div class="program-info-row">
+        <span class="program-title">Muscle Gain Pro</span>
+        <span class="progress-stat-text">Days <strong class="green-num">60/90</strong></span>
+      </div>
+      <span class="date-range-text">12/02/2026 - 12/05/2025</span>
+      <div class="progress-track thick-track">
+        <div class="progress-fill green-fill" style="width: 66%;"></div>
+      </div>
+    </div>
+
+    <!-- Assessments & Forms -->
+    <div class="card-section">
+      <h3 class="single-card-title">Assessments & Forms</h3>
+      <div class="forms-grid-bordered">
+        <div class="form-box-tall">Form 1</div>
+        <div class="form-box-tall">Form 2</div>
+        <div class="form-box-tall">Form 3</div>
+        <div class="form-box-tall">Form 4</div>
+      </div>
+    </div>
+
+    <!-- Files and Document -->
+    <div class="card-section mb-last">
+      <h3 class="single-card-title">Files and Document</h3>
+      <div class="docs-grid-bordered">
+        <div class="doc-card-inner">
+          <ion-icon name="document-text" class="doc-icon blue-doc"></ion-icon>
+          <span>Document 2</span>
+        </div>
+        <div class="doc-card-inner">
+          <ion-icon name="document-text" class="doc-icon purple-doc"></ion-icon>
+          <span>Document 2</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</ion-content>

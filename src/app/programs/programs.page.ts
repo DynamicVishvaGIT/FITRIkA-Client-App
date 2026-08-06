@@ -46,7 +46,7 @@ export class ProgramsPage implements OnInit {
   }
 
   goBack() {
-    this.router.navigate(['../']);
+    this.router.navigate(['../coaches']);
   }
 
   filterPrograms() {

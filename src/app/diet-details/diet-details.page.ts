@@ -63,7 +63,7 @@ export class DietDetailsPage implements OnInit {
   markAsDone() {
     this.isCompleted = true;
     setTimeout(() => {
-      this.router.navigate(['../']);
+      this.router.navigate(['/tasks']);
     }, 600);
   }
 }

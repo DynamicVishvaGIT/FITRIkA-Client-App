@@ -1,221 +1,231 @@
-/* how-did-you.page.scss */
-:host {
-  display: block;
-  font-family: system-ui, -apple-system, sans-serif;
-}
-
-.overlay-container {
-  position: relative;
-  height: 100vh;
-  max-width: 480px;
-  margin: 0 auto;
-  background: rgba(0, 0, 0, 0.4);
+.modal-content {
+  --background: transparent;
   display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  box-sizing: border-box;
-  overflow: hidden;
+  align-items: flex-end;
 }
 
-.dashboard-background {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: #fcfcfc;
-  opacity: 0.6;
-  pointer-events: none;
-  padding: 16px;
-
-  .greeting-box {
-    h2 { font-size: 20px; font-weight: 700; margin: 0 0 4px 0; color: #1a1a1a; }
-    p { font-size: 13px; color: #666; margin: 0; }
-  }
-}
-
-.bottom-sheet {
-  position: relative;
+.modal-card-wrapper {
   background: #ffffff;
-  border-top-left-radius: 24px;
-  border-top-right-radius: 24px;
-  padding: 12px 20px 24px 20px;
-  box-shadow: 0 -10px 30px rgba(0,0,0,0.1);
-  z-index: 10;
-  max-height: 90vh;
-  overflow-y: auto;
+  border-top-left-radius: 48px;  
+  border-top-right-radius: 48px; 
+  padding: 24px 20px calc(env(safe-area-inset-bottom) + 34px) 20px;
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
+  box-shadow: 0px -8px 32px rgba(0, 0, 0, 0.08);
+  box-sizing: border-box;
+}
 
-  .sheet-handle {
-    width: 40px;
-    height: 4px;
-    background: #e0e0e0;
-    border-radius: 2px;
-    margin: 0 auto 16px auto;
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+
+  h2 {
+    margin: 0;
+    font-family: "Satoshi", sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: #000000;
+    letter-spacing: -0.5px;
+    margin-left: 70px;
   }
 
-  .sheet-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 14px;
-
-    h3 {
-      font-size: 18px;
-      font-weight: 700;
-      margin: 0;
-      color: #1a1a1a;
-    }
-
-    .close-btn {
-      background: #f2f2f2;
-      border: none;
-      border-radius: 50%;
-      width: 32px;
-      height: 32px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      color: #333;
-    }
-  }
-
-  .planned-meal-box {
-    background: #f8fafc;
-    border: 1px solid #e2e8f0;
-    border-radius: 14px;
-    padding: 12px;
-    margin-bottom: 14px;
-    display: flex;
-    flex-direction: column;
-
-    .label {
-      font-size: 10px;
-      font-weight: 700;
-      color: #64748b;
-      letter-spacing: 0.5px;
-      margin-bottom: 2px;
-    }
-
-    strong {
-      font-size: 14px;
-      font-weight: 700;
-      color: #1a1a1a;
-      margin-bottom: 2px;
-    }
-
-    .calories {
-      font-size: 12px;
-      font-weight: 600;
-      color: #00c853;
-    }
-  }
-
-  .input-group {
-    margin-bottom: 14px;
-    display: flex;
-    flex-direction: column;
-
-    .label {
-      font-size: 11px;
-      font-weight: 700;
-      color: #666;
-      margin-bottom: 6px;
-      letter-spacing: 0.5px;
-    }
-
-    .dropdown-box {
-      background: #ffffff;
-      border: 1px solid #e5e5e5;
-      border-radius: 12px;
-      padding: 12px 14px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 14px;
-      color: #555;
-    }
-
-    .note-input {
-      background: #f8fafc;
-      border: 1px solid #e2e8f0;
-      border-radius: 12px;
-      padding: 12px;
-      font-size: 13px;
-      color: #1a1a1a;
-      resize: none;
-      height: 70px;
-      font-family: inherit;
-
-      &:focus {
-        outline: none;
-        border-color: #00c853;
-      }
-    }
-  }
-
-  .swapped-meal-card {
-    background: #ffffff;
-    border: 1px solid #e5e5e5;
-    border-radius: 14px;
-    padding: 14px;
-    margin-bottom: 14px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    .swapped-info {
-      display: flex;
-      flex-direction: column;
-
-      strong {
-        font-size: 14px;
-        font-weight: 700;
-        color: #1a1a1a;
-        margin-bottom: 4px;
-      }
-
-      .rough-cal {
-        font-size: 13px;
-        font-weight: 700;
-        color: #00c853;
-      }
-    }
-
-    .edit-btn {
-      background: none;
-      border: none;
-      cursor: pointer;
-      color: #444;
-      padding: 6px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: color 0.2s;
-
-      &:hover {
-        color: #00c853;
-      }
-    }
-  }
-
-  .primary-btn {
-    width: 100%;
-    background: #00e676;
-    color: #000;
+  .close-btn {
+    background: #F2F2F7;
     border: none;
-    border-radius: 16px;
-    padding: 14px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 18px;
+    color: #000000;
+    transition: background 0.2s;
+
+    &:hover {
+      background: #E5E5EA;
+    }
+  }
+}
+
+.label-muted {
+  font-family: "Satoshi", sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  color: #8E8E93;
+  letter-spacing: 0.5px;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.planned-meal-box {
+  background: #F2F2F7;
+  border: 1px solid transparent;
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 16px;
+
+  h4 {
+    margin: 0 0 4px 0;
+    font-family: "Satoshi", sans-serif;
     font-size: 15px;
     font-weight: 700;
-    cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0, 230, 118, 0.2);
-    transition: transform 0.2s;
+    color: #000000;
+  }
 
-    &:active {
-      transform: scale(0.98);
+  .calories-text {
+    font-family: "Satoshi", sans-serif;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #00DA8B;
+  }
+}
+
+.selection-section {
+  margin-bottom: 16px;
+
+  .custom-dropdown-wrap {
+    border: 1.5px solid #E5E5EA;
+    border-radius: 16px;
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+    margin-bottom: 12px;
+    min-height: 52px;
+
+    .ionic-dropdown {
+      width: 100%;
+      font-family: "Satoshi", sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      color: #000000;
+      --padding-top: 0px;
+      --padding-bottom: 0px;
+      --padding-start: 4px;
+      --padding-end: 4px;
+    }
+  }
+
+  .preview-selected-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #F2F2F7;
+    border: 1px solid transparent;
+    border-radius: 16px;
+    padding: 14px 16px;
+
+    .preview-text {
+      h4 {
+        margin: 0 0 2px 0;
+        font-family: "Satoshi", sans-serif;
+        font-size: 15px;
+        font-weight: 700;
+        color: #000000;
+      }
+
+      .calc-tag {
+        font-family: "Satoshi", sans-serif;
+        font-size: 13.5px;
+        font-weight: 600;
+        color: #00DA8B;
+      }
+    }
+
+    .preview-edit-mode {
+      display: flex;
+      gap: 8px;
+      flex: 1;
+      margin-right: 12px;
+
+      .edit-input-field {
+        flex: 1;
+        padding: 8px 12px;
+        border: 1.5px solid #00DA8B;
+        border-radius: 12px;
+        font-size: 14px;
+        outline: none;
+        background: #ffffff;
+      }
+
+      .save-btn {
+        background: #00DA8B;
+        color: #ffffff;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 12px;
+        font-family: "Satoshi", sans-serif;
+        font-weight: 700;
+        cursor: pointer;
+      }
+    }
+
+    .edit-icon-btn {
+      background: transparent;
+      border: none;
+      font-size: 15px;
+      color: #000000;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+}
+
+.input-group-field {
+  margin-bottom: 20px;
+
+  .note-textarea {
+    width: 100%;
+    border: 1.5px solid #E5E5EA;
+    border-radius: 16px;
+    background: #F2F2F7;
+    padding: 14px 16px;
+    font-family: "Satoshi", sans-serif;
+    font-size: 14.5px;
+    color: #000000;
+    resize: none;
+    outline: none;
+    box-sizing: border-box;
+
+    &::placeholder {
+      color: #A9A9A9;
+    }
+
+    &:focus {
+      border-color: #00DA8B;
+      background: #ffffff;
+    }
+  }
+}
+
+.action-footer {
+  width: 100%;
+  
+  .primary-action-btn {
+    width: 100%;
+    height: 54px;
+    background: #00DA8B;
+    color: #ffffff;
+    border: none;
+    border-radius: 14px;
+    font-family: "Satoshi", sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(0, 218, 139, 0.3);
+    transition: background 0.2s;
+
+    &:hover {
+      background: #00c27b;
     }
   }
 }

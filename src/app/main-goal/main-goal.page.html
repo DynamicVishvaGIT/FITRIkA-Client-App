@@ -1,0 +1,106 @@
+<ion-content [fullscreen]="true" class="goal-content" [scrollY]="false">
+  <div class="page-wrapper">
+    
+    <!-- Progress Header -->
+    <div class="progress-section">
+      <div class="progress-header">
+        <span class="step-text">Step 2 of 3</span>
+        <span class="progress-text">66% Complete</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill"></div>
+      </div>
+    </div>
+
+    <!-- Heading Block -->
+    <div class="heading-section">
+      <h1>What's your main goal?</h1>
+      <p>Select the primary outcome you want to achieve with FITRIKA.</p>
+    </div>
+
+    <!-- Goal Selection Options -->
+    <div class="options-stack">
+      <div 
+        class="selection-card" 
+        [class.active-card]="selectedGoal === 'Fat Loss'"
+        (click)="selectGoal('Fat Loss')">
+        <div class="icon-box" [class.active-icon]="selectedGoal === 'Fat Loss'">
+          <img src="assets/images/Overlay.png" alt="Swap Task" class="feature-icon-img" />
+        </div>
+        <div class="card-content">
+          <h3>Fat Loss</h3>
+        </div>
+        <ion-icon *ngIf="selectedGoal === 'Fat Loss'" name="checkmark-circle" class="check-icon"></ion-icon>
+        <div *ngIf="selectedGoal !== 'Fat Loss'" class="radio-circle"></div>
+      </div>
+
+      <div 
+        class="selection-card" 
+        [class.active-card]="selectedGoal === 'Muscle Gain'"
+        (click)="selectGoal('Muscle Gain')">
+        <div class="icon-box" [class.active-icon]="selectedGoal === 'Muscle Gain'">
+          <img src="assets/images/barbel.png" alt="Swap Task" class="feature-icon-img" />
+        </div>
+        <div class="card-content">
+          <h3>Muscle Gain</h3>
+        </div>
+        <ion-icon *ngIf="selectedGoal === 'Muscle Gain'" name="checkmark-circle" class="check-icon"></ion-icon>
+        <div *ngIf="selectedGoal !== 'Muscle Gain'" class="radio-circle"></div>
+      </div>
+
+      <div 
+        class="selection-card" 
+        [class.active-card]="selectedGoal === 'Build Strength'"
+        (click)="selectGoal('Build Strength')">
+        <div class="icon-box" [class.active-icon]="selectedGoal === 'Build Strength'">
+          <img src="assets/images/shop.png" alt="Swap Task" class="feature-icon-img" />
+        </div>
+        <div class="card-content">
+          <h3>Build Strength</h3>
+        </div>
+        <ion-icon *ngIf="selectedGoal === 'Build Strength'" name="checkmark-circle" class="check-icon"></ion-icon>
+        <div *ngIf="selectedGoal !== 'Build Strength'" class="radio-circle"></div>
+      </div>
+
+      <div 
+        class="selection-card" 
+        [class.active-card]="selectedGoal === 'Improve Endurance'"
+        (click)="selectGoal('Improve Endurance')">
+        <div class="icon-box" [class.active-icon]="selectedGoal === 'Improve Endurance'">
+        <img src="assets/images/clock.png" alt="Swap Task" class="ture-icon-img" />
+        </div>
+        <div class="card-content">
+          <h3>Improve Endurance</h3>
+        </div>
+        <ion-icon *ngIf="selectedGoal === 'Improve Endurance'" name="checkmark-circle" class="check-icon"></ion-icon>
+        <div *ngIf="selectedGoal !== 'Improve Endurance'" class="radio-circle"></div>
+      </div>
+
+      <div 
+        class="selection-card" 
+        [class.active-card]="selectedGoal === 'General Wellness'"
+        (click)="selectGoal('General Wellness')">
+        <div class="icon-box" [class.active-icon]="selectedGoal === 'General Wellness'">
+         <img src="assets/images/lotus.png" alt="Swap Task" class="ture-icon-img" />
+        </div>
+        <div class="card-content">
+          <h3>General Wellness</h3>
+        </div>
+        <ion-icon *ngIf="selectedGoal === 'General Wellness'" name="checkmark-circle" class="check-icon"></ion-icon>
+        <div *ngIf="selectedGoal !== 'General Wellness'" class="radio-circle"></div>
+      </div>
+    </div>
+
+    <!-- Navigation Footer -->
+    <div class="bottom-actions">
+      <button type="button" class="back-btn" (click)="goBack()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </button>
+      <ion-button expand="block" class="continue-btn" (click)="proceedToTrainerSelection()">
+        <span>Continue</span>
+        <ion-icon slot="end" name="arrow-forward-outline"></ion-icon>
+      </ion-button>
+    </div>
+
+  </div>
+</ion-content>

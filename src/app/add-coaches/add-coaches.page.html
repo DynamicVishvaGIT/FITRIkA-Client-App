@@ -1,0 +1,148 @@
+<div class="mobile-container" [class.filter-open]="isFilterOpen">
+  <div class="header">
+    <button class="back-btn" (click)="goBack()">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M19 12H5M12 19l-7-7 7-7"/>
+      </svg>
+    </button>
+    <h1>Find your trainer.</h1>
+    <button class="add-top-btn" (click)="onAddClick()">Add</button>
+  </div>
+
+  <div class="search-filter-section">
+    <div class="search-bar">
+      <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+      <input 
+        type="text" 
+        placeholder="Search by name or specialty..." 
+        [(ngModel)]="searchQuery" 
+        (input)="onSearch()"
+      />
+      <button class="filter-icon-btn" (click)="toggleFilter(true)">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="4" y1="21" x2="4" y2="14"></line>
+          <line x1="4" y1="10" x2="4" y2="3"></line>
+          <line x1="12" y1="21" x2="12" y2="12"></line>
+          <line x1="12" y1="8" x2="12" y2="3"></line>
+          <line x1="20" y1="21" x2="20" y2="16"></line>
+          <line x1="20" y1="12" x2="20" y2="3"></line>
+          <line x1="1" y1="14" x2="7" y2="14"></line>
+          <line x1="9" y1="8" x2="15" y2="8"></line>
+          <line x1="17" y1="16" x2="23" y2="16"></line>
+        </svg>
+        <span *ngIf="getActiveFilterCount() > 0" class="filter-badge">{{ getActiveFilterCount() }}</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="coaches-list">
+    <div class="coach-card" *ngFor="let coach of filteredCoaches">
+      <div class="coach-header">
+        <div class="coach-profile-info">
+          <img [src]="coach.image" [alt]="coach.name" class="coach-avatar" />
+          <div class="coach-titles">
+            <h3>{{ coach.name }}</h3>
+            <p class="specialty">{{ coach.specialty }}</p>
+          </div>
+        </div>
+        <span class="top-rated-badge">TOP RATED</span>
+      </div>
+
+      <div class="coach-meta">
+        <div class="meta-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+          <span>{{ coach.experience }} yrs exp</span>
+        </div>
+        <div class="meta-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+            <circle cx="12" cy="10" r="3"></circle>
+          </svg>
+          <span>{{ coach.location }}</span>
+        </div>
+      </div>
+
+      <p class="coach-bio">"{{ coach.bio }}"</p>
+
+      <div class="tags-price-row">
+        <div class="tags">
+          <span class="tag" *ngFor="let tag of coach.tags">{{ tag }}</span>
+        </div>
+        <div class="price">
+          <span class="amount">₹{{ coach.price }}</span>
+          <span class="period">/mo</span>
+        </div>
+      </div>
+
+      <div class="card-footer">
+        <div class="status-indicator">
+          <span class="dot"></span>
+          <span class="status-text">Open for coaching</span>
+        </div>
+        <button class="view-profile-btn" (click)="viewProfile(coach)">View Profile</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="backdrop" *ngIf="isFilterOpen" (click)="toggleFilter(false)"></div>
+
+  <div class="filter-bottom-sheet" [class.open]="isFilterOpen">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+      <h2>Filters</h2>
+      <button class="clear-btn" (click)="clearFilters()">Clear</button>
+      <button class="close-btn" (click)="toggleFilter(false)">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <div class="sheet-content">
+      <div class="filter-section">
+        <h3>Specialty</h3>
+        <div class="chip-grid">
+          <button 
+            *ngFor="let spec of specialtyOptions" 
+            class="filter-chip" 
+            [class.selected]="selectedSpecialties.includes(spec)"
+            (click)="toggleSpecialty(spec)">
+            <span>{{ spec }}</span>
+            <svg *ngIf="selectedSpecialties.includes(spec)" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+              <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="filter-section">
+        <h3>Goal</h3>
+        <div class="chip-grid">
+          <button 
+            *ngFor="let goal of goalOptions" 
+            class="filter-chip" 
+            [class.selected]="selectedGoals.includes(goal)"
+            (click)="toggleGoal(goal)">
+            <span>{{ goal }}</span>
+            <svg *ngIf="selectedGoals.includes(goal)" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+              <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="sheet-footer">
+      <button class="apply-filter-btn" (click)="applyFilters()">Apply Filter</button>
+    </div>
+  </div>
+</div>

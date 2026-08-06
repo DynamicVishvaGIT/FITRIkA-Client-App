@@ -1,0 +1,111 @@
+<ion-content
+  [fullscreen]="true"
+  class="trainer-content"
+  [scrollY]="false">
+
+  <div class="page-wrapper">
+
+    <!-- ================= Progress ================= -->
+
+    <div class="progress-section">
+
+      <div class="progress-header">
+        <span class="step-text">
+          Step 3 of 3
+        </span>
+
+        <span class="progress-text">
+          66% Complete
+        </span>
+      </div>
+
+      <div class="progress-bar">
+        <div class="progress-fill"></div>
+      </div>
+
+    </div>
+
+    <!-- ================= Heading ================= -->
+
+    <div class="heading-section">
+
+      <h1>
+        Find your trainer.
+      </h1>
+
+      <p>
+        Choose how you want to start your fitness journey with us today.
+      </p>
+
+    </div>
+
+    <!-- ================= Options Stack ================= -->
+
+    <div class="options-stack">
+
+      <!-- Card 1 -->
+      <div 
+        class="selection-card"
+        [class.active-card]="selectedOption === 'have-trainer'"
+        (click)="selectOption('have-trainer')">
+
+        <div class="icon-box" [class.active-icon]="selectedOption === 'have-trainer'">
+          <ion-icon name="search-outline"></ion-icon>
+        </div>
+
+        <div class="card-content">
+          <div class="top-row">
+            <h3>I already have a trainer</h3>
+            <ion-icon 
+              *ngIf="selectedOption === 'have-trainer'" 
+              name="checkmark-circle" 
+              class="check-icon">
+            </ion-icon>
+          </div>
+          <p>Search for your trainer by name or scan their unique invite code to connect instantly.</p>
+        </div>
+
+      </div>
+
+      <!-- Card 2 -->
+      <div 
+        class="selection-card"
+        [class.active-card]="selectedOption === 'find-trainer'"
+        (click)="selectOption('find-trainer')">
+
+        <div class="icon-box" [class.active-icon]="selectedOption === 'find-trainer'">
+          <ion-icon name="sparkles-outline"></ion-icon>
+        </div>
+
+        <div class="card-content">
+          <div class="top-row">
+            <h3>Help me find one</h3>
+            <ion-icon 
+              *ngIf="selectedOption === 'find-trainer'" 
+              name="checkmark-circle" 
+              class="check-icon">
+            </ion-icon>
+          </div>
+          <p>Tell us about your fitness goals and we'll match you with the perfect professional trainer.</p>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ================= Bottom Button ================= -->
+
+    <div class="bottom-actions">
+      <ion-button
+        expand="block"
+        class="continue-btn"
+        (click)="completeOnboarding()">
+        <span>
+          Continue
+        </span>
+      </ion-button>
+    </div>
+
+  </div>
+
+</ion-content>

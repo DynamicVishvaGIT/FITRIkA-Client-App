@@ -1,5 +1,7 @@
-import { Component, Input,OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
+
 @Component({
   selector: 'app-how-did-you',
   templateUrl: './how-did-you.page.html',
@@ -11,30 +13,60 @@ export class HowDidYouPage implements OnInit {
   safeAreaTop = 'env(safe-area-inset-top)';
   safeAreaBottom = 'env(safe-area-inset-bottom)';
 
-     @Input() currentMeal: any;
-  swappedMealName = 'Pizza - 2 slices pepperoni';
-  swappedMealCalories = 'Rough calories: ~580 kcal';
-  mealNote = '';
+  @Input() mealData: any = {
+    title: 'Brown rice + chicken + salad',
+    calories: '620 kcal'
+  };
 
-  constructor(private modalController: ModalController) {}
+  mealOptions = [
+    { name: 'Pizza - 2 slices pepperoni', calories: '580 kcal' },
+    { name: 'Chicken Burger & Fries', calories: '750 kcal' },
+    { name: 'Grilled Salmon with Quinoa', calories: '520 kcal' },
+    { name: 'Paneer Wrap & Green Chutney', calories: '480 kcal' },
+    { name: 'Avocado Toast with Eggs', calories: '410 kcal' }
+  ];
 
-  ngOnInit(): void {}
+  selectedAlternativeMeal: string = 'Pizza - 2 slices pepperoni';
+  selectedCalories: string = '580 kcal';
+  swapNote: string = '';
+  isEditing: boolean = false;
 
-  closeSheet() {
-    this.modalController.dismiss();
-  }
+  constructor(private router: Router, private modalController: ModalController) {}
 
-  editMealDetails() {
-    const newName = prompt('Edit swapped meal name:', this.swappedMealName);
-    if (newName) {
-      this.swappedMealName = newName;
+  ngOnInit() {}
+
+  onDropdownChange(event: any) {
+    const val = event.detail.value;
+    const match = this.mealOptions.find(m => m.name === val);
+    if (match) {
+      this.selectedAlternativeMeal = match.name;
+      this.selectedCalories = match.calories;
     }
   }
 
+  toggleEdit() {
+    this.isEditing = !this.isEditing;
+  }
+
+  dismissModal() {
+    this.modalController.dismiss();
+  }
+
   logSwap() {
-    // Dismisses modal and notifies dashboard that the meal swap is logged and completed
-    this.modalController.dismiss({ logged: true, updated: true });
+    this.modalController.dismiss({
+      status: 'swapped',
+      swappedMeal: this.selectedAlternativeMeal,
+      calories: this.selectedCalories,
+      note: this.swapNote
+    });
+
+    this.router.navigate(['/dashboard'], {
+      queryParams: { 
+        swappedMeal: this.selectedAlternativeMeal,
+        calories: this.selectedCalories,
+        note: this.swapNote,
+        status: 'swapped' 
+      }
+    });
   }
 }
-
-export { HowDidYouPage as HowDidYouComponent };

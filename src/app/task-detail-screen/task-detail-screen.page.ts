@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 
@@ -8,20 +8,76 @@ import { Location } from '@angular/common';
   styleUrls: ['./task-detail-screen.page.scss'],
   standalone: false
 })
-export class TaskDetailScreenPage implements OnInit {
+export class TaskDetailScreenPage implements OnInit, OnDestroy {
 
   safeAreaTop = 'env(safe-area-inset-top)';
   safeAreaBottom = 'env(safe-area-inset-bottom)';
 
- weight = 40;
+  weight = 40;
   reps = 12;
   isVsLastActive = false;
 
+  // Timer properties
+  timerSeconds = 0;
+  timerInterval: any = null;
+  isTimerRunning = false;
+  timerDisplay = '00:00';
+
   constructor(private router: Router, private location: Location) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.startTimer();
+  }
+
+  ngOnDestroy(): void {
+    this.stopTimer();
+  }
+
+  startTimer() {
+    if (!this.isTimerRunning) {
+      this.isTimerRunning = true;
+      this.timerInterval = setInterval(() => {
+        this.timerSeconds++;
+        this.updateTimerDisplay();
+      }, 1000);
+    }
+  }
+
+  pauseTimer() {
+    this.isTimerRunning = false;
+    if (this.timerInterval) {
+      clearInterval(this.timerInterval);
+    }
+  }
+
+  stopTimer() {
+    this.pauseTimer();
+  }
+
+  resetTimer() {
+    this.pauseTimer();
+    this.timerSeconds = 0;
+    this.updateTimerDisplay();
+  }
+
+  toggleTimer() {
+    if (this.isTimerRunning) {
+      this.pauseTimer();
+    } else {
+      this.startTimer();
+    }
+  }
+
+  updateTimerDisplay() {
+    const minutes = Math.floor(this.timerSeconds / 60);
+    const seconds = this.timerSeconds % 60;
+    const minStr = minutes < 10 ? '0' + minutes : '' + minutes;
+    const secStr = seconds < 10 ? '0' + seconds : '' + seconds;
+    this.timerDisplay = `${minStr}:${secStr}`;
+  }
 
   goBack() {
+    this.stopTimer();
     this.location.back();
   }
 
@@ -50,12 +106,14 @@ export class TaskDetailScreenPage implements OnInit {
   }
 
   navigateTo(route: string) {
+    this.stopTimer();
     switch (route) {
       case 'home':
-        this.router.navigate(['/home']);
+      case 'dashboard':
+        this.router.navigate(['/dashboard']);
         break;
       case 'task':
-        this.router.navigate(['/task-detail']);
+        this.router.navigate(['/task']);
         break;
       case 'coaches':
         this.router.navigate(['/coaches']);
@@ -66,4 +124,3 @@ export class TaskDetailScreenPage implements OnInit {
     }
   }
 }
-

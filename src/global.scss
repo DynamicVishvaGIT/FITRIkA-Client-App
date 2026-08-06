@@ -38,102 +38,93 @@
 
 // Status Bar Fix
 ion-app {
-    padding-top: constant(safe-area-inset-top); // iOS 11.0
-    padding-top: env(safe-area-inset-top); // iOS 11.2+
+  padding-top: constant(safe-area-inset-top); // iOS 11.0
+  padding-top: env(safe-area-inset-top); // iOS 11.2+
+}
+
+// Ensure proper header display
+ion-header {
+  &::after {
+    display: none; // Remove bottom border/shadow
   }
-  
-  // Ensure proper header display
+}
+
+// Fix for notched devices (iPhone X, etc.)
+@supports (padding-top: constant(safe-area-inset-top)) or (padding-top: env(safe-area-inset-top)) {
   ion-header {
-    &::after {
-      display: none; // Remove bottom border/shadow
-    }
-  }
-  
-  // Fix for notched devices (iPhone X, etc.)
-  @supports (padding-top: constant(safe-area-inset-top)) or (padding-top: env(safe-area-inset-top)) {
-    ion-header {
-      ion-toolbar {
-        --padding-top: constant(safe-area-inset-top);
-        --padding-top: env(safe-area-inset-top);
-      }
-    }
-  }
-  
-  // Android status bar fix
-  .md ion-header {
     ion-toolbar {
-      --min-height: 56px;
+      --padding-top: constant(safe-area-inset-top);
+      --padding-top: env(safe-area-inset-top);
     }
   }
-  
-  // iOS status bar fix
-  .ios ion-header {
-    ion-toolbar {
-      --min-height: 44px;
-    }
-  }
-
-  .toast-error {
-    --background: var(--ion-color-danger) !important;
-    --color: white;
 }
-  
+
+// Android status bar fix
+.md ion-header {
+  ion-toolbar {
+    --min-height: 56px;
+  }
+}
+
+// iOS status bar fix
+.ios ion-header {
+  ion-toolbar {
+    --min-height: 44px;
+  }
+}
+
+.toast-error {
+  --background: var(--ion-color-danger) !important;
+  --color: white;
+}
+
 .toast-success {
-    --background: var(--ion-color-success) !important;
-    --color: white;
-}
-  
-.toast-info {
-    --background: var(--ion-color-info) !important;
-    --color: white;
+  --background: var(--ion-color-success) !important;
+  --color: white;
 }
 
-// FOR MANDETORY FIELD
+.toast-info {
+  --background: var(--ion-color-info) !important;
+  --color: white;
+}
+
+// FOR MANDATORY FIELD
 .required:after {
-  content:" *";
+  content: " *";
   color: red;
 }
-ion-modal.bottom-sheet-modal::part(content) {
-  border-radius: 32px 32px 0 0 !important;
-  overflow: hidden;
-    --background: transparent;
+
+ion-select::part(icon) {
+  margin-left: 268px !important;
+  position: absolute;
 }
 
-// ion-modal.bottom-sheet-modal {
-//   --height: 90%;
-//   --width: 100%;
-//   --border-radius: 32px 32px 0 0;
-//   align-items: flex-end;
-//    overflow:hidden;
-// }
-ion-select::part(icon) {
-//color: #971e49;
-margin-left: 268px !important;
-position: absolute;
-}
 .add-day-modal-sheet {
-  --border-radius: 36px 36px 0 0;
+  --border-radius: 48px 48px 0 0;
   --height: 92%;
   --width: 100%;
   --max-width: 100%;
 }
+
 /* Target the CSS Custom Properties of the native Ion Modal Element globally */
 ion-modal.bottom-sheet-modal {
   --height: 90%;
-  --border-radius: 28px 28px 0 0;
+  --border-radius: 48px 48px 0 0;
   --backdrop-opacity: 0.4;
   align-items: flex-end;
 
   &::part(content) {
-    border-radius: 28px 28px 0 0;
+    border-radius: 48px 48px 0 0;
     box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.08);
   }
 }
+
 /* Premium High-Fidelity Oval Bottom Sheet Framework */
 .oval-bottom-modal {
-  --border-radius: 30px 30px 0px 0px !important; // Deep oval corner curve
+  --border-radius: 48px 48px 0px 0px !important; // Deep oval corner curve
   --box-shadow: 0px -8px 28px rgba(0, 0, 0, 0.08);
-  
+  align-items: flex-end;
+
   // Crucial: allows your custom absolute dropdown overlay menus to flow 
   // outside the boundary of the modal wrapper without getting clipped!
   .modal-wrapper {
@@ -141,20 +132,61 @@ ion-modal.bottom-sheet-modal {
   }
 
   ion-content {
-    --background: #ffffff;
+    --background: transparent;
     --overflow: visible;
     overflow: visible;
   }
-  /* Global Modal Styling for Bottom Sheet Presentation */
-.custom-bottom-sheet-modal {
-  --background: rgba(0, 0, 0, 0.4); /* Dim background backdrop */
-  align-items: flex-end;
 
-  // .ion-page {
-  //   position: relative;
-  //   display: block;
-  //   contain: initial;
-  //   background: transparent !important;
-  // }
+  ion-content::part(scroll) {
+    padding-top: 0px;
+  }
+
+  .dynamic-header {
+    box-shadow: none !important;
+    ion-toolbar {
+      --background: #ffffff;
+      --border-width: 0px;
+      padding-top: 8px !important;
+      padding-left: 16px !important;
+      padding-right: 16px !important;
+      padding-bottom: 12px !important;
+      --box-shadow: none !important;
+      border: none !important;
+    }
+  }
+
+  .dynmic-header-container {
+    height: 56px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .dynamic-left-section {
+    display: flex;
+    align-items: center;
+  }
+
+  .dynamic-header-title {
+    margin-left: 14px;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 800;
+    font-size: 20px;
+    line-height: 24px;
+    color: #002b57;
+  }
 }
+
+/* Global Modal Styling for Bottom Sheet Presentation */
+.custom-bottom-sheet-modal {
+  align-items: flex-end;
+}
+
+.dashboard-bottom-sheet-modal {
+  align-items: flex-end;
+  --border-radius: 48px 48px 0 0;
+  
+  &::part(content) {
+    border-radius: 48px 48px 0 0;
+  }
 }

@@ -1,77 +1,141 @@
-<!-- dashboard.page.html -->
-<div class="dashboard-container" [style.padding-top]="safeAreaTop">
-  <!-- Header -->
-  <header class="header">
-    <button class="menu-btn">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-    </button>
-    <div class="greeting-box">
-      <h2>Good morning, Aryan</h2>
-      <p>You're making great progress this week!</p>
+<ion-content [fullscreen]="true" class="dashboard-content">
+  <div class="dashboard-wrapper">
+    
+    <!-- Top Header -->
+    <div class="header-row">
+      <div class="user-greeting">
+        <button class="menu-btn" (click)="openMenu()">
+          <ion-icon name="menu-outline"></ion-icon>
+        </button>
+        <div>
+          <h2>Good morning, Aryan</h2>
+          <p>You're making great progress this week!</p>
+        </div>
+      </div>
     </div>
-  </header>
 
-  <!-- Filter Chips -->
-  <div class="filter-chips">
-    <button class="chip" [class.active]="selectedTab === 'all'" (click)="selectTab('all')">All Task</button>
-    <button class="chip" [class.active]="selectedTab === 'rohan'" (click)="selectTab('rohan')">Rohan</button>
-    <button class="chip" [class.active]="selectedTab === 'priya'" (click)="selectTab('priya')">Priya</button>
+    <!-- Filter Pills Horizontal Bar -->
+    <div class="filter-pills-scroll">
+      <button 
+        class="filter-pill" 
+        [class.active]="activeFilter === 'All Task'"
+        (click)="setFilter('All Task')">
+        All Task
+      </button>
+      <button 
+        class="filter-pill" 
+        [class.active]="activeFilter === 'Rohan'"
+        (click)="setFilter('Rohan')">
+        Rohan
+      </button>
+      <button 
+        class="filter-pill" 
+        [class.active]="activeFilter === 'Priya'"
+        (click)="setFilter('Priya')">
+        Priya
+      </button>
+      <button 
+        class="filter-pill" 
+        [class.active]="activeFilter === 'Food'"
+        (click)="setFilter('Food')">
+        Food
+      </button>
+    </div>
+
+    <!-- VIEW 1: All Task Progress Card -->
+    <div class="progress-card" *ngIf="activeFilter === 'All Task'">
+      <div class="progress-card-top">
+        <div class="progress-text-block">
+          <span class="label-muted">TODAY'S PROGRESS</span>
+          <h3><strong>3</strong><span class="total-tasks">/ 7 Tasks completed</span></h3>
+        </div>
+        <div class="circular-progress-wrap flipped-progress">
+          <div class="circle-inner">60%</div>
+        </div>
+      </div>
+
+      <!-- Micro Status Bars -->
+      <div class="micro-bars-grid">
+        <div class="micro-item" *ngFor="let bar of microBars">
+          <span class="micro-label">{{ bar.label }}</span>
+          <div class="bar-bg"><div class="bar-fill" [style.width.%]="bar.width"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIEW 2: Coach/Category Custom Banner (Rohan, Priya, Food) -->
+    <div class="coach-banner-card" *ngIf="activeFilter !== 'All Task'">
+      <div class="coach-banner-header">
+        <div class="coach-avatar-wrap">
+          <img [src]="getCurrentBanner().avatar" alt="Avatar" />
+        </div>
+        <div>
+          <h3>{{ getCurrentBanner().name }}</h3>
+          <span class="coach-specialty">{{ getCurrentBanner().specialty }}</span>
+        </div>
+      </div>
+      <p class="coach-quote">"{{ getCurrentBanner().quote }}"</p>
+    </div>
+
+    <!-- Tasks Header -->
+    <div class="section-header-row">
+      <h3>{{ getTasksHeaderTitle() }}</h3>
+      <span class="link-action" routerLink="/task">{{ activeFilter === 'All Task' ? 'All Coaches' : getFilteredTasks().length + ' meal' }}</span>
+    </div>
+
+    <!-- Tasks Stack -->
+    <div class="tasks-stack">
+      
+      <div 
+        class="task-card" 
+        *ngFor="let task of getFilteredTasks()" 
+        [class.active-task-card]="task.active"
+        (click)="onCardClick(task, $event)">
+        
+        <div class="task-left-content">
+          <!-- Left Swap Button using custom image asset and swapTask function -->
+          <button class="swap-action-btn" (click)="swapTask(task, $event)" title="Swap Task">
+            <img src="assets/images/swap.png" alt="Swap Task" class="feature-icon-img" />
+          </button>
+          
+          <div class="task-info">
+            <h4 [class.strikethrough]="task.completed">{{ task.title }}</h4>
+            <p>{{ task.description }}</p>
+          </div>
+        </div>
+
+        <div class="task-meta-right">
+          <span class="coach-badge" [class.active-coach-badge]="task.active">{{ task.coach }}</span>
+          
+          <!-- Circular Checkbox / Tick Indicator -->
+          <div class="circle-checkbox" [class.checked]="task.completed" (click)="toggleTaskCompletion(task, $event)">
+            <ion-icon *ngIf="task.completed" name="checkmark"></ion-icon>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
   </div>
 
-  <main class="content">
-    <!-- Coach Banner Card -->
-    <div class="coach-banner">
-      <div class="coach-profile">
-        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop&crop=faces" alt="Rohan Kapoor" class="coach-avatar">
-        <div>
-          <h3>Rohan Kapoor</h3>
-          <span>Fat Loss Specialist</span>
-        </div>
-      </div>
-      <p class="coach-quote">"Aryan, your consistency with interval training is showing in your recovery heart rate. Push the pace on today's session."</p>
-    </div>
-
-    <!-- Section Title -->
-    <div class="section-header">
-      <h3>Rohan’s plan Today</h3>
-      <span class="meal-count">5 meal</span>
-    </div>
-
-    <!-- Meals List -->
-    <div class="meals-list">
-      <div class="meal-card" *ngFor="let meal of meals; let i = index" (click)="openHowDid(meal)">
-        <div class="meal-status-indicator" [class.completed]="meal.status"></div>
-        <div class="meal-info">
-          <div class="meal-title-row">
-            <span class="meal-name" [class.strike]="meal.status">{{ meal.name }}</span>
-            <span class="coach-badge" *ngIf="meal.coach">{{ meal.coach }}</span>
-          </div>
-          <span class="meal-desc">{{ meal.desc }}</span>
-        </div>
-        <div class="meal-action-icon" *ngIf="meal.status">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00c853" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
-        </div>
-      </div>
-    </div>
-  </main>
-
-  <!-- Bottom Navigation -->
-  <nav class="bottom-nav" [style.padding-bottom]="safeAreaBottom">
-    <button class="nav-item active">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+  <!-- Bottom Tabs Bar -->
+  <div class="custom-bottom-tabs">
+    <button class="tab-item active" (click)="switchTab('home')">
+      <ion-icon name="home"></ion-icon>
       <span>Home</span>
     </button>
-    <button class="nav-item">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+    <button class="tab-item" routerLink="/task">
+      <ion-icon name="calendar-outline"></ion-icon>
       <span>Task</span>
     </button>
-    <button class="nav-item">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6.5 6.5l11 11M6.5 17.5l11-11"/></svg>
+    <button class="tab-item" routerLink="/coaches">
+      <ion-icon name="fitness-outline"></ion-icon>
       <span>Coaches</span>
     </button>
-    <button class="nav-item">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    <button class="tab-item" (click)="switchTab('profile')">
+      <ion-icon name="person-outline"></ion-icon>
       <span>Profile</span>
     </button>
-  </nav>
-</div>
+  </div>
+</ion-content>

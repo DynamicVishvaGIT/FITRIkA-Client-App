@@ -1,0 +1,104 @@
+<ion-content class="mobile-viewport-container" [scrollY]="false">
+  <div class="otp-wrapper">
+    <!-- Top Navigation Bar with Back Button Included -->
+    <div class="top-nav">
+      <ion-button fill="clear" class="back-btn" routerLink="/login">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="main-content-area">
+      <div class="header-block">
+        <h2>Verify Identity</h2>
+        <p>Enter the 4-digit code sent to your phone</p>
+      </div>
+
+      <!-- 4 Digit Input Blocks -->
+      <div class="otp-inputs-grid">
+        <input 
+          #otp0
+          type="text" 
+          inputmode="numeric" 
+          maxlength="1" 
+          class="otp-box" 
+          [(ngModel)]="otpDigits[0]" 
+          (input)="onInput(0, $event)" 
+          (keydown)="onKeyDown(0, $event)"
+          (focus)="setActiveIndex(0)"
+        />
+        <input 
+          #otp1
+          type="text" 
+          inputmode="numeric" 
+          maxlength="1" 
+          class="otp-box" 
+          [(ngModel)]="otpDigits[1]" 
+          (input)="onInput(1, $event)" 
+          (keydown)="onKeyDown(1, $event)"
+          (focus)="setActiveIndex(1)"
+        />
+        <input 
+          #otp2
+          type="text" 
+          inputmode="numeric" 
+          maxlength="1" 
+          class="otp-box" 
+          [(ngModel)]="otpDigits[2]" 
+          (input)="onInput(2, $event)" 
+          (keydown)="onKeyDown(2, $event)"
+          (focus)="setActiveIndex(2)"
+        />
+        <input 
+          #otp3
+          type="text" 
+          inputmode="numeric" 
+          maxlength="1" 
+          class="otp-box" 
+          [(ngModel)]="otpDigits[3]" 
+          (input)="onInput(3, $event)" 
+          (keydown)="onKeyDown(3, $event)"
+          (focus)="setActiveIndex(3)"
+        />
+      </div>
+
+      <!-- Verify Action & Timer -->
+      <div class="action-section">
+        <ion-button expand="block" class="brand-solid-btn" [disabled]="!isComplete" (click)="verifyOtp()">
+          Verify
+        </ion-button>
+        <div class="resend-timer">
+          <span *ngIf="timerSeconds > 0">Resend Code in <span class="time-highlight">{{ formattedTime }}</span></span>
+          <span *ngIf="timerSeconds === 0" class="resend-link" (click)="resendCode()">Resend Code</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Custom Numeric Keypad -->
+    <div class="numeric-keypad">
+      <div class="keypad-row">
+        <button class="key-node" (click)="appendNumber('1')"><span class="num-val">1</span></button>
+        <button class="key-node" (click)="appendNumber('2')"><span class="num-val">2</span><span class="num-sub">ABC</span></button>
+        <button class="key-node" (click)="appendNumber('3')"><span class="num-val">3</span><span class="num-sub">DEF</span></button>
+      </div>
+
+      <div class="keypad-row">
+        <button class="key-node" (click)="appendNumber('4')"><span class="num-val">4</span><span class="num-sub">GHI</span></button>
+        <button class="key-node" (click)="appendNumber('5')"><span class="num-val">5</span><span class="num-sub">JKL</span></button>
+        <button class="key-node" (click)="appendNumber('6')"><span class="num-val">6</span><span class="num-sub">MNO</span></button>
+      </div>
+
+      <div class="keypad-row">
+        <button class="key-node" (click)="appendNumber('7')"><span class="num-val">7</span><span class="num-sub">PQRS</span></button>
+        <button class="key-node" (click)="appendNumber('8')"><span class="num-val">8</span><span class="num-sub">TUV</span></button>
+        <button class="key-node" (click)="appendNumber('9')"><span class="num-val">9</span><span class="num-sub">WXYZ</span></button>
+      </div>
+
+      <div class="keypad-row">
+        <button class="key-node empty-key" disabled></button>
+        <button class="key-node" (click)="appendNumber('0')"><span class="num-val">0</span></button>
+        <button class="key-node action-key" (click)="deleteNumber()"><ion-icon name="backspace-outline"></ion-icon></button>
+      </div>
+    </div>
+  </div>
+</ion-content>

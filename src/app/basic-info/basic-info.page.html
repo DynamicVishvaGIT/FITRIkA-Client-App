@@ -1,0 +1,228 @@
+<ion-content
+  [fullscreen]="true"
+  class="basic-info-content"
+  [scrollY]="false">
+
+  <div class="page-wrapper">
+
+    <!-- ================= Progress ================= -->
+
+    <div class="progress-section">
+
+      <div class="progress-header">
+        <span class="step-text">
+          Step 2 of 3
+        </span>
+
+        <span class="progress-text">
+          {{ progress }}% Complete
+        </span>
+      </div>
+
+      <div class="progress-bar">
+        <div
+          class="progress-fill"
+          [style.width.%]="progress">
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ================= Heading ================= -->
+
+    <div class="heading-section">
+
+      <h1>
+        Tell us about yourself.
+      </h1>
+
+      <p>
+        This helps us personalize your fitness plan and
+        calculate accurate metrics.
+      </p>
+
+    </div>
+
+    <!-- ================= Gender ================= -->
+
+    <div class="form-section">
+
+      <label class="field-title">
+        Gender
+      </label>
+
+      <div class="gender-selector">
+
+        <button
+          type="button"
+          class="gender-btn"
+          [class.active]="selectedGender === 'Male'"
+          (click)="selectGender('Male')">
+
+          Male
+
+        </button>
+
+        <button
+          type="button"
+          class="gender-btn"
+          [class.active]="selectedGender === 'Female'"
+          (click)="selectGender('Female')">
+
+          Female
+
+        </button>
+
+        <button
+          type="button"
+          class="gender-btn"
+          [class.active]="selectedGender === 'Other'"
+          (click)="selectGender('Other')">
+
+          Other
+
+        </button>
+
+      </div>
+
+    </div>
+
+    <!-- ================= Age ================= -->
+
+    <div class="form-section">
+
+      <label class="field-title">
+        Age
+      </label>
+
+      <div class="input-box">
+
+        <input
+          type="number"
+          placeholder="25"
+          [(ngModel)]="age" />
+
+        <span class="suffix">
+          years
+        </span>
+
+      </div>
+
+    </div>
+
+    <!-- ================= Weight & Height ================= -->
+
+    <div class="row-fields">
+
+      <!-- Weight -->
+
+      <div class="form-section flex-field">
+
+        <label class="field-title">
+          Weight
+        </label>
+
+        <div class="input-box">
+
+          <input
+            type="number"
+            placeholder="70"
+            [(ngModel)]="weight" />
+
+          <span class="suffix">
+            kg
+          </span>
+
+        </div>
+
+      </div>
+
+      <!-- Height -->
+
+      <div class="form-section flex-field">
+
+        <label class="field-title">
+          Height
+        </label>
+
+        <div class="input-box">
+
+          <input
+            type="number"
+            placeholder="180"
+            [(ngModel)]="height" />
+
+          <span class="suffix">
+            cm
+          </span>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ================= Privacy Card ================= -->
+
+    <div class="privacy-card">
+
+      <div class="privacy-icon">
+
+        <ion-icon
+          name="lock-closed">
+        </ion-icon>
+
+      </div>
+
+      <div class="privacy-content">
+
+        <h4>
+          Privacy First
+        </h4>
+
+        <p>
+          Your data is used strictly for fitness calculations
+          and is never shared with third parties.
+        </p>
+
+      </div>
+
+    </div>
+
+    <!-- ================= Bottom Buttons ================= -->
+
+    <div class="bottom-actions">
+
+      <button
+        type="button"
+        class="back-btn"
+        (click)="goBack()">
+
+        <ion-icon
+          name="arrow-back-outline">
+        </ion-icon>
+
+      </button>
+
+      <ion-button
+        expand="block"
+        class="continue-btn"
+        [disabled]="!isFormValid()"
+        (click)="proceedToGoals()">
+
+        <span>
+          Continue
+        </span>
+
+        <ion-icon
+          slot="end"
+          name="arrow-forward-outline">
+        </ion-icon>
+
+      </ion-button>
+
+    </div>
+
+  </div>
+
+</ion-content>

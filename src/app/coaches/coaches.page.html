@@ -1,0 +1,107 @@
+<ion-content [fullscreen]="true" class="coaches-content">
+  <div class="coaches-wrapper">
+    
+    <!-- Top Header -->
+    <div class="header-row">
+      <div class="title-group">
+        <button class="menu-btn" (click)="openMenu()">
+          <ion-icon name="menu-outline"></ion-icon>
+        </button>
+        <h2>My Coaches</h2>
+      </div>
+      <ion-button class="add-coach-btn" (click)="addCoach()">
+        Add
+      </ion-button>
+    </div>
+
+    <!-- Coaches List Stack -->
+    <div class="coaches-stack">
+      
+      <!-- Coach Card 1 -->
+      <div class="coach-card">
+        <div class="coach-top-row">
+          <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200" alt="Rohan Kapoor" class="coach-avatar" />
+          <div class="coach-meta">
+            <span class="specialty-label">Fat Loss Specialist</span>
+            <h3>Rohan Kapoor</h3>
+          </div>
+        </div>
+
+        <div class="progress-section-coach">
+          <div class="progress-labels">
+            <span class="week-text">Week 11 of 16</span>
+            <span class="percent-text">68%</span>
+          </div>
+          <div class="progress-bar-coach">
+            <div class="progress-fill-coach" style="width: 68%;"></div>
+          </div>
+        </div>
+
+        <div class="stats-row">
+          <div class="stat-col">
+            <span class="stat-title">RECENT STATS</span>
+            <span class="stat-val">22 Sessions Done</span>
+          </div>
+          <div class="stat-col text-right">
+            <span class="stat-title">NEXT</span>
+            <span class="stat-val accent-green">Leg Day • 7PM</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Coach Card 2 -->
+      <div class="coach-card">
+        <div class="coach-top-row">
+          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=200" alt="Priya Sharma" class="coach-avatar" />
+          <div class="coach-meta">
+            <span class="specialty-label">Yoga & Mindfulness</span>
+            <h3>Priya Sharma</h3>
+          </div>
+        </div>
+
+        <div class="progress-section-coach">
+          <div class="progress-labels">
+            <span class="week-text">Week 11 of 16</span>
+            <span class="percent-text">68%</span>
+          </div>
+          <div class="progress-bar-coach">
+            <div class="progress-fill-coach" style="width: 68%;"></div>
+          </div>
+        </div>
+
+        <div class="stats-row">
+          <div class="stat-col">
+            <span class="stat-title">RECENT STATS</span>
+            <span class="stat-val">22 Sessions Done</span>
+          </div>
+          <div class="stat-col text-right">
+            <span class="stat-title">NEXT</span>
+            <span class="stat-val accent-green">Leg Day • 7PM</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Bottom Tabs Bar -->
+  <div class="custom-bottom-tabs">
+    <button class="tab-item" routerLink="/dashboard">
+      <ion-icon name="home-outline"></ion-icon>
+      <span>Home</span>
+    </button>
+    <button class="tab-item" (click)="switchTab('task')">
+      <ion-icon name="calendar-outline"></ion-icon>
+      <span>Task</span>
+    </button>
+    <button class="tab-item active" (click)="switchTab('coaches')">
+      <ion-icon name="fitness"></ion-icon>
+      <span>Coaches</span>
+    </button>
+    <button class="tab-item" (click)="switchTab('profile')">
+      <ion-icon name="person-outline"></ion-icon>
+      <span>Profile</span>
+    </button>
+  </div>
+</ion-content>

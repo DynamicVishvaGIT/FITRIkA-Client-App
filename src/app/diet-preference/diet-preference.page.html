@@ -1,0 +1,113 @@
+<ion-content [fullscreen]="true" class="onboarding-content">
+  <div class="onboarding-wrapper">
+    
+    <!-- Top Progress Bar -->
+    <div class="progress-container">
+      <div class="progress-info">
+        <span class="step-text">Step 2 of 3</span>
+        <span class="percentage-text">66% Complete</span>
+      </div>
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fill" style="width: 66%;"></div>
+      </div>
+    </div>
+
+    <!-- Title Section -->
+    <div class="header-section">
+      <h2>What's Your Dietary Preference?</h2>
+      <p>Important for matching diet plan recommendation.</p>
+    </div>
+
+    <!-- Options List -->
+    <div class="options-list">
+      
+      <div 
+        class="option-card" 
+        [class.selected]="selectedDiet === 'Vegan'"
+        (click)="selectDiet('Vegan')">
+        <div class="option-left">
+          <div class="icon-box">
+           <img src="assets/images/veg.png" alt="Swap Task" class="feature-icon-img" />
+          </div>
+          <span class="option-title">Vegan</span>
+        </div>
+        <div class="radio-indicator">
+          <ion-icon *ngIf="selectedDiet === 'Vegan'" name="checkmark"></ion-icon>
+        </div>
+      </div>
+
+      <div 
+        class="option-card" 
+        [class.selected]="selectedDiet === 'Vegetarian'"
+        (click)="selectDiet('Vegetarian')">
+        <div class="option-left">
+          <div class="icon-box">
+           <img src="assets/images/veg.png" alt="Swap Task" class="feature-icon-img" />
+          </div>
+          <span class="option-title">Vegetarian</span>
+        </div>
+        <div class="radio-indicator">
+          <ion-icon *ngIf="selectedDiet === 'Vegetarian'" name="checkmark"></ion-icon>
+        </div>
+      </div>
+
+      <div 
+        class="option-card" 
+        [class.selected]="selectedDiet === 'Eggetarian'"
+        (click)="selectDiet('Eggetarian')">
+        <div class="option-left">
+          <div class="icon-box">
+           <img src="assets/images/egg.png" alt="Swap Task" class="feature-icon-img" />
+          </div>
+          <span class="option-title">Eggetarian</span>
+        </div>
+        <div class="radio-indicator">
+          <ion-icon *ngIf="selectedDiet === 'Eggetarian'" name="checkmark"></ion-icon>
+        </div>
+      </div>
+
+      <div 
+        class="option-card" 
+        [class.selected]="selectedDiet === 'Non-vegetarian'"
+        (click)="selectDiet('Non-vegetarian')">
+        <div class="option-left">
+          <div class="icon-box">
+            <img src="assets/images/chicken.png" alt="Swap Task" class="feature-icon-img" />
+          </div>
+          <span class="option-title">Non-vegetarian</span>
+        </div>
+        <div class="radio-indicator">
+          <ion-icon *ngIf="selectedDiet === 'Non-vegetarian'" name="checkmark"></ion-icon>
+        </div>
+      </div>
+
+      <div 
+        class="option-card" 
+        [class.selected]="selectedDiet === 'Other/Flexible'"
+        (click)="selectDiet('Other/Flexible')">
+        <div class="option-left">
+          <div class="icon-box">
+           <img src="assets/images/swap.png" alt="Swap Task" class="feature-icon-img" />
+          </div>
+          <span class="option-title">Other/Flexible</span>
+        </div>
+        <div class="radio-indicator">
+          <ion-icon *ngIf="selectedDiet === 'Other/Flexible'" name="checkmark"></ion-icon>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Footer Actions -->
+    <div class="footer-actions">
+      <button class="back-btn" (click)="goBack()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </button>
+      <button class="continue-btn" (click)="goToFindTrainer()">
+        <span>Continue</span>
+        <ion-icon name="arrow-forward-outline"></ion-icon>
+      </button>
+    </div>
+
+  </div>
+</ion-content>
