@@ -17,7 +17,7 @@ export class ProgramsPage implements OnInit {
   programs = [
     { 
       id: 1, 
-      name: 'Calisthenic master...', 
+      name: 'Calisthenic master', 
       trainer: 'Sneha Dey', 
       level: 'Intermediate', 
       duration: '16 weeks / 4days/wk', 
@@ -27,9 +27,9 @@ export class ProgramsPage implements OnInit {
     },
     { 
       id: 2, 
-      name: '12-Week Strength Builder...', 
+      name: '12-Week Strength Builder', 
       trainer: 'Rohan Kapoor', 
-      level: 'Inter..', 
+      level: 'Intermediate', 
       duration: '12 weeks / 4d/wk', 
       tags: ['Muscle Gain', 'Powerlifting'], 
       price: 2500, 
@@ -46,7 +46,7 @@ export class ProgramsPage implements OnInit {
   }
 
   goBack() {
-    this.router.navigate(['../coaches']);
+    this.router.navigate(['../find-trainer']);
   }
 
   filterPrograms() {

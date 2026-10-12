@@ -1,7 +1,8 @@
 .coaches-content {
   --background: #f8fafc;
-  --padding-top: calc(env(safe-area-inset-top) + 12px);
-  --padding-bottom: calc(env(safe-area-inset-bottom) + 80px);
+  /* Increased top padding to push content away from the top edge / status bar */
+  --padding-top: calc(env(safe-area-inset-top) + 24px);
+  --padding-bottom: calc(env(safe-area-inset-bottom) + 90px);
   --padding-start: 16px;
   --padding-end: 16px;
 }
@@ -11,13 +12,15 @@
   margin: auto;
   display: flex;
   flex-direction: column;
+  /* Reduced bottom padding to remove the large blank space between the cards and bottom tabs */
+  padding-bottom: 20px;
 }
 
 .header-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
 }
 
 .title-group {
@@ -83,8 +86,8 @@
   }
 
   .specialty-label {
-    font-size: 12px;
-    font-weight: 600;
+    font-size: 14px;
+    font-weight: 500;
     color: #64748b;
     display: block;
     margin-bottom: 2px;
@@ -104,8 +107,8 @@
   .progress-labels {
     display: flex;
     justify-content: space-between;
-    font-size: 15px;
-    font-weight: 700;
+    font-size: 14px;
+    font-weight: 600;
     margin-bottom: 6px;
 
     .week-text {
@@ -148,15 +151,16 @@
     }
 
     .stat-title {
-      font-size: 15px;
-      font-weight: 700;
+      font-size: 14px;
+      font-weight: 400;
       color: #94a3b8;
       letter-spacing: 0.5px;
+      margin-right: 53px;
     }
 
     .stat-val {
-      font-size: 16px;
-      font-weight: 600;
+      font-size: 14px;
+      font-weight: 400;
       color: #0f172a;
 
       &.accent-green {

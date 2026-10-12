@@ -1,15 +1,28 @@
 <ion-app>
   <ion-split-pane contentId="main-content">
+
     <ion-menu contentId="main-content" type="overlay">
       <ion-content>
+
         <ion-list id="inbox-list">
           <ion-list-header>Inbox</ion-list-header>
           <ion-note>hi&#64;ionicframework.com</ion-note>
 
           @for (p of appPages; track p; let i = $index) {
             <ion-menu-toggle auto-hide="false">
-              <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected">
-                <ion-icon aria-hidden="true" slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
+              <ion-item
+                routerDirection="root"
+                [routerLink]="[p.url]"
+                lines="none"
+                detail="false"
+                routerLinkActive="selected"
+              >
+                <ion-icon
+                  aria-hidden="true"
+                  slot="start"
+                  [ios]="p.icon + '-outline'"
+                  [md]="p.icon + '-sharp'"
+                ></ion-icon>
                 <ion-label>{{ p.title }}</ion-label>
               </ion-item>
             </ion-menu-toggle>
@@ -21,13 +34,71 @@
 
           @for (label of labels; track label) {
             <ion-item lines="none">
-              <ion-icon aria-hidden="true" slot="start" ios="bookmark-outline" md="bookmark-sharp"></ion-icon>
+              <ion-icon
+                aria-hidden="true"
+                slot="start"
+                ios="bookmark-outline"
+                md="bookmark-sharp"
+              ></ion-icon>
               <ion-label>{{ label }}</ion-label>
             </ion-item>
           }
         </ion-list>
+
       </ion-content>
     </ion-menu>
+
     <ion-router-outlet id="main-content"></ion-router-outlet>
+
+    <ion-tabs #myTabs (ionTabsDidChange)="getSelectedTab()">
+      <ion-tab-bar
+        slot="bottom"
+        [selectedTab]="tab_name"
+        *ngIf="
+          tab_name =='dashboard' ||
+          tab_name =='task' ||
+          tab_name =='coaches' ||
+          tab_name =='find-trainer' ||
+          tab_name =='task-detail-screen' ||
+          tab_name =='clients' ||
+          tab_name =='profilee' ||
+          tab_name =='schedule' ||
+          tab_name =='workout-log' ||
+          tab_name =='diet-log' ||
+          tab_name =='package' ||
+           tab_name =='profile'
+
+        "
+      >
+        <ion-tab-button tab="dashboard">
+          <div class="tab-button-inner-wrapper">
+            <img src="assets/images/home.png" class="footer-icon" />
+            <ion-label class="footer-label">Home</ion-label>
+          </div>
+        </ion-tab-button>
+
+        <ion-tab-button tab="task">
+          <div class="tab-button-inner-wrapper">
+            <img src="assets/images/task.png" class="footer-icon" />
+            <ion-label class="footer-label">Task</ion-label>
+          </div>
+        </ion-tab-button>
+
+        <ion-tab-button tab="coaches">
+          <div class="tab-button-inner-wrapper">
+            <img src="assets/images/coach.png" class="booter-icon" />
+            <ion-label class="footer-label">Coaches</ion-label>
+          </div>
+        </ion-tab-button>
+
+        <ion-tab-button tab="profile">
+          <div class="tab-button-inner-wrapper">
+            <img src="assets/images/profile.png" class="footer-icon" />
+            <ion-label class="footer-label">Profile</ion-label>
+          </div>
+        </ion-tab-button>
+      </ion-tab-bar>
+    </ion-tabs>
+
   </ion-split-pane>
 </ion-app>

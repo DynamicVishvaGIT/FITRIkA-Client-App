@@ -16,27 +16,33 @@
       <span class="calories-text">{{ mealData.calories }}</span>
     </div>
 
-    <!-- Selection Section with Dropdown & Preview Card -->
+    <!-- Selection Section with Custom Responsive Dropdown Directly Below -->
     <div class="selection-section">
       <span class="label-muted">YOU HAD</span>
       
-      <!-- Dropdown Input Field using Popover Interface -->
-      <div class="custom-dropdown-wrap">
-        <ion-select 
-          [(ngModel)]="selectedAlternativeMeal" 
-          (ionChange)="onDropdownChange($event)" 
-          interface="popover" 
-          class="ionic-dropdown">
-          <ion-select-option *ngFor="let item of mealOptions" [value]="item.name">
-            {{ item.name }}
-          </ion-select-option>
-        </ion-select>
+      <!-- Trigger / Input Box for Custom Dropdown -->
+      <div class="custom-dropdown-container" [class.open]="isDropdownOpen">
+        <div class="dropdown-trigger-box" (click)="toggleDropdown()">
+          <span class="selected-text">{{ selectedAlternativeMeal || 'Select meal' }}</span>
+          <ion-icon name="chevron-down-outline" class="dropdown-arrow"></ion-icon>
+        </div>
+
+        <!-- Responsive Dropdown List Positioned Directly Below -->
+        <div class="dropdown-options-list" *ngIf="isDropdownOpen">
+          <div 
+            class="dropdown-option-item" 
+            *ngFor="let item of mealOptions" 
+            (click)="selectMealOption(item)">
+            <span class="option-name">{{ item.name }}</span>
+            <span class="option-calories">~{{ item.calories }} kcal</span>
+          </div>
+        </div>
       </div>
 
-      <!-- Preview Card with Working Pencil Edit Functionality -->
-      <div class="preview-selected-card">
+      <!-- Preview Displayed Directly Without Card Background/Container -->
+      <div class="preview-selected-inline">
         <div class="preview-text" *ngIf="!isEditing">
-          <h4>{{ selectedAlternativeMeal }}</h4>
+          <h4>{{ selectedAlternativeMeal || 'No meal selected' }}</h4>
           <span class="calc-tag">Rough calories: ~{{ selectedCalories }}</span>
         </div>
         
@@ -47,7 +53,7 @@
         </div>
 
         <button class="edit-icon-btn" (click)="toggleEdit()" title="Edit meal" type="button">
-          <ion-icon name="pencil-outline"></ion-icon>
+          <img src="assets/images/pen.png" alt="Swap Task" class="feature-icon-img" style="margin-right: 18px;" />
         </button>
       </div>
     </div>

@@ -76,7 +76,7 @@ export class HowDidPage implements OnInit {
         },
         backdropDismiss: true,
         breakpoints: [0, 0.85, 1],
-        initialBreakpoint: 0.85,
+        initialBreakpoint: 0.70,
         handle: false
       });
 

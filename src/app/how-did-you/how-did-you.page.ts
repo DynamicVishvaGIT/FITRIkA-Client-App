@@ -30,13 +30,27 @@ export class HowDidYouPage implements OnInit {
   selectedCalories: string = '580 kcal';
   swapNote: string = '';
   isEditing: boolean = false;
+  isDropdownOpen: boolean = false; // Added to fix binding error
 
   constructor(private router: Router, private modalController: ModalController) {}
 
   ngOnInit() {}
 
+  // Toggle custom dropdown visibility
+  toggleDropdown() {
+    this.isDropdownOpen = !this.isDropdownOpen;
+  }
+
+  // Handle selection from custom dropdown list
+  selectMealOption(item: any) {
+    this.selectedAlternativeMeal = item.name;
+    this.selectedCalories = item.calories;
+    this.isDropdownOpen = false;
+  }
+
+  // Fallback handler if any legacy event binding remains
   onDropdownChange(event: any) {
-    const val = event.detail.value;
+    const val = event?.detail?.value;
     const match = this.mealOptions.find(m => m.name === val);
     if (match) {
       this.selectedAlternativeMeal = match.name;

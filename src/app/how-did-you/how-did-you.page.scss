@@ -2,6 +2,7 @@
   --background: transparent;
   display: flex;
   align-items: flex-end;
+  overflow: hidden; /* Prevents outer page scrolling/bouncing */
 }
 
 .modal-card-wrapper {
@@ -16,6 +17,7 @@
   flex-direction: column;
   box-shadow: 0px -8px 32px rgba(0, 0, 0, 0.08);
   box-sizing: border-box;
+  transform: translateZ(0); /* Forces hardware acceleration to stop layout flickering */
 }
 
 .modal-header {
@@ -23,6 +25,7 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
+  flex-shrink: 0;
 
   h2 {
     margin: 0;
@@ -31,7 +34,7 @@
     font-weight: 700;
     color: #000000;
     letter-spacing: -0.5px;
-    margin-left: 70px;
+    margin-left: 80px;
   }
 
   .close-btn {
@@ -47,6 +50,8 @@
     font-size: 18px;
     color: #000000;
     transition: background 0.2s;
+    margin-right: 10px;
+    flex-shrink: 0;
 
     &:hover {
       background: #E5E5EA;
@@ -66,10 +71,12 @@
 
 .planned-meal-box {
   background: #F2F2F7;
-  border: 1px solid transparent;
+  border: 1.5px solid transparent; /* Set to 1.5px to match dropdown borders and prevent layout shift */
   border-radius: 16px;
   padding: 16px;
   margin-bottom: 16px;
+  box-sizing: border-box;
+  flex-shrink: 0;
 
   h4 {
     margin: 0 0 4px 0;
@@ -89,52 +96,126 @@
 
 .selection-section {
   margin-bottom: 16px;
+  position: relative;
+  flex-shrink: 0;
 
-  .custom-dropdown-wrap {
-    border: 1.5px solid #E5E5EA;
-    border-radius: 16px;
-    background: #ffffff;
-    display: flex;
-    align-items: center;
-    padding: 0 12px;
+  /* Custom Responsive Dropdown Wrapper Positioned Directly Below */
+  .custom-dropdown-container {
+    position: relative;
     margin-bottom: 12px;
-    min-height: 52px;
 
-    .ionic-dropdown {
-      width: 100%;
-      font-family: "Satoshi", sans-serif;
-      font-size: 15px;
-      font-weight: 600;
-      color: #000000;
-      --padding-top: 0px;
-      --padding-bottom: 0px;
-      --padding-start: 4px;
-      --padding-end: 4px;
+    .dropdown-trigger-box {
+      border: 1.5px solid #E5E5EA;
+      border-radius: 16px;
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      min-height: 52px;
+      height: 52px; /* Fixed height prevents layout jumps */
+      cursor: pointer;
+      box-sizing: border-box;
+      transition: border-color 0.2s;
+
+      .selected-text {
+        font-family: "Satoshi", sans-serif;
+        font-size: 15px;
+        font-weight: 600;
+        color: #000000;
+      }
+
+      .dropdown-arrow {
+        font-size: 18px;
+        color: #8E8E93;
+        transition: transform 0.2s ease;
+      }
+    }
+
+    &.open {
+      .dropdown-trigger-box {
+        border-color: #00DA8B;
+        .dropdown-arrow {
+          transform: rotate(180deg);
+        }
+      }
+    }
+
+    /* Dropdown Options List rendered directly below input box */
+    .dropdown-options-list {
+      position: absolute;
+      top: calc(100% + 6px);
+      left: 0;
+      right: 0;
+      background: #ffffff;
+      border: 1.5px solid #E5E5EA;
+      border-radius: 16px;
+      box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.08);
+      z-index: 100;
+      overflow: hidden;
+      max-height: 200px;
+      overflow-y: auto;
+      box-sizing: border-box;
+
+      .dropdown-option-item {
+        padding: 12px 16px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+        border-bottom: 1px solid #F2F2F7;
+        transition: background 0.15s;
+        box-sizing: border-box;
+
+        &:last-child {
+          border-bottom: none;
+        }
+
+        &:hover {
+          background: #F2F2F7;
+        }
+
+        .option-name {
+          font-family: "Satoshi", sans-serif;
+          font-size: 14.5px;
+          font-weight: 600;
+          color: #000000;
+        }
+
+        .option-calories {
+          font-family: "Satoshi", sans-serif;
+          font-size: 13px;
+          font-weight: 500;
+          color: #8E8E93;
+        }
+      }
     }
   }
 
-  .preview-selected-card {
+  /* Inline layout without container card background/rounded corners */
+  .preview-selected-inline {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: #F2F2F7;
-    border: 1px solid transparent;
-    border-radius: 16px;
-    padding: 14px 16px;
+    background: transparent;
+    border: none;
+    padding: 4px 0;
+    margin-top: 8px;
+    box-sizing: border-box;
 
     .preview-text {
       h4 {
         margin: 0 0 2px 0;
         font-family: "Satoshi", sans-serif;
-        font-size: 15px;
+        font-size: 16px;
         font-weight: 700;
         color: #000000;
       }
 
       .calc-tag {
         font-family: "Satoshi", sans-serif;
-        font-size: 13.5px;
-        font-weight: 600;
+        font-size: 14px;
+        font-weight: 700;
         color: #00DA8B;
       }
     }
@@ -147,23 +228,27 @@
 
       .edit-input-field {
         flex: 1;
-        padding: 8px 12px;
+        height: 42px; /* Fixed height */
+        padding: 0 12px;
         border: 1.5px solid #00DA8B;
         border-radius: 12px;
         font-size: 14px;
         outline: none;
         background: #ffffff;
+        box-sizing: border-box;
       }
 
       .save-btn {
         background: #00DA8B;
         color: #ffffff;
         border: none;
-        padding: 8px 16px;
+        height: 42px;
+        padding: 0 16px;
         border-radius: 12px;
         font-family: "Satoshi", sans-serif;
         font-weight: 700;
         cursor: pointer;
+        box-sizing: border-box;
       }
     }
 
@@ -181,10 +266,13 @@
 }
 
 .input-group-field {
+  margin-top: 16px;
   margin-bottom: 20px;
+  flex-shrink: 0;
 
   .note-textarea {
     width: 100%;
+    height: 90px; /* Fixed textarea height prevents resizing/shifting layout */
     border: 1.5px solid #E5E5EA;
     border-radius: 16px;
     background: #F2F2F7;
@@ -195,6 +283,7 @@
     resize: none;
     outline: none;
     box-sizing: border-box;
+    transition: border-color 0.2s, background 0.2s;
 
     &::placeholder {
       color: #A9A9A9;
@@ -207,8 +296,15 @@
   }
 }
 
+.feature-icon-img {
+  width: 16px;
+  height: 18px;
+  object-fit: contain;
+}
+
 .action-footer {
   width: 100%;
+  flex-shrink: 0;
   
   .primary-action-btn {
     width: 100%;
@@ -223,6 +319,7 @@
     cursor: pointer;
     box-shadow: 0 4px 14px rgba(0, 218, 139, 0.3);
     transition: background 0.2s;
+    box-sizing: border-box;
 
     &:hover {
       background: #00c27b;

@@ -21,7 +21,7 @@ interface Task {
   standalone: false
 })
 export class DashboardPage implements OnInit {
-  activeFilter: string = 'All Task';
+  activeFilter: string = 'Rohan';
 
   microBars = [
     { label: 'STRENGTH', width: 100 },
@@ -39,9 +39,9 @@ export class DashboardPage implements OnInit {
       title: 'Breakfast',
       description: 'High protein oatmeal + berries',
       coach: 'Coach Marcus',
-      completed: false,
+      completed: true,
       active: false,
-      category: 'Food',
+      category: 'Rohan',
       calories: '450 kcal'
     },
     {
@@ -66,23 +66,23 @@ export class DashboardPage implements OnInit {
     },
     {
       id: 4,
-      title: 'Yoga Flow',
-      description: 'Flexibility and mobility routine',
-      coach: 'Coach Priya',
-      completed: false,
-      active: false,
-      category: 'Priya',
-      calories: '250 kcal'
-    },
-    {
-      id: 5,
-      title: 'Lunch',
-      description: 'Brown rice + chicken + salad',
-      coach: 'Coach Rohan',
+      title: 'Interval Training',
+      description: '5km mix of sprints and recovery',
+      coach: 'Coach Marcus',
       completed: false,
       active: false,
       category: 'Rohan',
-      calories: '620 kcal'
+      calories: '500 kcal'
+    },
+    {
+      id: 5,
+      title: 'Interval Training',
+      description: '5km mix of sprints and recovery',
+      coach: 'Coach Marcus',
+      completed: false,
+      active: false,
+      category: 'Rohan',
+      calories: '500 kcal'
     }
   ];
 
@@ -95,13 +95,13 @@ export class DashboardPage implements OnInit {
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
       if (params['status']) {
-        const lunchTask = this.tasks.find(t => t.title.toLowerCase().includes('lunch') || t.id === 5);
-        if (lunchTask) {
+        const targetTask = this.tasks.find(t => t.id === 1);
+        if (targetTask) {
           if (params['status'] === 'swapped' && params['swappedMeal']) {
-            lunchTask.description = params['swappedMeal'];
-            lunchTask.completed = true;
+            targetTask.description = params['swappedMeal'];
+            targetTask.completed = true;
           } else if (params['status'] === 'planned' || params['status'] === 'skipped') {
-            lunchTask.completed = true;
+            targetTask.completed = true;
           }
         }
       }
@@ -119,7 +119,7 @@ export class DashboardPage implements OnInit {
           name: 'Rohan Kapoor',
           specialty: 'Fat Loss Specialist',
           avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150',
-          quote: 'Aryan, your consistency with interval training is showing in your recovery heart rate. Push the pace on todays session.'
+          quote: 'Aryan, your consistency with interval training is showing in your recovery heart rate.'
         };
       case 'Priya':
         return {
@@ -162,43 +162,29 @@ export class DashboardPage implements OnInit {
   }
 
   async openLunchModalForMeal(selectedMeal: any) {
-    let headerTitle = 'How did lunch go?';
-    const lowerTitle = (selectedMeal.title || '').toLowerCase();
-    const lowerDesc = (selectedMeal.description || '').toLowerCase();
-    
-    if (lowerTitle.includes('breakfast') || lowerDesc.includes('breakfast')) {
-      headerTitle = 'How did breakfast go?';
-    } else if (lowerTitle.includes('dinner') || lowerDesc.includes('dinner') || lowerDesc.includes('supper')) {
-      headerTitle = 'How did dinner go?';
-    } else if (lowerTitle.includes('lunch') || lowerDesc.includes('lunch') || lowerTitle.includes('rice')) {
-      headerTitle = 'How did lunch go?';
-    } else {
-      headerTitle = `How did ${selectedMeal.title.toLowerCase()} go?`;
-    }
+    let headerTitle = `How did ${selectedMeal.title.toLowerCase()} go?`;
 
-    if (selectedMeal.completed) {
-      const modal = await this.modalController.create({
-        component: HowDidPage,
-        cssClass: 'oval-bottom-modal',
-        componentProps: {
-          mealData: {
-            title: selectedMeal.description || selectedMeal.title,
-            calories: selectedMeal.calories || '620 kcal',
-            modalTitle: headerTitle
-          }
-        },
-        backdropDismiss: true,
-        breakpoints: [0, 0.78],
-        initialBreakpoint: 0.68,
-        handle:false
-      });
+    const modal = await this.modalController.create({
+      component: HowDidPage,
+      cssClass: 'oval-bottom-modal',
+      componentProps: {
+        mealData: {
+          title: selectedMeal.description || selectedMeal.title,
+          calories: selectedMeal.calories || '450 kcal',
+          modalTitle: headerTitle
+        }
+      },
+      backdropDismiss: true,
+      breakpoints: [0, 0.78],
+      initialBreakpoint: 0.64,
+      handle: false
+    });
 
-      await modal.present();
+    await modal.present();
 
-      const { data } = await modal.onDidDismiss();
-      if (data) {
-        console.log('Action logged:', data);
-      }
+    const { data } = await modal.onDidDismiss();
+    if (data) {
+      console.log('Action logged:', data);
     }
   }
 

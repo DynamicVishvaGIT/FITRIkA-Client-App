@@ -5,7 +5,7 @@
     <div class="header-row">
       <div class="user-greeting">
         <button class="menu-btn" (click)="openMenu()">
-          <ion-icon name="menu-outline"></ion-icon>
+          <!-- <ion-icon name="menu-outline"></ion-icon> -->
         </button>
         <div>
           <h2>Good morning, Aryan</h2>
@@ -63,7 +63,7 @@
       </div>
     </div>
 
-    <!-- VIEW 2: Coach/Category Custom Banner (Rohan, Priya, Food) -->
+    <!-- VIEW 2: Coach/Category Custom Banner -->
     <div class="coach-banner-card" *ngIf="activeFilter !== 'All Task'">
       <div class="coach-banner-header">
         <div class="coach-avatar-wrap">
@@ -86,56 +86,41 @@
     <!-- Tasks Stack -->
     <div class="tasks-stack">
       
-      <div 
-        class="task-card" 
-        *ngFor="let task of getFilteredTasks()" 
-        [class.active-task-card]="task.active"
-        (click)="onCardClick(task, $event)">
+      <div class="task-row-container" *ngFor="let task of getFilteredTasks()">
         
-        <div class="task-left-content">
-          <!-- Left Swap Button using custom image asset and swapTask function -->
-          <button class="swap-action-btn" (click)="swapTask(task, $event)" title="Swap Task">
-            <img src="assets/images/swap.png" alt="Swap Task" class="feature-icon-img" />
-          </button>
-          
-          <div class="task-info">
-            <h4 [class.strikethrough]="task.completed">{{ task.title }}</h4>
-            <p>{{ task.description }}</p>
-          </div>
-        </div>
+        <!-- Swap Button Positioned to the Left of the Card -->
+        <button class="swap-action-btn" (click)="swapTask(task, $event)" title="Swap Task">
+          <img src="assets/images/swap.png" alt="Swap Task" class="feature-icon-img" />
+        </button>
 
-        <div class="task-meta-right">
-          <span class="coach-badge" [class.active-coach-badge]="task.active">{{ task.coach }}</span>
+        <!-- Task Card -->
+        <div 
+          class="task-card" 
+          [class.active-task-card]="task.active"
+          [class.completed-task-card]="task.completed"
+          (click)="onCardClick(task, $event)">
           
-          <!-- Circular Checkbox / Tick Indicator -->
-          <div class="circle-checkbox" [class.checked]="task.completed" (click)="toggleTaskCompletion(task, $event)">
-            <ion-icon *ngIf="task.completed" name="checkmark"></ion-icon>
+          <div class="task-left-content">
+            <div class="task-info">
+              <h4 [class.strikethrough]="task.completed">{{ task.title }}</h4>
+              <p [class.strikethrough-desc]="task.completed">{{ task.description }}</p>
+            </div>
           </div>
+
+          <div class="task-meta-right">
+            <span class="coach-badge" [class.completed-coach-badge]="task.completed" [class.active-coach-badge]="task.active && !task.completed">{{ task.coach }}</span>
+            
+            <!-- Circular Checkbox / Tick Indicator on the Right -->
+            <div class="circle-checkbox" [class.checked]="task.completed" (click)="toggleTaskCompletion(task, $event)" title="Complete Task">
+              <ion-icon *ngIf="task.completed" name="checkmark"></ion-icon>
+            </div>
+          </div>
+
         </div>
 
       </div>
 
     </div>
 
-  </div>
-
-  <!-- Bottom Tabs Bar -->
-  <div class="custom-bottom-tabs">
-    <button class="tab-item active" (click)="switchTab('home')">
-      <ion-icon name="home"></ion-icon>
-      <span>Home</span>
-    </button>
-    <button class="tab-item" routerLink="/task">
-      <ion-icon name="calendar-outline"></ion-icon>
-      <span>Task</span>
-    </button>
-    <button class="tab-item" routerLink="/coaches">
-      <ion-icon name="fitness-outline"></ion-icon>
-      <span>Coaches</span>
-    </button>
-    <button class="tab-item" (click)="switchTab('profile')">
-      <ion-icon name="person-outline"></ion-icon>
-      <span>Profile</span>
-    </button>
   </div>
 </ion-content>

@@ -13,11 +13,12 @@
   display: flex;
   flex-direction: column;
 }
+
 .feature-icon-img {
-        width: 22px;
-        height: 22px;
-        object-fit: contain;
-      }
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
 
 .header-row {
   display: flex;
@@ -44,7 +45,6 @@
 
   h2 {
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     font-size: 22px;
     font-weight: 700;
     color: #0f172a;
@@ -53,7 +53,6 @@
 
   p {
     margin: 2px 0 0 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     font-size: 15px;
     color: #64748b;
   }
@@ -180,7 +179,6 @@
   }
 }
 
-/* Coach/Category Custom Banner */
 .coach-banner-card {
   background: linear-gradient(135deg, #17855F 0%, #00DA8B 100%);
   border-radius: 20px;
@@ -257,7 +255,30 @@
 .tasks-stack {
   display: flex;
   flex-direction: column;
+  gap: 14px;
+}
+
+.task-row-container {
+  display: flex;
+  align-items: center;
   gap: 12px;
+
+  .swap-action-btn {
+    background: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    opacity: 0.8;
+    transition: opacity 0.2s ease;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
 }
 
 .task-card {
@@ -268,38 +289,35 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex: 1;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.2s ease;
 
   &.active-task-card {
     border-color: #00df9a;
-    background: #f6fdfb;
-    box-shadow: 0 4px 14px rgba(0, 223, 154, 0.08);
+    background: #ffffff;
+    box-shadow: 0 4px 14px rgba(0, 223, 154, 0.06);
+  }
+
+  &.completed-task-card {
+    overflow: hidden;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: #00df9a;
+    }
   }
 
   .task-left-content {
     display: flex;
     align-items: center;
-    gap: 12px;
     flex: 1;
-
-    .swap-action-btn {
-      background: transparent;
-      border: none;
-      padding: 0;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-
-      .swap-svg-icon {
-        color: #64748b;
-        transition: color 0.2s ease;
-      }
-
-      &:hover .swap-svg-icon {
-        color: #00df9a;
-      }
-    }
 
     .task-info {
       h4 {
@@ -311,6 +329,7 @@
         &.strikethrough {
           text-decoration: line-through;
           color: #94a3b8;
+          font-weight: 500;
         }
       }
 
@@ -318,6 +337,10 @@
         margin: 0;
         font-size: 13px;
         color: #64748b;
+
+        &.strikethrough-desc {
+          color: #cbd5e1;
+        }
       }
     }
   }
@@ -332,17 +355,23 @@
       font-size: 10.5px;
       font-weight: 600;
       padding: 4px 10px;
-      background: #DAE2FD;
-      color: #475569;
-      border-radius: 6px;
+      background: #E8EEFF;
+      color: #6474b9;
+      border-radius: 8px;
+      margin-right: 20px;
 
       &.active-coach-badge {
-        background: #DAE2FD;
-        color: #475569;
+        background: #E8EEFF;
+        color: #6474b9;
+      }
+
+      &.completed-coach-badge {
+        background: #E8EEFF;
+        color: #6474b9;
       }
     }
 
-    /* Circular Checkbox / Tick Indicator */
+    /* Circular Checkbox / Tick Indicator Style */
     .circle-checkbox {
       width: 24px;
       height: 24px;
@@ -364,40 +393,6 @@
         background: #00df9a;
         border-color: #00df9a;
       }
-    }
-  }
-}
-
-.custom-bottom-tabs {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: #ffffff;
-  border-top: 1px solid #e2e8f0;
-  display: flex;
-  justify-content: space-around;
-  padding: 12px 0 calc(env(safe-area-inset-bottom) + 12px) 0;
-  z-index: 100;
-
-  .tab-item {
-    background: transparent;
-    border: none;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-    color: #94a3b8;
-    font-size: 11.5px;
-    font-weight: 600;
-    cursor: pointer;
-
-    ion-icon {
-      font-size: 22px;
-    }
-
-    &.active {
-      color: #00df9a;
     }
   }
 }

@@ -3,7 +3,7 @@
     <button class="back-btn" (click)="goBack()">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
     </button>
-    <h1>Program Details</h1>
+    <h1>Program Detail</h1>
   </header>
 
   <main class="content">
@@ -29,19 +29,19 @@
     <!-- Separate 4-Column Metrics Card Grid -->
     <div class="metrics-bar">
       <div class="metric">
-        <strong>{{ program?.duration || '12wk' }}</strong>
+        <strong>12wk</strong>
         <span>Duration</span>
       </div>
       <div class="metric">
-        <strong>{{ program?.frequency || '4d/wk' }}</strong>
+        <strong>4d/wk</strong>
         <span>FREQ.</span>
       </div>
       <div class="metric">
-        <strong>{{ program?.level || 'Inter..' }}</strong>
+        <strong>Inter..</strong>
         <span>Level</span>
       </div>
       <div class="metric">
-        <strong>{{ program?.rating || '4.6' }}</strong>
+        <strong>4.6</strong>
         <span>Rating</span>
       </div>
     </div>
@@ -87,6 +87,19 @@
               <div class="details">
                 <strong>{{ w.name }}</strong>
                 <small>{{ w.desc }}</small>
+                
+                <!-- Workout Meta Row -->
+                <div class="workout-meta-info" *ngIf="w.exercises || w.calories">
+                  <span class="meta-element" *ngIf="w.exercises">
+                    <img src="assets/images/exer.png" alt="Exercises" />
+                    {{ w.exercises }} EXERCISES
+                  </span>
+                  <span class="meta-element" *ngIf="w.calories">
+                    <img src="assets/images/kc.png" alt="Calories" />
+                    {{ w.calories }} KCAL
+                  </span>
+                </div>
+
               </div>
             </div>
           </div>
@@ -94,22 +107,31 @@
       </div>
     </div>
 
-    <!-- Choose Your Plan Section -->
+    <!-- Choose Your Plan Section (Dynamic) -->
     <div class="choose-plan-section">
       <div class="section-title-heading">CHOOSE YOUR PLAN</div>
       
-      <div class="plan-selectable-card" [class.selected]="selectedPlan === 'personal'" (click)="selectPlan('personal', 2500)">
+      <div 
+        class="plan-selectable-card" 
+        *ngFor="let plan of availablePlans" 
+        [class.selected]="selectedPlanKey === plan.key" 
+        (click)="selectPlan(plan)">
         <div class="plan-left-indicator"></div>
         <div class="plan-card-content">
           <div class="plan-radio-title-group">
             <div class="custom-radio-circle">
-              <div class="inner-dot" *ngIf="selectedPlan === 'personal'"></div>
+              <div class="inner-dot" *ngIf="selectedPlanKey === plan.key"></div>
             </div>
-            <span class="plan-name">Personalized Guidance</span>
+            <span class="plan-name">{{ plan.name }}</span>
           </div>
-          <div class="plan-price-group">
-            <span class="price-val">₹2500</span>
-            <span class="price-per">/month</span>
+          <div class="plan-right-group">
+            <div class="plan-price-group">
+              <span class="price-val">₹{{ plan.price | number }}</span>
+              <span class="price-per">per month</span>
+            </div>
+            <svg class="arrow-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9 18l6-6-6-6"/>
+            </svg>
           </div>
         </div>
       </div>
@@ -121,7 +143,7 @@
     <button class="subscribe-btn" (click)="subscribe()">
       <div class="left-content">
         <span class="sub-label">START PROGRAM</span>
-        <span class="sub-title">Subscribe Now</span>
+        <span class="sub-title">Subscribe & Start</span>
       </div>
       <div class="price-tag">₹{{ currentPrice | number }} <small>/mo</small></div>
     </button>

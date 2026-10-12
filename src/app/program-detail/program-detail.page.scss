@@ -62,7 +62,6 @@
     line-height: 1.15;
   }
   
-  /* Author & Location Info Layout */
   .author-info { 
     display: flex;
     align-items: center;
@@ -75,31 +74,18 @@
     overflow: hidden;
     text-overflow: ellipsis;
 
-    .author-name {
-      color: #666;
-    }
-
-    .dot-separator {
-      margin: 0 6px;
-      color: #999;
-    }
-
+    .author-name { color: #666; }
+    .dot-separator { margin: 0 6px; color: #999; }
     .location-badge {
       display: inline-flex;
       align-items: center;
       gap: 3px;
       color: #666;
       vertical-align: middle;
-
-      svg {
-        stroke: #666;
-        width: 12px;
-        height: 12px;
-      }
+      svg { stroke: #666; width: 12px; height: 12px; }
     }
   }
   
-  /* Separate 4-Column Metrics Card Grid */
   .metrics-bar { 
     display: grid; 
     grid-template-columns: repeat(4, 1fr); 
@@ -108,28 +94,26 @@
     background: #fff;
     border: 1px solid #e5e5e5;
     border-radius: 16px;
-    padding: 12px 8px;
+    padding: 0; 
     box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+    overflow: hidden;
     
     .metric { 
       background: transparent; 
       border: none;
       border-radius: 0;
-      padding: 4px 2px; 
+      padding: 16px 4px; 
       text-align: center;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      min-height: 52px;
 
-      &:not(:last-child) {
-        border-right: 1px solid #f0f0f0;
-      }
+      &:not(:last-child) { border-right: 1px solid #eee; }
 
       strong { 
         display: block; 
-        font-size: 14px; 
+        font-size: 15px; 
         font-weight: 800; 
         color: #111; 
         line-height: 1.2; 
@@ -139,8 +123,8 @@
 
       span { 
         font-size: 10px; 
-        color: #888; 
-        font-weight: 500;
+        color: #596579; 
+        font-weight: 600;
         white-space: nowrap;
       } 
     } 
@@ -193,7 +177,7 @@
     .info { 
       h4 { font-size: 18px; font-weight: 700; margin: 0 0 2px 0; color: #111; } 
       span { font-size: 14px; color: #666; display: block; margin-bottom: 4px; } 
-      .profile-link { font-size: 14px; font-weight: 700; color: #00b664; text-decoration: none; } 
+      .profile-link { font-size: 14px; font-weight: 400; color: #00b664; text-decoration: none; } 
     } 
   }
 
@@ -215,8 +199,8 @@
         justify-content: space-between; 
         align-items: center; 
         cursor: pointer; 
-        h4 { font-size: 13px; font-weight: 700; margin: 0; color: #888; } 
-        .sub { font-size: 18px; color: #111; font-weight: 500; text-transform: uppercase; } 
+        h4 { font-size: 13px; font-weight: 500; margin: 0; color: #888; } 
+        .sub { font-size: 16px; color: #111; font-weight: 700; text-transform: uppercase; } 
       } 
       
       .week-body { 
@@ -230,9 +214,9 @@
 
           .vertical-connector-line {
             position: absolute;
-            left: 15.5px;
-            top: 16px;
-            bottom: 20px;
+            left: 36px;  
+            top: 28px;   
+            bottom: 28px;
             width: 2px;
             background: #e2fbe8;
             z-index: 1;
@@ -246,9 +230,7 @@
             position: relative;
             z-index: 2;
 
-            &:not(:last-child) {
-              padding-bottom: 12px;
-            }
+            &:not(:last-child) { padding-bottom: 12px; }
 
             .day-icon { 
               width: 32px; 
@@ -268,7 +250,31 @@
               display: flex; 
               flex-direction: column; 
               strong { font-size: 14px; font-weight: 700; color: #111; margin-bottom: 2px; } 
-              small { font-size: 12px; color: #666; } 
+              small { font-size: 12px; color: #666; margin-bottom: 4px; } 
+
+              .workout-meta-info {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                margin-top: 4px;
+
+                .meta-element {
+                  display: inline-flex;
+                  align-items: center;
+                  gap: 4px;
+                  font-size: 11px !important;
+                  font-weight: 700 !important;
+                  color: #888;
+                  letter-spacing: 0.3px;
+
+                  img {
+                    width: 12px !important;
+                    height: 12px !important;
+                    object-fit: contain !important;
+                    margin-bottom: -2px;
+                  }
+                }
+              }
             } 
           }
         }
@@ -296,18 +302,14 @@
       cursor: pointer;
       overflow: hidden;
       transition: all 0.2s ease;
+      margin-bottom: 10px;
 
       &.selected {
         border-color: #00e676;
         box-shadow: 0 4px 12px rgba(0, 230, 118, 0.12);
 
-        .plan-left-indicator {
-          background: #00e676;
-        }
-
-        .custom-radio-circle {
-          border-color: #00e676;
-        }
+        .plan-left-indicator { background: #00e676; }
+        .custom-radio-circle { border-color: #00e676; }
       }
 
       .plan-left-indicator {
@@ -355,21 +357,32 @@
           }
         }
 
-        .plan-price-group {
-          text-align: right;
+        .plan-right-group {
           display: flex;
-          flex-direction: column;
+          align-items: center;
+          gap: 14px;
 
-          .price-val {
-            font-size: 16px;
-            font-weight: 800;
-            color: #111;
+          .plan-price-group {
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+
+            .price-val {
+              font-size: 16px;
+              font-weight: 700;
+              color: #111;
+            }
+
+            .price-per {
+              font-size: 11px;
+              color: #888;
+              font-weight: 400;
+            }
           }
 
-          .price-per {
-            font-size: 10px;
-            color: #888;
-            font-weight: 500;
+          .arrow-icon {
+            color: #111;
+            flex-shrink: 0;
           }
         }
       }
@@ -397,7 +410,7 @@
     cursor: pointer;
     box-sizing: border-box;
     box-shadow: 0 4px 16px rgba(0, 230, 118, 0.3);
-        margin-bottom: 16px;
+    margin-bottom: 16px;
     
     .left-content {
       display: flex;
@@ -406,15 +419,15 @@
       text-align: left;
       
       .sub-label { 
-        font-size: 11px; 
-        font-weight: 800; 
+        font-size: 9px; 
+        font-weight: 700; 
         letter-spacing: 0.8px; 
         color:#fff; 
         margin-bottom: 2px;
       }
       
       .sub-title { 
-        font-size: 16px; 
+        font-size: 15px; 
         font-weight: 700; 
         color: #fff;
       }
@@ -422,13 +435,10 @@
 
     .price-tag {
       font-size: 20px;
-      font-weight: 800;
+      font-weight: 700;
       color: #fff;
       
-      small { 
-        font-size: 11px; 
-        font-weight: 600; 
-      }
+      small { font-size: 12px; font-weight: 400; }
     }
   } 
 }

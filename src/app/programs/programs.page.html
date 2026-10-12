@@ -21,7 +21,7 @@
         </svg>
         <input 
           type="text" 
-          placeholder="Search by name or specialty..." 
+          placeholder="Search by name or specialty" 
           [(ngModel)]="searchQuery" 
           (input)="filterPrograms()"
         />
@@ -39,15 +39,13 @@
               <p class="trainer-name">{{ prog.trainer }}</p>
             </div>
           </div>
+          <!-- Full badge with white-space protection -->
           <span class="level-badge">{{ prog.level }}</span>
         </div>
 
         <div class="program-meta">
           <div class="meta-item">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <circle cx="12" cy="12" r="10"></circle>
-              <polyline points="12 6 12 12 16 14"></polyline>
-            </svg>
+            <img src="assets/images/exp.png" alt="Experience" style="width: 14px !important; height: 14px !important; object-fit: contain !important;" />
             <span>{{ prog.duration }}</span>
           </div>
         </div>

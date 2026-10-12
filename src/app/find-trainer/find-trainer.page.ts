@@ -8,34 +8,37 @@ import { Router } from '@angular/router';
   standalone: false,
 })
 export class FindTrainerPage implements OnInit {
-  
-  // Track the currently selected option, starting as empty/null
+
   selectedOptionType: string | null = null;
 
   constructor(private router: Router) {}
+
+  ngOnInit(): void {
+    // No option selected initially
+    this.selectedOptionType = null;
+  }
 
   goBack(): void {
     this.router.navigate(['/coaches']);
   }
 
   selectOption(type: string): void {
-    // 1. Set the selection state first
+
+    // Highlight selected option
     this.selectedOptionType = type;
 
-    // 2. Perform the navigation based on the clicked option
+    // Navigate
     if (type === 'expert' || type === 'accountability') {
-      this.router.navigate(['/add-coaches'], { queryParams: { type } });
+      this.router.navigate(['/add-coaches'], {
+        queryParams: { type }
+      });
     } else if (type === 'programs') {
       this.router.navigate(['/programs']);
     }
   }
 
   navigateTo(route: string): void {
-    this.router.navigate(['/add-coaches']);
+    this.router.navigate(['/' + route]);
   }
 
-  ngOnInit() {
-    // Reset selection when the page loads
-    this.selectedOptionType = null;
-  }
 }

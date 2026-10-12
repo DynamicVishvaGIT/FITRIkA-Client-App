@@ -14,7 +14,7 @@ $border-color: #e2e8f0;
   width: 100%;
   max-width: 412px;
   min-height: 100vh;
-  min-height: 100dvh; /* Handles dynamic mobile viewports */
+  min-height: 100dvh;
   margin: 0 auto;
   background-color: $bg-color;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -25,7 +25,6 @@ $border-color: #e2e8f0;
   border-left: 1px solid $border-color;
   border-right: 1px solid $border-color;
 
-  /* Sticky Top Header with Safe Area Top Inset */
   .header {
     display: flex;
     align-items: center;
@@ -48,6 +47,7 @@ $border-color: #e2e8f0;
       color: $text-main;
       display: flex;
       align-items: center;
+      flex-shrink: 0;
     }
 
     h1 {
@@ -55,6 +55,8 @@ $border-color: #e2e8f0;
       font-weight: 700;
       color: $text-main;
       margin: 0;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
 
     .add-top-btn {
@@ -66,10 +68,11 @@ $border-color: #e2e8f0;
       font-weight: 600;
       font-size: 14px;
       cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
   }
 
-  /* Search & Filter Section */
   .search-filter-section {
     padding-top: 16px;
     padding-bottom: 16px;
@@ -97,6 +100,7 @@ $border-color: #e2e8f0;
 
       input {
         flex: 1;
+        min-width: 0;
         border: none;
         background: transparent;
         font-size: 14px;
@@ -116,29 +120,29 @@ $border-color: #e2e8f0;
         display: flex;
         align-items: center;
         position: relative;
-        padding: 4px;
+        padding: 6px 8px;
         flex-shrink: 0;
 
         .filter-badge {
           position: absolute;
-          top: -2px;
+          top: -4px;
           right: -2px;
           background-color: $primary-green;
           color: white;
           font-size: 10px;
-          width: 16px;
-          height: 16px;
+          width: 17px;
+          height: 17px;
           border-radius: 50%;
           display: flex;
           align-items: center;
           justify-content: center;
           font-weight: 700;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
         }
       }
     }
   }
 
-  /* Main Coaches List Area */
   .coaches-list {
     flex: 1;
     overflow-y: auto;
@@ -155,19 +159,24 @@ $border-color: #e2e8f0;
       background: #ffffff;
       border: 1px solid $border-color;
       border-radius: 16px;
-      padding: 16px;
+      padding: 14px;
       display: flex;
       flex-direction: column;
       gap: 12px;
+      min-width: 0;
 
       .coach-header {
         display: flex;
         justify-content: space-between;
         align-items: flex-start;
+        gap: 8px;
+        min-width: 0;
 
         .coach-profile-info {
           display: flex;
           gap: 12px;
+          flex: 1;
+          min-width: 0;
 
           .coach-avatar {
             width: 50px;
@@ -178,17 +187,30 @@ $border-color: #e2e8f0;
           }
 
           .coach-titles {
+            flex: 1;
+            min-width: 0;
+            overflow: hidden;
+
             h3 {
-              font-size: 16px;
+              font-size: 17px;
               font-weight: 700;
               color: $text-main;
               margin: 0 0 4px 0;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
             }
 
             .specialty {
-              font-size: 13px;
+              font-size: 15px;
               color: $text-muted;
               margin: 0;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              font-weight: 400;
+              display: block;
+              width: 100%;
             }
           }
         }
@@ -196,18 +218,24 @@ $border-color: #e2e8f0;
         .top-rated-badge {
           background-color: #00e676;
           color: #000000;
-          font-size: 10px;
-          font-weight: 800;
-          padding: 4px 8px;
+          font-size: 9px;
+          font-weight: 700;
+          padding: 4px 5px;
           border-radius: 6px;
           letter-spacing: 0.5px;
+          white-space: nowrap;
           flex-shrink: 0;
         }
       }
 
       .coach-meta {
         display: flex;
+        align-items: center;
         gap: 16px;
+        width: 100%;
+        min-width: 0;
+        flex-wrap: nowrap;
+        overflow: hidden;
 
         .meta-item {
           display: flex;
@@ -215,9 +243,12 @@ $border-color: #e2e8f0;
           gap: 4px;
           font-size: 12px;
           color: $text-muted;
+          white-space: nowrap;
+          flex-shrink: 0;
 
           svg {
             color: #00c875;
+            flex-shrink: 0;
           }
         }
       }
@@ -237,32 +268,55 @@ $border-color: #e2e8f0;
         display: flex;
         justify-content: space-between;
         align-items: center;
+        gap: 8px;
+        width: 100%;
+        min-width: 0;
+        overflow: hidden;
 
         .tags {
           display: flex;
+          align-items: center;
           gap: 6px;
-          flex-wrap: wrap;
+          flex-wrap: nowrap;
+          flex: 1 1 auto;
+          min-width: 0;
+          overflow: hidden;
+          white-space: nowrap;
+        }
 
-          .tag {
-            background-color: #f1f3f5;
-            color: $text-muted;
-            font-size: 11px;
-            padding: 4px 10px;
-            border-radius: 6px;
-          }
+        .tag {
+          background-color: #f1f3f5;
+          color: $text-muted;
+          font-size: 11px;
+          padding: 4px 10px;
+          border-radius: 6px;
+          white-space: nowrap;
+          flex: 0 0 auto;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          line-height: 1.2;
         }
 
         .price {
           text-align: right;
+          white-space: nowrap;
+          flex: 0 0 auto;
+          display: flex;
+          align-items: baseline;
 
           .amount {
             font-size: 16px;
             font-weight: 700;
             color: #006d43;
+            white-space: nowrap;
           }
+
           .period {
             font-size: 11px;
             color: $text-muted;
+            margin-right: 60px;
+            white-space: nowrap;
           }
         }
       }
@@ -271,25 +325,31 @@ $border-color: #e2e8f0;
         display: flex;
         justify-content: space-between;
         align-items: center;
+        gap: 10px;
         border-top: 1px solid #f1f3f5;
         padding-top: 12px;
+        min-width: 0;
 
         .status-indicator {
           display: flex;
           align-items: center;
           gap: 6px;
+          min-width: 0;
+          flex-shrink: 1;
 
           .dot {
             width: 8px;
             height: 8px;
             background-color: $primary-green;
             border-radius: 50%;
+            flex-shrink: 0;
           }
 
           .status-text {
             font-size: 12px;
             color: $primary-green;
             font-weight: 500;
+            white-space: nowrap;
           }
         }
 
@@ -302,12 +362,13 @@ $border-color: #e2e8f0;
           font-size: 12px;
           font-weight: 600;
           cursor: pointer;
+          white-space: nowrap;
+          flex-shrink: 0;
         }
       }
     }
   }
 
-  /* Backdrop Overlay */
   .backdrop {
     position: absolute;
     top: 0;
@@ -318,7 +379,6 @@ $border-color: #e2e8f0;
     z-index: 100;
   }
 
-  /* Bottom Sheet Modal with Safe Area Bottom Inset */
   .filter-bottom-sheet {
     position: absolute;
     bottom: 0;
@@ -365,6 +425,7 @@ $border-color: #e2e8f0;
         color: $text-main;
         margin: 0;
         flex: 1;
+        white-space: nowrap;
       }
 
       .clear-btn {
@@ -375,6 +436,7 @@ $border-color: #e2e8f0;
         cursor: pointer;
         text-decoration: underline;
         margin-right: 16px;
+        white-space: nowrap;
       }
 
       .close-btn {
@@ -388,6 +450,7 @@ $border-color: #e2e8f0;
         justify-content: center;
         cursor: pointer;
         color: $text-main;
+        flex-shrink: 0;
       }
     }
 
@@ -406,6 +469,7 @@ $border-color: #e2e8f0;
           font-weight: 600;
           color: $text-main;
           margin: 0 0 12px 0;
+          white-space: nowrap;
         }
 
         .chip-grid {
@@ -424,10 +488,12 @@ $border-color: #e2e8f0;
             display: flex;
             align-items: center;
             gap: 6px;
+            white-space: nowrap;
             transition: all 0.2s;
 
             svg {
               stroke: $primary-green;
+              flex-shrink: 0;
             }
 
             &.selected {
@@ -457,6 +523,7 @@ $border-color: #e2e8f0;
         font-size: 16px;
         font-weight: 600;
         cursor: pointer;
+        white-space: nowrap;
       }
     }
   }
