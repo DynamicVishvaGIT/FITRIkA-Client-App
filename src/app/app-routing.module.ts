@@ -106,6 +106,14 @@ const routes: Routes = [
   {
     path: 'profile',
     loadChildren: () => import('./profile/profile.module').then( m => m.ProfilePageModule)
+  },
+  {
+    path: 'my-prospects',
+    loadChildren: () => import('./my-prospects/my-prospects.module').then( m => m.MyProspectsPageModule)
+  },
+  {
+    path: 'nothing-scheduled',
+    loadChildren: () => import('./nothing-scheduled/nothing-scheduled.module').then( m => m.NothingScheduledPageModule)
   }
  
 ];

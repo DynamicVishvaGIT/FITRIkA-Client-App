@@ -1,54 +1,100 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
+import { Common } from '../common';
+import { Api } from '../api';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
-  standalone:false,
+  standalone: false,
 })
-export class LoginPage implements OnInit {
+export class LoginPage implements OnInit, OnDestroy {
 
-phoneNumber: string = '';
-  showError: boolean = false;
+  private _unsubscribeAll = new Subject<void>();
 
-  constructor(private router: Router) {}
+  phoneNumber = '';
+  showError = false;
+  isSubmitting = false;
+
+  constructor(
+    private router: Router,
+    private commonService: Common,
+    private apiService: Api
+  ) {}
 
   ngOnInit() {}
 
-  // Allow only numbers and maximum 10 digits
+  ngOnDestroy() {
+    this._unsubscribeAll.next();
+    this._unsubscribeAll.complete();
+  }
+
   onPhoneInput(event: any) {
-
-    let value = event.target.value;
-
-    // Remove all non-numeric characters
-    value = value.replace(/[^0-9]/g, '');
-
-    // Limit to 10 digits
-    if (value.length > 10) {
-      value = value.substring(0, 10);
-    }
-
-    this.phoneNumber = value;
-
-    // Hide error while typing
+    this.phoneNumber = event.target.value;
     this.showError = false;
   }
 
   proceedToOtp() {
+    const username = this.phoneNumber.trim();
 
-    const phoneRegex = /^[0-9]{10}$/;
+    const isPhone = /^[0-9]{10}$/.test(username);
+    const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(username);
 
-    if (!phoneRegex.test(this.phoneNumber)) {
+    if (!isPhone && !isEmail) {
       this.showError = true;
       return;
     }
 
-    this.showError = false;
+    if (this.isSubmitting) return;
 
-    // Navigate when valid
-    this.router.navigate(['/sign-up']);
+    const otpData = {
+      username: username,
+      user_type: 'member'
+    };
+
+    this.isSubmitting = true;
+    this.commonService.presentLoading();
+
+    this.apiService.request_otp(otpData)
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe({
+        next: (response: any) => {
+          this.isSubmitting = false;
+          this.commonService.dismissLoading();
+
+          console.log('OTP API response:', response);
+
+          this.commonService.showToastMessage(
+            response?.message || 'OTP sent successfully',
+            'toast-success',
+            '',
+            2000
+          );
+
+          this.router.navigate(['/otp-verification'], {
+            queryParams: {
+              username: response?.username || username,
+              user_type: response?.user_type || 'member',
+              otp_type: response?.otp_type || (isEmail ? 'email' : 'mobile')
+            }
+          });
+        },
+        error: (error: any) => {
+          this.isSubmitting = false;
+          this.commonService.dismissLoading();
+
+          this.commonService.showToastMessage(
+            error?.error?.message ||
+            error?.message ||
+            'Unable to send OTP. Please try again.',
+            'toast-error',
+            '',
+            4000
+          );
+        }
+      });
   }
-
 }

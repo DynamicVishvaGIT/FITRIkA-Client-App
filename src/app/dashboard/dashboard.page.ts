@@ -11,6 +11,7 @@ interface Task {
   completed: boolean;
   active?: boolean;
   category: string; // 'Rohan' | 'Priya' | 'Food'
+  type: 'food' | 'workout'; // decides which bottom sheet opens
   calories?: string;
 }
 
@@ -42,6 +43,7 @@ export class DashboardPage implements OnInit {
       completed: true,
       active: false,
       category: 'Rohan',
+      type: 'food',
       calories: '450 kcal'
     },
     {
@@ -52,6 +54,7 @@ export class DashboardPage implements OnInit {
       completed: false,
       active: true,
       category: 'Rohan',
+      type: 'food',
       calories: '300 kcal'
     },
     {
@@ -62,6 +65,7 @@ export class DashboardPage implements OnInit {
       completed: false,
       active: false,
       category: 'Rohan',
+      type: 'workout',
       calories: '500 kcal'
     },
     {
@@ -72,6 +76,7 @@ export class DashboardPage implements OnInit {
       completed: false,
       active: false,
       category: 'Rohan',
+      type: 'workout',
       calories: '500 kcal'
     },
     {
@@ -82,30 +87,49 @@ export class DashboardPage implements OnInit {
       completed: false,
       active: false,
       category: 'Rohan',
+      type: 'workout',
       calories: '500 kcal'
     }
   ];
 
   constructor(
-    private router: Router, 
+    private router: Router,
     private route: ActivatedRoute,
     private modalController: ModalController
   ) {}
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
-      if (params['status']) {
-        const targetTask = this.tasks.find(t => t.id === 1);
-        if (targetTask) {
-          if (params['status'] === 'swapped' && params['swappedMeal']) {
-            targetTask.description = params['swappedMeal'];
-            targetTask.completed = true;
-          } else if (params['status'] === 'planned' || params['status'] === 'skipped') {
-            targetTask.completed = true;
-          }
-        }
+      if (!params['status']) {
+        return;
+      }
+      const targetId = params['taskId'] ? Number(params['taskId']) : 1;
+      const targetTask = this.tasks.find(t => t.id === targetId);
+      if (targetTask) {
+        this.applyStatus(targetTask, {
+          status: params['status'],
+          swappedMeal: params['swappedMeal'],
+          calories: params['calories']
+        });
       }
     });
+  }
+
+  /** Updates a task after a bottom-sheet action (idempotent) */
+  private applyStatus(task: Task, data: any) {
+    if (!data || !data.status) {
+      return;
+    }
+
+    if (data.status === 'swapped' && data.swappedMeal) {
+      task.description = data.swappedMeal;
+      if (data.calories) {
+        task.calories = data.calories;
+      }
+      task.completed = true;
+    } else if (data.status === 'planned' || data.status === 'skipped') {
+      task.completed = true;
+    }
   }
 
   setFilter(filter: string) {
@@ -161,22 +185,38 @@ export class DashboardPage implements OnInit {
     await this.openLunchModalForMeal(task);
   }
 
-  async openLunchModalForMeal(selectedMeal: any) {
-    let headerTitle = `How did ${selectedMeal.title.toLowerCase()} go?`;
+  /** Food task -> meal sheet, workout task -> workout sheet */
+  async openLunchModalForMeal(selectedMeal: Task) {
+    const isWorkout = this.getTaskType(selectedMeal) === 'workout';
+    const headerTitle = `How did ${selectedMeal.title.toLowerCase()} go?`;
+
+    const mealData = isWorkout
+      ? {
+          type: 'workout',
+          taskId: selectedMeal.id,
+          title: selectedMeal.title,
+          subtitle: selectedMeal.description,
+          calories: selectedMeal.calories || '500 kcal',
+          modalTitle: headerTitle
+        }
+      : {
+          type: 'food',
+          taskId: selectedMeal.id,
+          title: selectedMeal.description || selectedMeal.title,
+          calories: selectedMeal.calories || '450 kcal',
+          modalTitle: headerTitle
+        };
+
+    // sheet height = content height (a bit taller for the workout sheet's extra line)
+    const bp = this.sheetBreakpoint(isWorkout ? 560 : 540);
 
     const modal = await this.modalController.create({
       component: HowDidPage,
       cssClass: 'oval-bottom-modal',
-      componentProps: {
-        mealData: {
-          title: selectedMeal.description || selectedMeal.title,
-          calories: selectedMeal.calories || '450 kcal',
-          modalTitle: headerTitle
-        }
-      },
+      componentProps: { mealData },
       backdropDismiss: true,
-      breakpoints: [0, 0.78],
-      initialBreakpoint: 0.64,
+      breakpoints: [0, bp],
+      initialBreakpoint: bp,
       handle: false
     });
 
@@ -185,7 +225,28 @@ export class DashboardPage implements OnInit {
     const { data } = await modal.onDidDismiss();
     if (data) {
       console.log('Action logged:', data);
+      this.applyStatus(selectedMeal, data);
     }
+  }
+
+  /** explicit type first, otherwise guess from the text */
+  private getTaskType(task: Task): 'food' | 'workout' {
+    if (task.type) {
+      return task.type;
+    }
+    const text = `${task.title} ${task.description}`.toLowerCase();
+    if (/(breakfast|lunch|dinner|snack|shake|meal|oatmeal|salad|smoothie)/.test(text)) {
+      return 'food';
+    }
+    if (/(training|workout|run|session|exercise|leg day|yoga|strength|cardio|hiit)/.test(text)) {
+      return 'workout';
+    }
+    return 'food';
+  }
+
+  private sheetBreakpoint(contentPx: number): number {
+    const h = window.innerHeight || 800;
+    return Math.min(0.95, Math.max(0.35, contentPx / h));
   }
 
   toggleTaskCompletion(task: Task, event: Event) {
@@ -202,7 +263,7 @@ export class DashboardPage implements OnInit {
     if (currentIndex > 0) {
       const prevTaskInView = currentList[currentIndex - 1];
       const masterPrevIndex = this.tasks.indexOf(prevTaskInView);
-      
+
       const temp = this.tasks[masterIndex];
       this.tasks[masterIndex] = this.tasks[masterPrevIndex];
       this.tasks[masterPrevIndex] = temp;

@@ -1,39 +1,47 @@
 /* diet-details.page.scss */
+$green: #00d98b;
+$green-dark: #00c875;
+$mint-bg: #effcf7;
+$text-main: #0f172a;
+$text-muted: #64748b;
+$border: #e8ecf1;
+
 :host {
   display: block;
-  font-family: system-ui, -apple-system, sans-serif;
-  background-color: #fcfcfc;
-  color: #1a1a1a;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background-color: #ffffff;
+  color: $text-main;
 }
 
 .diet-container {
   display: flex;
   flex-direction: column;
   height: 100vh;
+  height: 100dvh;
   max-width: 480px;
   margin: 0 auto;
   box-sizing: border-box;
   overflow: hidden;
-  padding-top: max(env(safe-area-inset-top), 8px); /* Fixes top edge spacing issue */
+  background: #ffffff;
 }
 
+/* ---------- Header ---------- */
 .header {
   display: flex;
   align-items: center;
-  gap: 16px;
-  padding: 12px 16px;
-  background: #fcfcfc;
+  gap: 14px;
+  padding: calc(env(safe-area-inset-top) + 14px) 18px 12px 18px;
+  background: #ffffff;
   z-index: 10;
 
   .back-btn {
     background: none;
     border: none;
     cursor: pointer;
-    padding: 4px;
+    padding: 0;
     display: flex;
     align-items: center;
-    color: #1a1a1a;
-    transition: opacity 0.2s;
+    color: $text-main;
 
     &:active {
       opacity: 0.6;
@@ -41,111 +49,72 @@
   }
 
   h1 {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 700;
     margin: 0;
+    color: $text-main;
   }
 }
 
+/* ---------- Content ---------- */
 .content {
   flex: 1;
   overflow-y: auto;
-  padding: 8px 16px 24px 16px;
   -webkit-overflow-scrolling: touch;
+  padding: 14px 16px 24px 16px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 18px;
 
   .main-meal-card {
-    background: #f4fffb;
-    border: 1px solid #00e676;
-    border-radius: 16px;
-    padding: 16px;
+    background: $mint-bg;
+    border: 1.5px solid $green;
+    border-radius: 12px;
+    padding: 16px 14px;
 
     h2 {
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 700;
-      color: #1a1a1a;
-      margin: 0 0 12px 0;
-    }
-
-    .meal-badges {
-      display: flex;
-      gap: 8px;
-      flex-wrap: nowrap; /* Forces badges to stay in a single row */
-      overflow-x: auto;
-      white-space: nowrap;
-      width: 100%;
-
-      .badge-item {
-        background: #ffffff;
-        border: 1px solid #e5e5e5;
-        font-size: 13px;
-        font-weight: 600;
-        color: #555;
-        padding: 6px 10px;
-        border-radius: 8px;
-        display: inline-flex;
-        align-items: center;
-        gap: 5px;
-        outline: none;
-        cursor: pointer;
-        flex-shrink: 0;
-        transition: all 0.2s ease;
-
-        svg { 
-          color: #666; 
-          transition: color 0.2s ease;
-        }
-
-        &.active {
-          background: #00e676;
-          border-color: #00c853;
-          color: #000000;
-          font-weight: 700;
-
-          svg { 
-            color: #000000; 
-          }
-        }
-      }
+      color: $text-main;
+      margin: 0;
     }
   }
 
+  /* ---------- Macros ---------- */
   .macros-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 10px;
 
     .macro-card {
-      background: #ffffff;
-      border: 1px solid #00e676;
-      border-radius: 14px;
-      padding: 12px;
+      background: $mint-bg;
+      border: 1.5px solid $green;
+      border-radius: 12px;
+      padding: 12px 10px;
       display: flex;
       flex-direction: column;
 
       .macro-title {
-        font-size: 13px;
-        color: #666;
-        margin-bottom: 4px;
+        font-size: 12px;
+        color: #475569;
+        margin-bottom: 6px;
       }
 
       .macro-value {
-        font-size: 16px;
-        font-weight: 800;
-        color: #1a1a1a;
-        margin-bottom: 8px;
+        font-size: 17px;
+        font-weight: 500;
+        color: $text-main;
+        margin-bottom: 10px;
       }
 
       .progress-bar {
-        background: #eee;
+        background: #e2e8f0;
         height: 4px;
         border-radius: 2px;
         overflow: hidden;
 
         .fill {
-          background: #00e676;
+          background: $green;
           height: 100%;
           border-radius: 2px;
         }
@@ -154,13 +123,13 @@
   }
 
   .section-title {
-    font-size: 15px;
-    font-weight: 700;
-    color: #1a1a1a;
-    margin: 4px 0 0 0;
+    font-size: 14px;
+    font-weight: 500;
+    color: $text-main;
+    margin: 6px 0 -4px 0;
   }
 
-  /* Accurate 4-part Micronutrients Section Layout */
+  /* ---------- Micronutrients ---------- */
   .micro-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -168,34 +137,31 @@
 
     .micro-card {
       background: #ffffff;
-      border: 1px solid #f0f0f0;
-      border-radius: 14px;
+      border: 1px solid $border;
+      border-radius: 10px;
       padding: 12px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.05);
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 7px;
 
       .micro-header {
         display: flex;
-        justify-content: space-between;
-        align-items: center;
+        align-items: baseline;
+        font-size: 11px;
+        font-weight: 700;
 
         .micro-name {
-          font-size: 12px;
-          font-weight: 600;
-          color: #333;
+          color: $text-main;
         }
 
         .micro-percent {
-          font-size: 12px;
-          font-weight: 500;
-          margin-right: 70px;
+          color: $green-dark;
         }
       }
 
       .progress-bar.small {
-        background: #f0f0f0;
+        background: #e8ecf1;
         height: 4px;
         border-radius: 2px;
         overflow: hidden;
@@ -209,33 +175,36 @@
 
       .micro-sub {
         font-size: 10px;
-        color: #888;
+        color: #6b7a99;
       }
     }
   }
 
+  /* ---------- Ingredients ---------- */
   .ingredients-container {
     background: #ffffff;
-    border: 1px solid #e5e5e5;
-    border-radius: 16px;
-    padding: 16px;
+    border: 1px solid $border;
+    border-radius: 18px;
+    padding: 18px 16px 8px 16px;
+    margin-top: 10px;
+    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
 
     .ingredients-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 14px;
+      margin-bottom: 8px;
 
       h3 {
-        font-size: 15px;
+        font-size: 18px;
         font-weight: 700;
         margin: 0;
+        color: $text-main;
       }
 
       .serving-text {
-        font-size: 14px;
-        color: #888;
-        font-weight: 400;
+        font-size: 13px;
+        color: #374151;
       }
     }
 
@@ -243,46 +212,41 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 10px 0;
-      border-bottom: 1px solid #f2f2f2;
+      padding: 14px 0;
+      border-bottom: 1px solid #eceff3;
 
       &:last-child {
         border-bottom: none;
-        padding-bottom: 0;
       }
 
       .ing-name {
         font-size: 13px;
-        color: #444;
+        color: #1f2937;
       }
 
       .ing-amount {
-        font-size: 13px;
+        font-size: 14px;
         font-weight: 700;
-        color: #00c853;
+        color: $green-dark;
       }
     }
   }
 }
 
+/* ---------- Footer ---------- */
 .footer-action {
   background: #ffffff;
-  padding: 16px 20px 24px 20px;
-  border-top: 1px solid #f1f5f9;
-  position: sticky;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  padding: 14px 16px calc(env(safe-area-inset-bottom) + 14px) 16px;
+  border-top: 1px solid #eceff3;
   z-index: 10;
-  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.03);
 
   .action-btn {
     width: 100%;
-    background: #00df9a;
+    height: 54px;
+    background: linear-gradient(90deg, $green-dark 0%, #00e397 100%);
     color: #ffffff;
     border: none;
-    border-radius: 16px;
-    padding: 16px 20px;
+    border-radius: 14px;
     font-size: 15px;
     font-weight: 700;
     display: flex;
@@ -290,7 +254,7 @@
     align-items: center;
     gap: 10px;
     cursor: pointer;
-    box-shadow: 0 4px 14px rgba(0, 223, 154, 0.25);
+    box-shadow: 0 4px 14px rgba(0, 200, 117, 0.22);
     transition: all 0.2s ease;
 
     .icon-circle-check {
@@ -304,7 +268,7 @@
       flex-shrink: 0;
 
       svg {
-        color: #00df9a;
+        color: $green-dark;
       }
     }
 
@@ -316,10 +280,8 @@
       background: #0288d1;
       box-shadow: 0 4px 14px rgba(2, 136, 209, 0.25);
 
-      .icon-circle-check {
-        svg {
-          color: #0288d1;
-        }
+      .icon-circle-check svg {
+        color: #0288d1;
       }
     }
   }

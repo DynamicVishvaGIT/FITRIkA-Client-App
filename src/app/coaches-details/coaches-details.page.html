@@ -1,76 +1,139 @@
-<div class="coach-container" [style.padding-top]="safeAreaTop">
+<div class="coach-container" [style.padding-top]="safeAreaTop" [class.is-profile]="isProfile" [class.is-program]="!isProfile">
+
+  <!-- Header -->
   <header class="header">
-    <button class="back-btn" (click)="goBack()">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    <button class="back-btn" (click)="goBack()" type="button" aria-label="Back">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M19 12H5M12 19l-7-7 7-7" />
+      </svg>
     </button>
     <h1>Coaches Details</h1>
   </header>
 
-  <main class="content">
-    <!-- Coach Profile Header -->
-    <div class="coach-profile-header">
-      <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200" alt="Rohan" class="avatar">
+  <main class="content" [style.padding-bottom]="safeAreaBottom">
+
+    <!-- ===== Hero: PROGRAM view (opened from "12-Week Strength Builder") ===== -->
+    <section class="hero-program" *ngIf="!isProfile">
+      <img [src]="coach.image" [alt]="coach.name" class="avatar" />
       <div class="info">
-        <h2>12-Week Strength Builder</h2>
-        <div class="badge">Trending Program</div>
-      </div>
-    </div>
-
-    <!-- Author & Location Row -->
-    <div class="author-info">
-      <span class="author-name">by Rohan Kapoor</span>
-      <span class="dot-separator">•</span>
-      <span class="location-badge">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-          <circle cx="12" cy="10" r="3"></circle>
-        </svg>
-        Mumbai, India
-      </span>
-    </div>
-
-    <!-- 4-Column Metrics Bar Grid -->
-    <div class="metrics-bar">
-      <div class="metric">
-        <strong>12wk</strong>
-        <span>Duration</span>
-      </div>
-      <div class="metric">
-        <strong>4d/wk</strong>
-        <span>FREQ.</span>
-      </div>
-      <div class="metric">
-        <strong>Inter..</strong>
-        <span>Level</span>
-      </div>
-      <div class="metric">
-        <strong>4.6</strong>
-        <span>Rating</span>
-      </div>
-    </div>
-
-    <!-- About Section -->
-    <section class="about-section">
-      <h3>About Rohan</h3>
-      <p>Rohan is a dedicated performance coach specializing in hypertrophy and functional strength. With nearly a decade of experience training elite athletes and corporate professionals, his methodology focuses on data-driven progress tracking and biomechanically efficient movement patterns. He believes in building a sustainable lifestyle rather than just temporary results.</p>
-      <h4>AREA OF EXPERTISE</h4>
-      <div class="tags">
-        <span class="tag">Muscle Gain</span>
-        <span class="tag">Powerlifting</span>
-        <span class="tag">Hypertrophy</span>
-        <span class="tag">Fat Loss</span>
+        <h2>{{ program.title }}</h2>
+        <div class="badge">{{ program.badge }}</div>
+        <div class="location">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+            <circle cx="12" cy="10" r="3"></circle>
+          </svg>
+          <span>{{ coach.location }}</span>
+        </div>
       </div>
     </section>
-  </main>
 
-  <!-- Footer Action -->
-  <footer class="footer-action" [style.padding-bottom]="safeAreaBottom">
-    <button class="subscribe-btn" (click)="subscribe()">
-      <div class="left-content">
-        <span class="sub-label">START PROGRAM</span>
-        <span class="sub-title">Subscribe & Start</span>
+    <!-- ===== Hero: PROFILE view (opened from "View Profile") ===== -->
+    <section class="hero-profile" *ngIf="isProfile">
+      <div class="profile-top">
+        <div class="avatar-wrap">
+          <img [src]="coach.image" [alt]="coach.name" class="avatar" />
+          <span class="online-dot"></span>
+        </div>
+
+        <div class="info">
+          <h2>{{ coach.name }}</h2>
+          <div class="badge-row">
+            <span class="elite-badge">{{ coach.badge }}</span>
+            <button class="insta-btn" type="button" (click)="openInstagram()" aria-label="Instagram">
+              <svg width="24" height="24" viewBox="0 0 24 24">
+                <defs>
+                  <linearGradient id="igGrad" x1="0" y1="1" x2="1" y2="0">
+                    <stop offset="0" stop-color="#f9a233" />
+                    <stop offset="0.5" stop-color="#e1306c" />
+                    <stop offset="1" stop-color="#7a3fc7" />
+                  </linearGradient>
+                </defs>
+                <rect width="24" height="24" rx="6" fill="url(#igGrad)" />
+                <rect x="5.5" y="5.5" width="13" height="13" rx="4" fill="none" stroke="#fff" stroke-width="1.6" />
+                <circle cx="12" cy="12" r="3.2" fill="none" stroke="#fff" stroke-width="1.6" />
+                <circle cx="16.2" cy="7.8" r="1" fill="#fff" />
+              </svg>
+            </button>
+          </div>
+          <div class="location">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+            <span>{{ coach.location }}</span>
+          </div>
+        </div>
       </div>
-      <div class="price-tag">₹2,500 <small>/mo</small></div>
-    </button>
-  </footer>
+
+      <div class="profile-divider"></div>
+
+      <div class="stats-row">
+        <div class="stat">
+          <div class="stat-value">
+            {{ coach.rating | number: '1.1-1' }}
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="#f5a524">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+            </svg>
+          </div>
+          <div class="stat-label">RATING</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">{{ coach.yearsExp }}+</div>
+          <div class="stat-label">YEARS EXP</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Shared sections ===== -->
+    <div class="sections">
+
+      <!-- Area of expertise -->
+      <h4 class="section-label">AREA OF EXPERTISE</h4>
+      <div class="tags">
+        <span class="tag" *ngFor="let tag of coach.expertise">{{ tag }}</span>
+      </div>
+
+      <!-- Contact -->
+      <div class="contact-card">
+        <div class="contact-col">
+          <span class="contact-label">MOBILE NUMBER</span>
+          <strong>{{ coach.phone }}</strong>
+        </div>
+        <div class="contact-col">
+          <span class="contact-label">EMAIL ADDRESS</span>
+          <strong>{{ coach.email }}</strong>
+        </div>
+      </div>
+
+      <!-- Packages -->
+      <div class="packages-head">
+        <h4 class="section-label">AVAILABLE PACKAGES</h4>
+        <span class="swipe-hint">Swipe for more</span>
+      </div>
+
+      <div class="packages-scroll">
+        <div class="package-card" *ngFor="let pkg of packages" [class.premium]="pkg.premium">
+          <div class="pkg-top">
+            <div class="pkg-title">
+              <h5>{{ pkg.name }}</h5>
+              <p>{{ pkg.tagline }}</p>
+            </div>
+            <div class="pkg-price">
+              <strong>₹{{ pkg.price | number }}</strong>
+              <span>/month</span>
+            </div>
+          </div>
+          <button class="pkg-btn" [class.filled]="pkg.premium" type="button" (click)="bookEnquiry(pkg)">
+            {{ pkg.premium ? 'Book Now' : 'Book Enquiry' }}
+          </button>
+        </div>
+      </div>
+
+      <!-- About -->
+      <h3 class="about-title">About Rohan</h3>
+      <p class="about-text">{{ coach.about }}</p>
+    </div>
+
+  </main>
 </div>

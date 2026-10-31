@@ -10,6 +10,7 @@ interface Coach {
   bio: string;
   tags: string[];
   price: number;
+  rating: number;
   image: string;
   goal: string;
   topRated: boolean;
@@ -25,7 +26,7 @@ interface Coach {
 export class FindYourTrainerPage implements OnInit {
   searchQuery: string = '';
   isFilterOpen: boolean = false;
-  
+
   // Track active horizontal banner selection
   selectedCategory: string = 'All';
 
@@ -38,13 +39,14 @@ export class FindYourTrainerPage implements OnInit {
   coaches: Coach[] = [
     {
       id: 1,
-      name: 'Rohan Kapoor',
+      name: 'Anika Kulkarni',
       specialty: 'Strength & Hypertrophy',
       experience: 8,
       location: 'Mumbai',
       bio: 'I help professionals build sustainable strength habits without sacrificing their lifestyle.',
-      tags: ['Hypertrophy', 'Powerlifting'],
+      tags: ['Powerlifting', 'Hypertrophy'],
       price: 2500,
+      rating: 4.9,
       image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80',
       goal: 'Muscle Gain',
       topRated: true,
@@ -57,9 +59,10 @@ export class FindYourTrainerPage implements OnInit {
       experience: 5,
       location: 'Mumbai',
       bio: 'Data-driven nutrition and training tailored to your specific hormonal profile...',
-      tags: ['Hypertrophy', 'Powerlifting'],
+      tags: ['Powerlifting', 'Hypertrophy'],
       price: 1800,
-      image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80',
+      rating: 4.9,
+      image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80',
       goal: 'Fat Loss',
       topRated: true,
       status: 'Open for coaching'
@@ -126,25 +129,25 @@ export class FindYourTrainerPage implements OnInit {
 
   filterCoaches(): void {
     this.filteredCoaches = this.coaches.filter(coach => {
-      const matchesSearch = 
-        this.searchQuery === '' || 
-        coach.name.toLowerCase().includes(this.searchQuery.toLowerCase()) || 
+      const matchesSearch =
+        this.searchQuery === '' ||
+        coach.name.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
         coach.specialty.toLowerCase().includes(this.searchQuery.toLowerCase());
 
-      const matchesBannerCategory = 
-        this.selectedCategory === 'All' || 
+      const matchesBannerCategory =
+        this.selectedCategory === 'All' ||
         coach.specialty.toLowerCase().includes(this.selectedCategory.toLowerCase()) ||
         coach.tags.some(t => t.toLowerCase().includes(this.selectedCategory.toLowerCase()));
 
-      const matchesSpecialty = 
-        this.selectedSpecialties.length === 0 || 
-        this.selectedSpecialties.some(spec => 
-          coach.specialty.toLowerCase().includes(spec.toLowerCase()) || 
+      const matchesSpecialty =
+        this.selectedSpecialties.length === 0 ||
+        this.selectedSpecialties.some(spec =>
+          coach.specialty.toLowerCase().includes(spec.toLowerCase()) ||
           coach.tags.some(t => t.toLowerCase().includes(spec.toLowerCase()))
         );
 
-      const matchesGoal = 
-        this.selectedGoals.length === 0 || 
+      const matchesGoal =
+        this.selectedGoals.length === 0 ||
         this.selectedGoals.includes(coach.goal);
 
       return matchesSearch && matchesBannerCategory && (this.selectedSpecialties.length === 0 && this.selectedGoals.length === 0 || (matchesSpecialty || matchesGoal));

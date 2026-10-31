@@ -1,7 +1,20 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { HowDidYouPage } from '../how-did-you/how-did-you.page';
+
+// Change these if your routes are named differently
+const ROUTES = {
+  taskDetail: '/task-detail-screen',
+  nothingScheduled: '/nothing-scheduled',
+  dashboard: '/dashboard'
+};
+
+interface SheetOption {
+  key: string;
+  label: string;
+  icon: 'check' | 'edit' | 'ban' | 'play';
+}
 
 @Component({
   selector: 'app-how-did',
@@ -15,90 +28,156 @@ export class HowDidPage implements OnInit {
   safeAreaBottom = 'env(safe-area-inset-bottom)';
 
   selectedOption: string = '';
-  
+  isWorkout: boolean = false;
+  private isBusy = false;
+
+  // 'food' | 'workout' decides which sheet is shown
   @Input() mealData: any = {
     title: 'Brown rice + chicken + salad',
     calories: '620 kcal',
-    modalTitle: 'How did lunch go?'
+    modalTitle: 'How did lunch go?',
+    type: 'food'
   };
 
-  constructor(private router: Router, private route: ActivatedRoute, private modalController: ModalController) {}
+  private readonly foodOptions: SheetOption[] = [
+    { key: 'planned', label: 'Ate as planned', icon: 'check' },
+    { key: 'else', label: 'Ate something else', icon: 'edit' },
+    { key: 'skipped', label: 'Skipped the meal', icon: 'ban' }
+  ];
+
+  private readonly workoutOptions: SheetOption[] = [
+    { key: 'start', label: 'Start Workout', icon: 'play' },
+    { key: 'else', label: 'Done something else', icon: 'edit' },
+    { key: 'skipped', label: 'Skipped the Workout', icon: 'ban' }
+  ];
+
+  options: SheetOption[] = this.foodOptions;
+
+  constructor(private router: Router, private modalController: ModalController) {}
 
   ngOnInit() {
-    // Fallback if passed via router state navigation
-    const navigation = this.router.getCurrentNavigation();
-    if (navigation?.extras?.state && navigation.extras.state['mealData']) {
-      const passedData = navigation.extras.state['mealData'];
-      this.processMealData(passedData);
-    } else if (this.mealData && this.mealData.title) {
-      // Handles data passed via componentProps directly from ModalController
-      this.processMealData(this.mealData);
-    }
+    this.processMealData(this.mealData || {});
   }
 
   processMealData(passedData: any) {
-    let dynamicHeader = 'How did lunch go?';
-    const titleLower = (passedData.title || '').toLowerCase();
-    
-    if (titleLower.includes('breakfast')) {
-      dynamicHeader = 'How did breakfast go?';
-    } else if (titleLower.includes('dinner') || titleLower.includes('supper')) {
-      dynamicHeader = 'How did dinner go?';
-    } else if (titleLower.includes('lunch') || titleLower.includes('rice') || titleLower.includes('salad')) {
-      dynamicHeader = 'How did lunch go?';
-    } else if (passedData.modalTitle) {
-      dynamicHeader = passedData.modalTitle;
+    this.isWorkout = passedData.type === 'workout';
+    this.options = this.isWorkout ? this.workoutOptions : this.foodOptions;
+
+    let header = passedData.modalTitle;
+    if (!header) {
+      const t = (passedData.title || '').toLowerCase();
+      if (this.isWorkout) {
+        header = 'How did your workout go?';
+      } else if (t.includes('breakfast')) {
+        header = 'How did breakfast go?';
+      } else if (t.includes('dinner') || t.includes('supper')) {
+        header = 'How did dinner go?';
+      } else {
+        header = 'How did lunch go?';
+      }
     }
 
     this.mealData = {
+      ...passedData,
       title: passedData.title || this.mealData.title,
       calories: passedData.calories || this.mealData.calories,
-      modalTitle: dynamicHeader
+      modalTitle: header
     };
   }
 
+  /** Tap an option: highlight it, then continue automatically */
   selectOption(option: string) {
+    if (this.isBusy) {
+      return;
+    }
+    this.isBusy = true;
     this.selectedOption = option;
+
+    setTimeout(async () => {
+      await this.proceedNext();
+      this.isBusy = false;
+    }, 280);
   }
 
   dismissModal() {
     this.modalController.dismiss({ dismissed: true });
   }
 
-  // Opens the next How-Did-You page with the exact same oval bottom sheet style
   async proceedNext() {
+    if (this.isWorkout) {
+      await this.handleWorkoutOption();
+    } else {
+      await this.handleFoodOption();
+    }
+  }
+
+  /* ---------------- FOOD ---------------- */
+
+  private async handleFoodOption() {
     if (this.selectedOption === 'else') {
       const modal = await this.modalController.create({
         component: HowDidYouPage,
-        cssClass: 'oval-bottom-modal', // Matches the exact deep oval modal style from dashboard
-        componentProps: {
-          mealData: this.mealData
-        },
+        cssClass: 'oval-bottom-modal',
+        componentProps: { mealData: this.mealData },
         backdropDismiss: true,
-        breakpoints: [0, 0.85, 1],
-        initialBreakpoint: 0.70,
+        breakpoints: [0, this.sheetBreakpoint(620)],
+        initialBreakpoint: this.sheetBreakpoint(620),
         handle: false
       });
 
       await modal.present();
 
       const { data } = await modal.onDidDismiss();
-      if (data) {
-        console.log('How-Did-You modal closed with data:', data);
-        if (data.status === 'swapped' || data.swappedMeal || data.status) {
-          this.modalController.dismiss(data);
-        }
+      if (data && (data.status === 'swapped' || data.swappedMeal || data.status)) {
+        this.modalController.dismiss({ ...data, taskId: this.mealData.taskId });
+      } else {
+        // closed without logging: let the user pick again
+        this.selectedOption = '';
       }
     } else {
-      this.modalController.dismiss({ status: this.selectedOption });
+      // 'planned' | 'skipped'
+      this.modalController.dismiss({ status: this.selectedOption, taskId: this.mealData.taskId });
     }
   }
 
-  closeSheet() {
-    this.modalController.dismiss();
+  /* ---------------- WORKOUT ---------------- */
+
+  private async handleWorkoutOption() {
+    const taskId = this.mealData.taskId;
+
+    switch (this.selectedOption) {
+      case 'start':
+        // Start Workout -> Task Detail Screen
+        await this.modalController.dismiss({ status: 'workout-start', taskId });
+        this.router.navigate([ROUTES.taskDetail], {
+          queryParams: { taskId },
+          state: { task: this.mealData }
+        });
+        break;
+
+      case 'else':
+        // Done something else -> "Nothing scheduled today" screen
+        await this.modalController.dismiss({ status: 'workout-else', taskId });
+        this.router.navigate([ROUTES.nothingScheduled]);
+        break;
+
+      case 'skipped':
+        // Skipped the Workout -> back to the dashboard
+        await this.modalController.dismiss({ status: 'skipped', taskId });
+        this.router.navigate([ROUTES.dashboard], {
+          queryParams: { status: 'skipped', taskId }
+        });
+        break;
+    }
   }
 
-  moveAnotherTime() {
+  /** sheet height = content height, whatever the phone size is */
+  private sheetBreakpoint(contentPx: number): number {
+    const h = window.innerHeight || 800;
+    return Math.min(0.95, Math.max(0.35, contentPx / h));
+  }
+
+  closeSheet() {
     this.modalController.dismiss();
   }
 }

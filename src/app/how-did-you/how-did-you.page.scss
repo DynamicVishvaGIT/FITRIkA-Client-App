@@ -1,222 +1,268 @@
-.modal-content {
-  --background: transparent;
+/* swap-meal-modal.page.scss */
+$green: #00da8b;
+$green-dark: #00c875;
+$text-main: #0f172a;
+
+:host {
   display: flex;
-  align-items: flex-end;
-  overflow: hidden; /* Prevents outer page scrolling/bouncing */
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
+  color-scheme: light; /* stops inputs from turning dark in dark mode */
+  font-family: "Satoshi", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
+/* The sheet modal already provides the white background, rounded top and backdrop.
+   Content is laid out from the TOP so it is always inside the visible part of the sheet. */
 .modal-card-wrapper {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   background: #ffffff;
-  border-top-left-radius: 48px;  
-  border-top-right-radius: 48px; 
-  padding: 24px 20px calc(env(safe-area-inset-bottom) + 34px) 20px;
+  padding: 14px 20px calc(env(safe-area-inset-bottom) + 24px) 20px;
   width: 100%;
-  max-width: 100%;
+  max-width: 480px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  box-shadow: 0px -8px 32px rgba(0, 0, 0, 0.08);
   box-sizing: border-box;
-  transform: translateZ(0); /* Forces hardware acceleration to stop layout flickering */
 }
 
+.sheet-handle {
+  width: 40px;
+  height: 4px;
+  background: #d9dce1;
+  border-radius: 2px;
+  align-self: center;
+  margin-bottom: 22px;
+}
+
+/* ---------- Header ---------- */
 .modal-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
-  flex-shrink: 0;
+  margin-bottom: 18px;
 
   h2 {
     margin: 0;
-    font-family: "Satoshi", sans-serif;
     font-size: 20px;
     font-weight: 700;
-    color: #000000;
-    letter-spacing: -0.5px;
-    margin-left: 80px;
+    color: $text-main;
+    letter-spacing: -0.3px;
   }
 
   .close-btn {
-    background: #F2F2F7;
+    width: 38px;
+    height: 38px;
     border: none;
-    width: 28px;
-    height: 28px;
     border-radius: 50%;
+    background: #f1f2f4;
+    color: $text-main;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    font-size: 18px;
-    color: #000000;
-    transition: background 0.2s;
-    margin-right: 10px;
     flex-shrink: 0;
 
-    &:hover {
-      background: #E5E5EA;
+    &:active {
+      background: #e5e7eb;
     }
   }
 }
 
 .label-muted {
-  font-family: "Satoshi", sans-serif;
-  font-size: 11px;
-  font-weight: 700;
-  color: #8E8E93;
-  letter-spacing: 0.5px;
   display: block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.6px;
+  color: #6b7280;
   margin-bottom: 6px;
 }
 
+/* ---------- Planned meal ---------- */
 .planned-meal-box {
-  background: #F2F2F7;
-  border: 1.5px solid transparent; /* Set to 1.5px to match dropdown borders and prevent layout shift */
-  border-radius: 16px;
-  padding: 16px;
-  margin-bottom: 16px;
-  box-sizing: border-box;
-  flex-shrink: 0;
+  background: #f6f7f9;
+  border: 1px solid #e8eaee;
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 18px;
 
   h4 {
     margin: 0 0 4px 0;
-    font-family: "Satoshi", sans-serif;
     font-size: 15px;
     font-weight: 700;
-    color: #000000;
+    color: $text-main;
   }
 
   .calories-text {
-    font-family: "Satoshi", sans-serif;
-    font-size: 13.5px;
-    font-weight: 600;
-    color: #00DA8B;
+    font-size: 14px;
+    font-weight: 700;
+    color: $green;
   }
 }
 
+/* ---------- Ate less / more ---------- */
+.portion-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+
+  .portion-btn {
+    height: 50px;
+    background: #ffffff;
+    border: 1.5px solid $green;
+    border-radius: 12px;
+    color: $green-dark;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+
+    &.selected {
+      background: $green;
+      color: #ffffff;
+    }
+
+    &:active {
+      transform: scale(0.98);
+    }
+  }
+}
+
+/* ---------- OR divider ---------- */
+.or-divider {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 22px 28px;
+
+  .line {
+    flex: 1;
+    height: 1px;
+    background: #e5e7eb;
+  }
+
+  .or-text {
+    font-size: 12px;
+    font-weight: 600;
+    color: #6b7280;
+    letter-spacing: 0.4px;
+  }
+}
+
+/* ---------- You had ---------- */
 .selection-section {
-  margin-bottom: 16px;
-  position: relative;
-  flex-shrink: 0;
+  .label-strong {
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    color: #374151;
+    margin-bottom: 10px;
+  }
 
-  /* Custom Responsive Dropdown Wrapper Positioned Directly Below */
-  .custom-dropdown-container {
+  .search-wrap {
     position: relative;
-    margin-bottom: 12px;
 
-    .dropdown-trigger-box {
-      border: 1.5px solid #E5E5EA;
-      border-radius: 16px;
+    .meal-input {
+      width: 100%;
+      height: 48px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
       background: #ffffff;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 16px;
-      min-height: 52px;
-      height: 52px; /* Fixed height prevents layout jumps */
-      cursor: pointer;
+      padding: 0 14px;
+      font-family: inherit;
+      font-size: 15px;
+      color: $text-main;
+      outline: none;
       box-sizing: border-box;
       transition: border-color 0.2s;
 
-      .selected-text {
-        font-family: "Satoshi", sans-serif;
-        font-size: 15px;
-        font-weight: 600;
-        color: #000000;
+      &::placeholder {
+        color: #9ca3af;
       }
 
-      .dropdown-arrow {
-        font-size: 18px;
-        color: #8E8E93;
-        transition: transform 0.2s ease;
+      &:focus {
+        border-color: $green;
       }
     }
 
-    &.open {
-      .dropdown-trigger-box {
-        border-color: #00DA8B;
-        .dropdown-arrow {
-          transform: rotate(180deg);
-        }
-      }
-    }
-
-    /* Dropdown Options List rendered directly below input box */
     .dropdown-options-list {
       position: absolute;
-      top: calc(100% + 6px);
+      bottom: calc(100% + 6px); /* opens upward so it stays inside the screen */
       left: 0;
       right: 0;
       background: #ffffff;
-      border: 1.5px solid #E5E5EA;
-      border-radius: 16px;
-      box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.08);
-      z-index: 100;
-      overflow: hidden;
-      max-height: 200px;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+      max-height: 190px;
       overflow-y: auto;
-      box-sizing: border-box;
+      z-index: 100;
 
       .dropdown-option-item {
-        padding: 12px 16px;
         display: flex;
         justify-content: space-between;
         align-items: center;
+        gap: 10px;
+        padding: 12px 14px;
+        border-bottom: 1px solid #f1f2f4;
         cursor: pointer;
-        border-bottom: 1px solid #F2F2F7;
-        transition: background 0.15s;
-        box-sizing: border-box;
 
         &:last-child {
           border-bottom: none;
         }
 
-        &:hover {
-          background: #F2F2F7;
+        &:active {
+          background: #f6f7f9;
         }
 
         .option-name {
-          font-family: "Satoshi", sans-serif;
-          font-size: 14.5px;
+          font-size: 14px;
           font-weight: 600;
-          color: #000000;
+          color: $text-main;
         }
 
         .option-calories {
-          font-family: "Satoshi", sans-serif;
-          font-size: 13px;
-          font-weight: 500;
-          color: #8E8E93;
+          font-size: 12px;
+          color: #8e8e93;
+          white-space: nowrap;
+        }
+
+        &.custom .option-name {
+          color: $green-dark;
         }
       }
     }
   }
 
-  /* Inline layout without container card background/rounded corners */
   .preview-selected-inline {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: transparent;
-    border: none;
-    padding: 4px 0;
-    margin-top: 8px;
-    box-sizing: border-box;
+    gap: 12px;
+    margin-top: 26px;
+    margin-bottom: 22px;
+    min-height: 44px;
 
     .preview-text {
+      min-width: 0;
+
       h4 {
-        margin: 0 0 2px 0;
-        font-family: "Satoshi", sans-serif;
+        margin: 0 0 3px 0;
         font-size: 16px;
         font-weight: 700;
-        color: #000000;
+        color: $text-main;
       }
 
       .calc-tag {
-        font-family: "Satoshi", sans-serif;
         font-size: 14px;
         font-weight: 700;
-        color: #00DA8B;
+        color: $green-dark;
       }
     }
 
@@ -224,105 +270,72 @@
       display: flex;
       gap: 8px;
       flex: 1;
-      margin-right: 12px;
 
       .edit-input-field {
         flex: 1;
-        height: 42px; /* Fixed height */
+        min-width: 0;
+        height: 42px;
         padding: 0 12px;
-        border: 1.5px solid #00DA8B;
-        border-radius: 12px;
+        border: 1.5px solid $green;
+        border-radius: 10px;
+        background: #ffffff;
+        color: $text-main;
+        font-family: inherit;
         font-size: 14px;
         outline: none;
-        background: #ffffff;
         box-sizing: border-box;
       }
 
       .save-btn {
-        background: #00DA8B;
+        background: $green;
         color: #ffffff;
         border: none;
         height: 42px;
         padding: 0 16px;
-        border-radius: 12px;
-        font-family: "Satoshi", sans-serif;
+        border-radius: 10px;
+        font-family: inherit;
         font-weight: 700;
         cursor: pointer;
-        box-sizing: border-box;
       }
     }
 
     .edit-icon-btn {
       background: transparent;
       border: none;
-      font-size: 15px;
-      color: #000000;
+      padding: 6px;
+      color: #111827;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
+      flex-shrink: 0;
     }
   }
 }
 
-.input-group-field {
-  margin-top: 16px;
-  margin-bottom: 20px;
-  flex-shrink: 0;
-
-  .note-textarea {
-    width: 100%;
-    height: 90px; /* Fixed textarea height prevents resizing/shifting layout */
-    border: 1.5px solid #E5E5EA;
-    border-radius: 16px;
-    background: #F2F2F7;
-    padding: 14px 16px;
-    font-family: "Satoshi", sans-serif;
-    font-size: 14.5px;
-    color: #000000;
-    resize: none;
-    outline: none;
-    box-sizing: border-box;
-    transition: border-color 0.2s, background 0.2s;
-
-    &::placeholder {
-      color: #A9A9A9;
-    }
-
-    &:focus {
-      border-color: #00DA8B;
-      background: #ffffff;
-    }
-  }
-}
-
-.feature-icon-img {
-  width: 16px;
-  height: 18px;
-  object-fit: contain;
-}
-
+/* ---------- Done ---------- */
 .action-footer {
-  width: 100%;
-  flex-shrink: 0;
-  
   .primary-action-btn {
     width: 100%;
-    height: 54px;
-    background: #00DA8B;
-    color: #ffffff;
+    height: 56px;
     border: none;
-    border-radius: 14px;
-    font-family: "Satoshi", sans-serif;
+    border-radius: 16px;
+    background: linear-gradient(90deg, $green-dark 0%, #00e397 100%);
+    color: #ffffff;
+    font-family: inherit;
     font-size: 16px;
-    font-weight: 600;
+    font-weight: 700;
     cursor: pointer;
     box-shadow: 0 4px 14px rgba(0, 218, 139, 0.3);
-    transition: background 0.2s;
-    box-sizing: border-box;
+    transition: transform 0.15s ease, opacity 0.2s;
 
-    &:hover {
-      background: #00c27b;
+    &:active {
+      transform: scale(0.98);
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      box-shadow: none;
     }
   }
 }

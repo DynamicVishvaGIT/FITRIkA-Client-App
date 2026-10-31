@@ -1,99 +1,64 @@
-<ion-content [fullscreen]="true" class="modal-content">
-  <div class="modal-card-wrapper">
-    
-    
+<!-- how-did.page.html -->
+<div class="modal-card-wrapper">
 
-    <!-- Header Title & Close Icon -->
-    <div class="modal-header">
-      <h2>{{ mealData.modalTitle }}</h2>
-      <button class="close-btn" (click)="dismissModal()" type="button">
-        <ion-icon name="close"></ion-icon>
-      </button>
-    </div>
+  <div class="sheet-handle"></div>
 
-    <!-- Planned Meal Info Box -->
-    <div class="planned-meal-box">
-      <span class="label-muted">PLANNED MEAL</span>
-      <h4>{{ mealData.title }}</h4>
-      <span class="calories-text">{{ mealData.calories }}</span>
-    </div>
-
-    <!-- Selection Options Stack -->
-    <div class="options-stack">
-      
-      <!-- Option 1: Ate as planned -->
-      <div 
-        class="option-card" 
-        [class.selected]="selectedOption === 'planned'"
-        (click)="selectOption('planned')">
-        <div class="option-left">
-          <div class="icon-circle" [class.active-green-bg]="selectedOption === 'planned'">
-            <img src="assets/images/Container.png" alt="Swap Task" class="feature-icon-img" />
-          </div>
-          <span>Ate as planned</span>
-        </div>
-        <div class="radio-check-wrap">
-          <ion-icon *ngIf="selectedOption === 'planned'" name="checkmark-circle" class="checked-green"></ion-icon>
-          <ion-icon *ngIf="selectedOption !== 'planned'" name="chevron-forward-outline" class="arrow-icon"></ion-icon>
-        </div>
-      </div>
-
-      <!-- Option 2: Ate something else -->
-<div 
-  class="option-card" 
-  [class.selected]="selectedOption === 'else'"
-  (click)="selectOption('else')">
-  <div class="option-left">
-    <div class="icon-circle" [class.active-green-bg]="selectedOption === 'else'">
-      <div class="edit-icon" aria-label="Edit">
-        <svg
-          width="18"
-          height="19"
-          style="margin-top: -2px !important; display: inline-block !important; vertical-align: middle !important;"
-          viewBox="0 0 20 21"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M2 20.025C1.45 20.025 0.979167 19.8292 0.5875 19.4375C0.195833 19.0458 0 18.575 0 18.025V4.025C0 3.475 0.195833 3.00417 0.5875 2.6125C0.979167 2.22083 1.45 2.025 2 2.025H10.925L8.925 4.025H2V18.025H16V11.075L18 9.075V18.025C18 18.575 17.8042 19.0458 17.4125 19.4375C17.0208 19.8292 16.55 20.025 16 20.025H2ZM6 14.025V9.775L15.175 0.6C15.375 0.4 15.6 0.25 15.85 0.15C16.1 0.05 16.35 0 16.6 0C16.8667 0 17.1208 0.05 17.3625 0.15C17.6042 0.25 17.825 0.4 18.025 0.6L19.425 2.025C19.6083 2.225 19.75 2.44583 19.85 2.6875C19.95 2.92917 20 3.175 20 3.425C20 3.675 19.9542 3.92083 19.8625 4.1625C19.7708 4.40417 19.625 4.625 19.425 4.825L10.25 14.025H6ZM18.025 3.425L16.625 2.025L18.025 3.425ZM8 12.025H9.4L15.2 6.225L14.5 5.525L13.775 4.825L8 10.6V12.025ZM14.5 5.525L13.775 4.825L14.5 5.525L15.2 6.225L14.5 5.525Z"
-            [attr.fill]="selectedOption === 'else' ? '#FFFFFF' : '#3B4A40'"
-            style="transition: fill 0.15s ease !important;"
-          />
-        </svg>
-</div>          </div>
-          <span>Ate something else</span>
-        </div>
-        <div class="radio-check-wrap">
-          <ion-icon *ngIf="selectedOption === 'else'" name="checkmark-circle" class="checked-green"></ion-icon>
-          <ion-icon *ngIf="selectedOption !== 'else'" name="chevron-forward-outline" class="arrow-icon"></ion-icon>
-        </div>
-      </div>
-
-      <!-- Option 3: Skipped the meal -->
-      <div 
-        class="option-card" 
-        [class.selected]="selectedOption === 'skipped'"
-        (click)="selectOption('skipped')">
-        <div class="option-left">
-          <div class="icon-circle" [class.active-green-bg]="selectedOption === 'skipped'">
-            <ion-icon name="ban-outline"></ion-icon>
-          </div>
-          <span>Skipped the meal</span>
-        </div>
-        <div class="radio-check-wrap">
-          <ion-icon *ngIf="selectedOption === 'skipped'" name="checkmark-circle" class="checked-green"></ion-icon>
-          <ion-icon *ngIf="selectedOption !== 'skipped'" name="chevron-forward-outline" class="arrow-icon"></ion-icon>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- Bottom Action Button -->
-    <div class="action-footer">
-      <button class="primary-action-btn" (click)="proceedNext()" type="button">
-        {{ selectedOption === 'else' ? 'Continue' : 'Move To Another Time' }}
-      </button>
-    </div>
-
+  <!-- Header: title + close -->
+  <div class="modal-header">
+    <h2>{{ mealData.modalTitle }}</h2>
+    <button class="close-btn" (click)="dismissModal()" type="button" aria-label="Close">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
   </div>
-</ion-content>
+
+  <!-- Planned meal / workout -->
+  <div class="planned-meal-box">
+    <span class="label-muted">{{ isWorkout ? 'PLANNED WORKOUT' : 'PLANNED MEAL' }}</span>
+    <h4>{{ mealData.title }}</h4>
+    <span class="calories-text" [class.small]="isWorkout">{{ isWorkout ? mealData.subtitle : mealData.calories }}</span>
+  </div>
+
+  <!-- Options -->
+  <div class="options-stack">
+    <button type="button" class="option-card" *ngFor="let opt of options"
+            [class.selected]="selectedOption === opt.key" (click)="selectOption(opt.key)">
+
+      <span class="icon-circle">
+        <ng-container [ngSwitch]="opt.icon">
+
+          <svg *ngSwitchCase="'check'" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21.801 10A10 10 0 1 1 17 3.335"></path>
+            <path d="m9 11 3 3L22 4"></path>
+          </svg>
+
+          <svg *ngSwitchCase="'edit'" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+            <path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"></path>
+          </svg>
+
+          <svg *ngSwitchCase="'ban'" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="9"></circle>
+            <line x1="5.6" y1="5.6" x2="18.4" y2="18.4"></line>
+          </svg>
+
+          <!-- <svg *ngSwitchCase="'play'" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="9"></circle>
+            <polygon points="10.2 8.6 16 12 10.2 15.4" fill="currentColor" stroke="none"></polygon>
+          </svg> -->
+
+          <svg *ngSwitchCase="'play'" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21.801 10A10 10 0 1 1 17 3.335"></path>
+            <path d="m9 11 3 3L22 4"></path>
+          </svg>
+
+        </ng-container>
+      </span>
+
+      <span class="option-label">{{ opt.label }}</span>
+    </button>
+  </div>
+
+</div>

@@ -1,0 +1,131 @@
+<ion-content [fullscreen]="true" class="nst-content">
+  <div class="nst-container">
+
+    <!-- Header -->
+    <div class="header">
+      <button class="back-btn" (click)="goBack()" type="button" aria-label="Back">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M19 12H5M12 19l-7-7 7-7" />
+        </svg>
+      </button>
+      <h1>Nothing scheduled today</h1>
+    </div>
+
+    <!-- Empty state -->
+    <div class="empty-state">
+      <h2>Nothing scheduled today</h2>
+      <p>Pick the first exercise and start logging,<br />or load one of Priya's templates.</p>
+
+      <button class="action-btn" type="button"
+        [class.active]="selectedAction === 'exercise'"
+        (click)="openSheet('exercise')">Pick Exercise</button>
+
+      <button class="action-btn" type="button"
+        [class.active]="selectedAction === 'template'"
+        (click)="openSheet('template')">Load Template</button>
+    </div>
+
+    <!-- Backdrop -->
+    <div class="backdrop" [class.show]="activeSheet !== null" (click)="closeSheet()"></div>
+
+    <!-- Sheet 1: Pick first exercise -->
+    <div class="bottom-sheet" [class.open]="activeSheet === 'exercise'">
+      <div class="sheet-handle"></div>
+
+      <div class="sheet-header">
+        <h3>Pick first exercise</h3>
+        <button class="close-btn" type="button" (click)="closeSheet()" aria-label="Close">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <div class="sheet-search">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="text" placeholder="Search 18 exercises" [(ngModel)]="exerciseSearch" (input)="filterExercises()" />
+      </div>
+
+      <h4 class="section-label">Recent With</h4>
+      <div class="chip-grid">
+        <button
+          type="button"
+          class="exercise-chip"
+          *ngFor="let ex of filteredExercises; let i = index"
+          [class.selected]="selectedIndex === i"
+          (click)="selectExercise(i)">
+          <span>{{ ex }}</span>
+          <svg *ngIf="selectedIndex === i" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+          </svg>
+        </button>
+      </div>
+
+      <button class="apply-btn" type="button" (click)="applyExercise()">Apply Filter</button>
+    </div>
+
+    <!-- Sheet 2: Load a Template -->
+    <div class="bottom-sheet" [class.open]="activeSheet === 'template'">
+      <div class="sheet-handle"></div>
+
+      <div class="sheet-header">
+        <h3>Load a Template</h3>
+        <button class="close-btn" type="button" (click)="closeSheet()" aria-label="Close">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <div class="template-list">
+        <div class="template-card" *ngFor="let tpl of templates" (click)="previewTemplate(tpl)">
+          <div class="tpl-top">
+            <div class="tpl-title-row">
+              <h5>{{ tpl.name }}</h5>
+              <span class="focus-pill"><i class="dot"></i>{{ tpl.focus }}</span>
+            </div>
+            <span class="more-dots">
+              <i></i><i></i><i></i>
+            </span>
+          </div>
+
+          <div class="last-used">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+            <span>{{ tpl.lastUsed }}</span>
+          </div>
+
+          <div class="tpl-divider"></div>
+
+          <div class="tpl-stats">
+            <span>{{ tpl.exercises.length }} exercises</span>
+            <span>~{{ tpl.duration }} mins</span>
+          </div>
+
+          <div class="tpl-chips">
+            <span class="tpl-chip" *ngFor="let e of tpl.exercises"><i class="bar"></i>{{ e }}</span>
+          </div>
+
+          <div class="tpl-footer">
+            <span class="preview-hint">Tap to preview routine</span>
+            <button class="start-btn" type="button" (click)="startWorkout(tpl); $event.stopPropagation()">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 3 20 12 6 21 6 3"></polygon></svg>
+              Start Workout
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <button class="apply-btn" type="button" (click)="closeSheet()">Apply Filter</button>
+    </div>
+
+  </div>
+</ion-content>

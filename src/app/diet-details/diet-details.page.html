@@ -1,64 +1,37 @@
 <!-- diet-details.page.html -->
-<div class="diet-container" [style.padding-top]="safeAreaTop">
+<div class="diet-container">
+
   <header class="header">
-    <button class="back-btn" (click)="goBack()">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    <button class="back-btn" (click)="goBack()" type="button" aria-label="Back">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M19 12H5M12 19l-7-7 7-7"/>
+      </svg>
     </button>
     <h1>Diet Details</h1>
   </header>
 
   <main class="content">
-    <!-- Main Meal Card with dynamic active green tag changing based on user selection -->
+
+    <!-- Meal name -->
     <div class="main-meal-card">
       <h2>{{ meal?.name || 'Brown Rice & Grilled Chicken Bowl' }}</h2>
-      <div class="meal-badges">
-        <button class="badge-item interactive" [class.active]="activeBadge === 'time'" (click)="onBadgeClick('time')">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-          {{ meal?.time || '25m' }}
-        </button>
-        <button class="badge-item interactive" [class.active]="activeBadge === 'calories'" (click)="onBadgeClick('calories')">
-        <img src="assets/images/fire.png" alt="Swap Task" style="width: 12px; height: 12px; object-fit: contain;"/>
-
-          {{ meal?.calories || '540 kcal' }}
-        </button>
-        <br>
-        <button class="badge-item interactive" [class.active]="activeBadge === 'category'" (click)="onBadgeClick('category')">
-          <img
-            src="assets/images/high.png"
-            alt="Accountability Coaches"
-           style="width: 12px; height: 12px; object-fit: contain;"/>
-
-          {{ meal?.category || 'High Protein' }}
-        </button>
-      </div>
     </div>
 
-    <!-- Macronutrients Grid -->
+    <!-- Macronutrients -->
     <div class="macros-grid">
-      <div class="macro-card">
-        <span class="macro-title">Protein</span>
-        <strong class="macro-value">{{ meal?.macros?.protein || '142g' }}</strong>
-        <div class="progress-bar"><div class="fill" style="width: 70%;"></div></div>
-      </div>
-      <div class="macro-card">
-        <span class="macro-title">Carbs</span>
-        <strong class="macro-value">{{ meal?.macros?.carbs || '198g' }}</strong>
-        <div class="progress-bar"><div class="fill" style="width: 55%;"></div></div>
-      </div>
-      <div class="macro-card">
-        <span class="macro-title">Fat</span>
-        <strong class="macro-value">{{ meal?.macros?.fat || '48g' }}</strong>
-        <div class="progress-bar"><div class="fill" style="width: 40%;"></div></div>
+      <div class="macro-card" *ngFor="let macro of macros">
+        <span class="macro-title">{{ macro.name }}</span>
+        <strong class="macro-value">{{ macro.value }}</strong>
+        <div class="progress-bar"><div class="fill" [style.width.%]="macro.percent"></div></div>
       </div>
     </div>
 
-    <!-- Micronutrients Section -->
+    <!-- Micronutrients -->
     <h3 class="section-title">Micronutrients</h3>
     <div class="micro-grid">
       <div class="micro-card" *ngFor="let micro of micronutrients">
         <div class="micro-header">
-          <span class="micro-name">{{ micro.name }}</span>
-          <span class="micro-percent" [style.color]="micro.color">{{ micro.percent }}</span>
+          <span class="micro-name">{{ micro.name }}</span><span class="micro-percent" [style.color]="micro.color">{{ micro.percent }}</span>
         </div>
         <div class="progress-bar small">
           <div class="fill" [style.width]="micro.percent" [style.background]="micro.color"></div>
@@ -67,7 +40,7 @@
       </div>
     </div>
 
-    <!-- Ingredients Box -->
+    <!-- Ingredients -->
     <div class="ingredients-container">
       <div class="ingredients-header">
         <h3>Ingredients</h3>
@@ -78,15 +51,17 @@
         <span class="ing-amount">{{ ing.amount }}</span>
       </div>
     </div>
+
   </main>
 
-  <!-- Footer Action Button -->
-<footer class="footer-action" [style.padding-bottom]="safeAreaBottom">
-  <button class="action-btn" [class.completed]="isCompleted" (click)="markAsDone()">
-    <span class="icon-circle-check">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-    </span>
-    {{ isCompleted ? 'Meal completed!' : 'Mark lunch as done' }}
-  </button>
-</footer>
-<br>
+  <!-- Footer action -->
+  <footer class="footer-action">
+    <button class="action-btn" [class.completed]="isCompleted" (click)="markAsDone()" type="button">
+      <span class="icon-circle-check">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </span>
+      {{ isCompleted ? 'Meal completed!' : 'Mark lunch as done' }}
+    </button>
+  </footer>
+
+</div>

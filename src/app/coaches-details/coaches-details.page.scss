@@ -1,10 +1,17 @@
+$navy: #0f172a;
+$green: #0fb67c;
+$green-dark: #0b8c64;
+$label: #8a95ab;
+$muted: #6b7280;
+$border: #e6e9ef;
+
 :host {
   display: block;
   width: 100%;
   height: 100%;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  background: #fcfcfc;
-  color: #1a1a1a;
+  font-family: 'Plus Jakarta Sans', 'Poppins', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #ffffff;
+  color: $navy;
   box-sizing: border-box;
 }
 
@@ -23,712 +30,453 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  background: #fcfcfc;
-  box-sizing: border-box;
+  background: #ffffff;
 }
 
+/* ---------- Header ---------- */
 .header {
-  width: 100%;
-  min-height: 56px;
   flex: 0 0 auto;
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 10px 16px;
-  background: #fcfcfc;
-  position: relative;
-  z-index: 10;
+  gap: 16px;
+  padding: 14px 20px 12px 20px;
+  background: #ffffff;
 
   .back-btn {
-    width: 34px;
-    height: 34px;
-    flex: 0 0 34px;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: $navy;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 4px;
-    margin: 0;
-    border: 0;
-    outline: none;
-    background: transparent;
-    color: #111111;
     cursor: pointer;
-
-    svg {
-      width: 24px;
-      height: 24px;
-      display: block;
-    }
-
-    &:active {
-      transform: scale(0.94);
-    }
   }
 
   h1 {
-    min-width: 0;
-    flex: 1 1 auto;
     margin: 0;
-    color: #111111;
-    font-size: clamp(18px, 5vw, 22px);
-    line-height: 1.2;
-    font-weight: 700;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    font-size: 18px;
+    font-weight: 600;
+    color: $navy;
   }
 }
 
+/* ---------- Scroll area ---------- */
 .content {
-  width: 100%;
-  min-width: 0;
   flex: 1 1 auto;
   min-height: 0;
   overflow-x: hidden;
   overflow-y: auto;
-  padding: 0 16px 24px;
+  padding: 8px 20px 28px 20px;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
 
   &::-webkit-scrollbar {
     display: none;
   }
+}
 
-  .coach-profile-header {
-    width: 100%;
-    min-width: 0;
-    display: flex;
-    align-items: center;
-    gap: clamp(12px, 4vw, 16px);
-    margin: 0 0 16px;
+/* ---------- Hero : PROGRAM ---------- */
+.hero-program {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin: 4px 0 30px 0;
 
-    .avatar {
-      width: clamp(68px, 20vw, 84px);
-      height: clamp(68px, 20vw, 84px);
-      flex: 0 0 clamp(68px, 20vw, 84px);
-      border-radius: 50%;
-      object-fit: cover;
-      border: 2px solid #00e676;
-      display: block;
-    }
-
-    .info {
-      min-width: 0;
-      flex: 1 1 auto;
-
-      h2 {
-        width: 100%;
-        min-width: 0;
-        margin: 0 0 8px;
-        color: #111111;
-        font-size: clamp(17px, 5.3vw, 20px);
-        line-height: 1.2;
-        font-weight: 800;
-        overflow-wrap: anywhere;
-      }
-
-      .badge {
-        max-width: 100%;
-        display: inline-flex;
-        align-items: center;
-        min-height: 26px;
-        padding: 5px 12px;
-        border-radius: 20px;
-        background: #00e676;
-        color: #000000;
-        font-size: clamp(10px, 3vw, 11px);
-        line-height: 1.2;
-        font-weight: 700;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-    }
+  .avatar {
+    width: 104px;
+    height: 104px;
+    flex: 0 0 104px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
   }
 
-  .author-info {
-    width: 100%;
+  .info {
     min-width: 0;
-    display: flex;
-    align-items: center;
-    flex-wrap: nowrap;
-    gap: 0;
-    margin: 0 0 20px;
-    color: #666666;
-    font-size: clamp(11px, 3.5vw, 13px);
-    line-height: 18px;
-    font-weight: 500;
-    white-space: nowrap;
-    overflow: hidden;
+    flex: 1 1 auto;
 
-    .author-name {
-      min-width: 0;
-      max-width: 48%;
-      color: #666666;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
-    .dot-separator {
-      flex: 0 0 auto;
-      margin: 0 6px;
-      color: #999999;
-      margin-left: 102px;
-    }
-
-    .location-badge {
-      min-width: 0;
-      max-width: 48%;
-      display: inline-flex;
-      align-items: center;
-      gap: 3px;
-      color: #666666;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-
-      svg {
-        width: 12px;
-        height: 12px;
-        flex: 0 0 12px;
-        display: block;
-        stroke: #666666;
-      }
-    }
-  }
-
-  .metrics-bar {
-    width: 100%;
-    min-width: 0;
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 0;
-    margin: 0 0 24px;
-    padding: 0;
-    background: #ffffff;
-    border: 1px solid #e5e5e5;
-    border-radius: 16px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
-    overflow: hidden;
-
-    .metric {
-      min-width: 0;
-      min-height: 76px;
-      padding: 14px 3px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      background: transparent;
-      border: 0;
-
-      &:not(:last-child) {
-        border-right: 1px solid #eeeeee;
-      }
-
-      strong {
-        display: block;
-        max-width: 100%;
-        margin: 0 0 4px;
-        color: #111111;
-        font-size: clamp(15px, 4.8vw, 20px);
-        line-height: 1.2;
-        font-weight: 800;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-
-      span {
-        display: block;
-        max-width: 100%;
-        color: #888888;
-        font-size: clamp(8px, 2.7vw, 10px);
-        line-height: 1.2;
-        font-weight: 500;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-    }
-  }
-
-  .about-section {
-    width: 100%;
-    min-width: 0;
-    margin: 0 0 20px;
-
-    h3 {
-      margin: 0 0 10px;
-      color: #111111;
-      font-size: clamp(21px, 6.5vw, 25px);
+    h2 {
+      margin: 0 0 10px 0;
+      font-size: 17px;
       line-height: 1.25;
       font-weight: 700;
+      color: $navy;
     }
 
-    p {
-      width: 100%;
-      margin: 0 0 16px;
-      color: #555555;
-      font-size: clamp(13px, 3.8vw, 14px);
-      line-height: 1.6;
-      font-weight: 400;
-      overflow-wrap: break-word;
-    }
-
-    h4 {
-      margin: 0 0 8px;
-      color: #111111;
-      font-size: clamp(12px, 3.8vw, 14px);
-      line-height: 1.3;
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      height: 28px;
+      padding: 0 18px;
+      border-radius: 20px;
+      background: #12d983;
+      color: #ffffff;
+      font-size: 13px;
       font-weight: 700;
-      letter-spacing: 0.5px;
+      margin-bottom: 10px;
     }
 
-    .tags {
-      width: 100%;
+    .location {
       display: flex;
-      flex-wrap: wrap;
       align-items: center;
       gap: 6px;
+      font-size: 12px;
+      color: $muted;
 
-      .tag {
-        max-width: 100%;
-        display: inline-flex;
-        align-items: center;
-        min-height: 28px;
-        padding: 6px 12px;
-        border-radius: 8px;
-        background: #f0f2f1;
-        color: #444444;
-        font-size: clamp(11px, 3.3vw, 12px);
-        line-height: 1.2;
-        font-weight: 500;
-        white-space: nowrap;
-      }
-    }
-  }
-
-  .weeks-accordion {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin: 0 0 24px;
-
-    .week-box {
-      width: 100%;
-      min-width: 0;
-      background: #ffffff;
-      border: 1px solid #e5e5e5;
-      border-radius: 14px;
-      overflow: hidden;
-
-      .week-header {
-        min-width: 0;
-        min-height: 54px;
-        padding: 14px 16px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 12px;
-        cursor: pointer;
-
-        h4 {
-          min-width: 0;
-          margin: 0;
-          color: #888888;
-          font-size: clamp(11px, 3.5vw, 13px);
-          line-height: 1.2;
-          font-weight: 700;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-        }
-
-        .sub {
-          min-width: 0;
-          color: #111111;
-          font-size: clamp(15px, 5vw, 18px);
-          line-height: 1.2;
-          font-weight: 500;
-          text-transform: uppercase;
-          white-space: nowrap;
-        }
-      }
-
-      .week-body {
-        padding: 4px 16px 16px;
-        border-top: 1px solid #f0f0f0;
-
-        .timeline-container {
-          position: relative;
-          width: 100%;
-          padding-left: 20px;
-          margin-top: 10px;
-
-          .vertical-connector-line {
-            position: absolute;
-            left: 36px;
-            top: 28px;
-            bottom: 28px;
-            width: 2px;
-            background: #e2fbe8;
-            z-index: 1;
-          }
-
-          .workout-item {
-            position: relative;
-            z-index: 2;
-            min-width: 0;
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            padding-top: 12px;
-
-            &:not(:last-child) {
-              padding-bottom: 12px;
-            }
-
-            .day-icon {
-              width: 32px;
-              height: 32px;
-              flex: 0 0 32px;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              border-radius: 50%;
-              color: #111111;
-              font-size: 13px;
-              line-height: 1;
-              font-weight: 700;
-              box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-            }
-
-            .details {
-              min-width: 0;
-              flex: 1 1 auto;
-              display: flex;
-              flex-direction: column;
-
-              strong {
-                min-width: 0;
-                color: #111111;
-                font-size: clamp(13px, 3.8vw, 14px);
-                line-height: 1.25;
-                font-weight: 700;
-                overflow-wrap: break-word;
-              }
-
-              small {
-                min-width: 0;
-                margin: 2px 0 4px;
-                color: #666666;
-                font-size: clamp(11px, 3.2vw, 12px);
-                line-height: 1.35;
-                overflow-wrap: break-word;
-              }
-
-              .workout-meta-info {
-                min-width: 0;
-                display: flex;
-                align-items: center;
-                flex-wrap: wrap;
-                gap: 8px 12px;
-                margin-top: 4px;
-
-                .meta-element {
-                  min-width: 0;
-                  display: inline-flex;
-                  align-items: center;
-                  gap: 4px;
-                  color: #888888;
-                  font-size: 11px;
-                  line-height: 1.2;
-                  font-weight: 700;
-                  letter-spacing: 0.3px;
-                  white-space: nowrap;
-                }
-              }
-            }
-          }
-        }
+      svg {
+        color: $green;
+        flex-shrink: 0;
       }
     }
   }
 }
 
-.footer-action {
-  width: 100%;
-  flex: 0 0 auto;
-  padding: 12px 16px;
-  background: #fcfcfc;
-  border-top: 1px solid #eeeeee;
-  z-index: 10;
+/* ---------- Hero : PROFILE ---------- */
+.hero-profile {
+  background: #ffffff;
+  border: 1px solid #e9eef6;
+  border-radius: 26px;
+  padding: 18px 18px 16px 18px;
+  margin: 4px 0 24px 0;
+  box-shadow: 0 6px 22px rgba(30, 64, 120, 0.08);
 
-  .subscribe-btn {
-    width: 100%;
+  .profile-top {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .avatar-wrap {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    flex: 0 0 80px;
+
+    .avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #0a9d6b;
+      padding: 2px;
+      background: #ffffff;
+      display: block;
+    }
+
+    .online-dot {
+      position: absolute;
+      right: 3px;
+      bottom: 4px;
+      width: 13px;
+      height: 13px;
+      border-radius: 50%;
+      background: #0a9d6b;
+      border: 2px solid #ffffff;
+    }
+  }
+
+  .info {
     min-width: 0;
-    min-height: 62px;
-    padding: 14px 20px;
-    margin: 0;
+    flex: 1 1 auto;
+
+    h2 {
+      margin: 0 0 8px 0;
+      font-size: 24px;
+      line-height: 1.15;
+      font-weight: 800;
+      color: $navy;
+    }
+
+    .badge-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+
+      .elite-badge {
+        display: inline-flex;
+        align-items: center;
+        height: 22px;
+        padding: 0 12px;
+        border-radius: 8px;
+        background: $green;
+        color: #ffffff;
+        font-size: 11px;
+        font-weight: 700;
+      }
+
+      .insta-btn {
+        padding: 0;
+        border: 0;
+        background: transparent;
+        display: flex;
+        cursor: pointer;
+      }
+    }
+
+    .location {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: $muted;
+
+      svg {
+        color: $green;
+        flex-shrink: 0;
+      }
+    }
+  }
+
+  .profile-divider {
+    height: 1px;
+    background: #edf0f5;
+    margin: 16px 0 14px 0;
+  }
+
+  .stats-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+
+    .stat {
+      background: #f7f9fc;
+      border: 1px solid #eef1f6;
+      border-radius: 14px;
+      padding: 10px 6px 11px 6px;
+      text-align: center;
+
+      .stat-value {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        font-size: 20px;
+        line-height: 1.2;
+        font-weight: 800;
+        color: $navy;
+      }
+
+      .stat-label {
+        margin-top: 3px;
+        font-size: 10px;
+        letter-spacing: 1px;
+        font-weight: 500;
+        color: $label;
+      }
+    }
+  }
+}
+
+/* ---------- Shared sections ---------- */
+.sections {
+  .section-label {
+    margin: 0 0 12px 0;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    color: $label;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 8px;
+    margin-bottom: 22px;
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      height: 26px;
+      padding: 0 11px;
+      border-radius: 8px;
+      background: #eceef2;
+      color: #4b5563;
+      font-size: 12px;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+  }
+
+  .contact-card {
+    display: grid;
+    grid-template-columns: 1.12fr 1fr;
+    gap: 8px;
+    padding: 12px 16px;
+    margin-bottom: 26px;
+    background: #ffffff;
+    border: 1px solid $border;
+    border-radius: 16px;
+    box-shadow: 0 2px 8px rgba(30, 64, 120, 0.04);
+
+    .contact-col {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+
+      .contact-label {
+        font-size: 9.5px;
+        letter-spacing: 1px;
+        font-weight: 500;
+        color: $label;
+      }
+
+      strong {
+        font-size: 12px;
+        font-weight: 700;
+        color: $navy;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+  }
+
+  .packages-head {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 12px;
-    border: 0;
-    border-radius: 16px;
-    background: #00e676;
-    color: #ffffff;
-    box-shadow: 0 4px 16px rgba(0, 230, 118, 0.3);
-    cursor: pointer;
+    margin-bottom: 14px;
 
-    &:active {
-      transform: scale(0.99);
+    .section-label {
+      margin: 0;
     }
 
-    .left-content {
-      min-width: 0;
-      flex: 1 1 auto;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      text-align: left;
-
-      .sub-label {
-        max-width: 100%;
-        margin: 0 0 2px;
-        color: #ffffff;
-        font-size:  9px;
-        line-height: 1.2;
-        font-weight: 700;
-        letter-spacing: 0.8px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-
-      .sub-title {
-        max-width: 100%;
-        color: #ffffff;
-        font-size:  16px;
-        line-height: 1.25;
-        font-weight: 700;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-    }
-
-    .price-tag {
-      flex: 0 0 auto;
-      color: #ffffff;
-      font-size: clamp(17px, 5.5vw, 20px);
-      line-height: 1.2;
+    .swipe-hint {
+      font-size: 12px;
       font-weight: 700;
-      white-space: nowrap;
+      color: #0e9f6e;
+    }
+  }
 
-      small {
-        font-size: clamp(10px, 3.3vw, 12px);
-        line-height: 1;
-        font-weight: 400;
+  .packages-scroll {
+    display: flex;
+    gap: 14px;
+    margin: 0 -20px 48px -20px;
+    padding: 2px 20px 4px 20px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    .package-card {
+      flex: 0 0 236px;
+      scroll-snap-align: start;
+      padding: 16px;
+      border: 1px solid $border;
+      border-radius: 18px;
+      background: #ffffff;
+      box-shadow: 0 2px 8px rgba(30, 64, 120, 0.04);
+
+      &.premium {
+        background: #ecfbf4;
+        border-color: #b9ebd5;
+      }
+
+      .pkg-top {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 8px;
+        margin-bottom: 14px;
+
+        .pkg-title {
+          min-width: 0;
+
+          h5 {
+            margin: 0 0 6px 0;
+            font-size: 19px;
+            line-height: 1.2;
+            font-weight: 700;
+            color: $navy;
+          }
+
+          p {
+            margin: 0;
+            font-size: 12px;
+            color: #6b7a99;
+            white-space: nowrap;
+          }
+        }
+
+        .pkg-price {
+          text-align: right;
+          flex-shrink: 0;
+
+          strong {
+            display: block;
+            font-size: 20px;
+            line-height: 1.2;
+            font-weight: 800;
+            color: $navy;
+          }
+
+          span {
+            font-size: 11px;
+            color: $label;
+          }
+        }
+      }
+
+      .pkg-btn {
+        width: 100%;
+        height: 40px;
+        border-radius: 12px;
+        border: 1px solid $navy;
+        background: #ffffff;
+        color: $navy;
+        font-size: 13px;
+        font-weight: 700;
+        cursor: pointer;
+
+        &.filled {
+          background: $green-dark;
+          border-color: $green-dark;
+          color: #ffffff;
+        }
       }
     }
+  }
+
+  .about-title {
+    margin: 0 0 8px 0;
+    font-size: 18px;
+    font-weight: 700;
+    color: $navy;
+  }
+
+  .about-text {
+    margin: 0;
+    font-size: 12.5px;
+    line-height: 1.6;
+    color: #374151;
+  }
+}
+
+/* Program view: sections sit slightly inset, like the design */
+.is-program .sections {
+  padding: 0 8px;
+
+  .packages-scroll {
+    margin-left: -28px;
+    margin-right: -28px;
+    padding-left: 28px;
+    padding-right: 28px;
   }
 }
 
 @media (max-width: 360px) {
-  .header {
-    min-height: 52px;
-    gap: 8px;
-    padding-left: 12px;
-    padding-right: 12px;
-
-    .back-btn {
-      width: 32px;
-      height: 32px;
-      flex-basis: 32px;
-
-      svg {
-        width: 22px;
-        height: 22px;
-      }
-    }
-
-    h1 {
-      font-size: 18px;
-    }
+  .hero-profile .info h2 {
+    font-size: 21px;
   }
-
-  .content {
-    padding-left: 12px;
-    padding-right: 12px;
-    padding-bottom: 20px;
-
-    .coach-profile-header {
-      gap: 10px;
-      margin-bottom: 14px;
-
-      .avatar {
-        width: 64px;
-        height: 64px;
-        flex-basis: 64px;
-      }
-
-      .info {
-        h2 {
-          font-size: 17px;
-          margin-bottom: 6px;
-        }
-
-        .badge {
-          min-height: 24px;
-          padding: 4px 9px;
-          font-size: 9px;
-        }
-      }
-    }
-
-    .author-info {
-      margin-bottom: 16px;
-      font-size: 11px;
-
-      .dot-separator {
-        margin-left: 4px;
-        margin-right: 4px;
-      }
-
-      .author-name {
-        max-width: 46%;
-      }
-
-      .location-badge {
-        max-width: 46%;
-      }
-    }
-
-    .metrics-bar {
-      margin-bottom: 20px;
-      border-radius: 13px;
-
-      .metric {
-        min-height: 68px;
-        padding: 12px 2px;
-
-        strong {
-          font-size: 14px;
-        }
-
-        span {
-          font-size: 8px;
-        }
-      }
-    }
-
-    .about-section {
-      h3 {
-        font-size: 21px;
-      }
-
-      p {
-        font-size: 13px;
-        line-height: 1.55;
-      }
-
-      h4 {
-        font-size: 12px;
-      }
-
-      .tags {
-        gap: 5px;
-
-        .tag {
-          padding: 5px 9px;
-          font-size: 11px;
-        }
-      }
-    }
-
-    .weeks-accordion {
-      .week-box {
-        .week-header {
-          padding-left: 12px;
-          padding-right: 12px;
-        }
-
-        .week-body {
-          padding-left: 12px;
-          padding-right: 12px;
-
-          .timeline-container {
-            padding-left: 12px;
-
-            .vertical-connector-line {
-              left: 28px;
-            }
-
-            .workout-item {
-              gap: 9px;
-
-              .day-icon {
-                width: 30px;
-                height: 30px;
-                flex-basis: 30px;
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-
-  .footer-action {
-    padding-left: 12px;
-    padding-right: 12px;
-    padding-top: 10px;
-
-    .subscribe-btn {
-      min-height: 58px;
-      padding: 12px 15px;
-      border-radius: 14px;
-      gap: 8px;
-
-      .price-tag {
-        font-size: 20px;
-      }
-    }
-  }
-}
-
-@media (min-width: 361px) and (max-width: 390px) {
-  .content {
-    .metrics-bar {
-      .metric {
-        padding-left: 3px;
-        padding-right: 3px;
-      }
-    }
-  }
-}
-
-@media (min-width: 391px) and (max-width: 480px) {
-  .content {
-    padding-left: 16px;
-    padding-right: 16px;
-  }
-}
-
-@media (min-width: 481px) {
-  .coach-container {
-    border-left: 1px solid #f0f0f0;
-    border-right: 1px solid #f0f0f0;
-  }
-}
-
-@media (min-width: 600px) {
-  .coach-container {
-    max-width: 480px;
+  .hero-program .info h2 {
+    font-size: 16px;
   }
 }

@@ -10,6 +10,7 @@ interface Coach {
   bio: string;
   tags: string[];
   price: number;
+  rating: number;
   image: string;
   goal: string;
 }
@@ -18,29 +19,33 @@ interface Coach {
   selector: 'app-add-coaches',
   templateUrl: './add-coaches.page.html',
   styleUrls: ['./add-coaches.page.scss'],
-  standalone:false,
+  standalone: false,
 })
 export class AddCoachesPage implements OnInit {
 
   searchQuery: string = '';
   isFilterOpen: boolean = false;
 
+  // Active horizontal chip selection
+  selectedCategory: string = 'All';
+
   specialtyOptions: string[] = ['Strength', 'Nutrition', 'Running', 'Yoga', 'Crossfit'];
   goalOptions: string[] = ['Fat Loss', 'Muscle Gain', 'Running', 'Yoga', 'Crossfit'];
 
-  selectedSpecialties: string[] = ['Strength'];
-  selectedGoals: string[] = ['Fat Loss'];
+  selectedSpecialties: string[] = [];
+  selectedGoals: string[] = [];
 
   coaches: Coach[] = [
     {
       id: 1,
-      name: 'Rohan Kapoor',
+      name: 'Anika Kulkarni',
       specialty: 'Strength & Hypertrophy',
       experience: 8,
       location: 'Mumbai',
       bio: 'I help professionals build sustainable strength habits without sacrificing their lifestyle.',
-      tags: ['Hypertrophy', 'Powerlifting'],
+      tags: ['Powerlifting', 'Hypertrophy'],
       price: 2500,
+      rating: 4.9,
       image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80',
       goal: 'Muscle Gain'
     },
@@ -51,9 +56,10 @@ export class AddCoachesPage implements OnInit {
       experience: 5,
       location: 'Mumbai',
       bio: 'Data-driven nutrition and training tailored to your specific hormonal profile...',
-      tags: ['Hypertrophy', 'Powerlifting'],
+      tags: ['Powerlifting', 'Hypertrophy'],
       price: 1800,
-      image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80',
+      rating: 4.9,
+      image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80',
       goal: 'Fat Loss'
     }
   ];
@@ -63,7 +69,7 @@ export class AddCoachesPage implements OnInit {
   constructor(private router: Router) {}
 
   ngOnInit(): void {
-    this.filteredCoaches = this.coaches;
+    this.filterCoaches();
   }
 
   goBack(): void {
@@ -76,6 +82,11 @@ export class AddCoachesPage implements OnInit {
 
   toggleFilter(open: boolean): void {
     this.isFilterOpen = open;
+  }
+
+  selectCategory(category: string): void {
+    this.selectedCategory = category;
+    this.filterCoaches();
   }
 
   toggleSpecialty(spec: string): void {
@@ -99,6 +110,7 @@ export class AddCoachesPage implements OnInit {
   clearFilters(): void {
     this.selectedSpecialties = [];
     this.selectedGoals = [];
+    this.filterCoaches();
   }
 
   getActiveFilterCount(): number {
@@ -115,18 +127,30 @@ export class AddCoachesPage implements OnInit {
   }
 
   filterCoaches(): void {
+    const query = this.searchQuery.toLowerCase();
+    const category = this.selectedCategory.toLowerCase();
+
     this.filteredCoaches = this.coaches.filter(coach => {
-      const matchesSearch = this.searchQuery === '' || 
-        coach.name.toLowerCase().includes(this.searchQuery.toLowerCase()) || 
-        coach.specialty.toLowerCase().includes(this.searchQuery.toLowerCase());
+      const matchesSearch = query === '' ||
+        coach.name.toLowerCase().includes(query) ||
+        coach.specialty.toLowerCase().includes(query);
 
-      const matchesSpecialty = this.selectedSpecialties.length === 0 || 
-        this.selectedSpecialties.some(spec => coach.specialty.toLowerCase().includes(spec.toLowerCase()) || coach.tags.some(t => t.toLowerCase().includes(spec.toLowerCase())));
+      const matchesCategory = this.selectedCategory === 'All' ||
+        coach.specialty.toLowerCase().includes(category) ||
+        coach.tags.some(t => t.toLowerCase().includes(category));
 
-      const matchesGoal = this.selectedGoals.length === 0 || 
+      const matchesSpecialty = this.selectedSpecialties.length === 0 ||
+        this.selectedSpecialties.some(spec =>
+          coach.specialty.toLowerCase().includes(spec.toLowerCase()) ||
+          coach.tags.some(t => t.toLowerCase().includes(spec.toLowerCase()))
+        );
+
+      const matchesGoal = this.selectedGoals.length === 0 ||
         this.selectedGoals.includes(coach.goal);
 
-      return matchesSearch && (matchesSpecialty || matchesGoal);
+      const noSheetFilters = this.selectedSpecialties.length === 0 && this.selectedGoals.length === 0;
+
+      return matchesSearch && matchesCategory && (noSheetFilters || matchesSpecialty || matchesGoal);
     });
   }
 

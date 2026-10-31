@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-find-trainer',
@@ -9,13 +10,13 @@ import { Router } from '@angular/router';
 })
 export class FindTrainerPage implements OnInit {
 
-  selectedOptionType: string | null = null;
+  selectedOptionType: string | null = 'expert';
+  inviteLink: string = 'hyynd.app/priya-sharma';
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private toastCtrl: ToastController) {}
 
   ngOnInit(): void {
-    // No option selected initially
-    this.selectedOptionType = null;
+    this.selectedOptionType = 'expert';
   }
 
   goBack(): void {
@@ -23,7 +24,6 @@ export class FindTrainerPage implements OnInit {
   }
 
   selectOption(type: string): void {
-
     // Highlight selected option
     this.selectedOptionType = type;
 
@@ -41,4 +41,34 @@ export class FindTrainerPage implements OnInit {
     this.router.navigate(['/' + route]);
   }
 
+  async copyLink(): Promise<void> {
+    try {
+      await navigator.clipboard.writeText(this.inviteLink);
+      this.showToast('Link copied');
+    } catch (e) {
+      this.showToast('Could not copy the link');
+    }
+  }
+
+  async shareLink(): Promise<void> {
+    if (navigator.share) {
+      try {
+        await navigator.share({ url: 'https://' + this.inviteLink });
+      } catch (e) {
+        // user cancelled the share sheet
+      }
+    } else {
+      this.copyLink();
+    }
+  }
+
+  private async showToast(message: string): Promise<void> {
+    const toast = await this.toastCtrl.create({
+      message,
+      duration: 1500,
+      position: 'top',
+      color: 'success',
+    });
+    await toast.present();
+  }
 }

@@ -1,80 +1,95 @@
-<ion-content [fullscreen]="true" class="modal-content">
-  <div class="modal-card-wrapper">
-    
-    <!-- Header Title & Close -->
+<!-- how-did-you.page.html -->
+<div class="overlay" (click)="dismissModal()">
+  <div class="modal-card-wrapper" (click)="$event.stopPropagation()">
+
+    <div class="sheet-handle"></div>
+
+    <!-- Header -->
     <div class="modal-header">
       <h2>How did You Have?</h2>
-      <button class="close-btn" (click)="dismissModal()" type="button">
-        <ion-icon name="close"></ion-icon>
+      <button class="close-btn" (click)="dismissModal()" type="button" aria-label="Close">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
       </button>
     </div>
 
-    <!-- Planned Meal Info Box -->
+    <!-- Planned meal -->
     <div class="planned-meal-box">
       <span class="label-muted">PLANNED MEAL</span>
       <h4>{{ mealData.title }}</h4>
       <span class="calories-text">{{ mealData.calories }}</span>
     </div>
 
-    <!-- Selection Section with Custom Responsive Dropdown Directly Below -->
-    <div class="selection-section">
-      <span class="label-muted">YOU HAD</span>
-      
-      <!-- Trigger / Input Box for Custom Dropdown -->
-      <div class="custom-dropdown-container" [class.open]="isDropdownOpen">
-        <div class="dropdown-trigger-box" (click)="toggleDropdown()">
-          <span class="selected-text">{{ selectedAlternativeMeal || 'Select meal' }}</span>
-          <ion-icon name="chevron-down-outline" class="dropdown-arrow"></ion-icon>
-        </div>
+    <!-- Ate less / Ate more -->
+    <div class="portion-row">
+      <button type="button" class="portion-btn" [class.selected]="portion === 'less'" (click)="selectPortion('less')">Ate Less</button>
+      <button type="button" class="portion-btn" [class.selected]="portion === 'more'" (click)="selectPortion('more')">Ate More</button>
+    </div>
 
-        <!-- Responsive Dropdown List Positioned Directly Below -->
-        <div class="dropdown-options-list" *ngIf="isDropdownOpen">
-          <div 
-            class="dropdown-option-item" 
-            *ngFor="let item of mealOptions" 
-            (click)="selectMealOption(item)">
+    <!-- OR divider -->
+    <div class="or-divider">
+      <span class="line"></span>
+      <span class="or-text">OR</span>
+      <span class="line"></span>
+    </div>
+
+    <!-- You had -->
+    <div class="selection-section">
+      <span class="label-strong">YOU HAD</span>
+
+      <div class="search-wrap">
+        <input
+          type="text"
+          class="meal-input"
+          [placeholder]="inputPlaceholder"
+          [(ngModel)]="searchText"
+          (focus)="openDropdown()"
+          (blur)="closeDropdown()"
+          (keyup.enter)="useTypedMeal()"
+        />
+
+        <div class="dropdown-options-list" *ngIf="isDropdownOpen && (filteredOptions.length || showCustomOption)">
+          <div class="dropdown-option-item" *ngFor="let item of filteredOptions"
+               (mousedown)="$event.preventDefault()" (click)="selectMealOption(item)">
             <span class="option-name">{{ item.name }}</span>
-            <span class="option-calories">~{{ item.calories }} kcal</span>
+            <span class="option-calories">~{{ item.calories }}</span>
+          </div>
+
+          <div class="dropdown-option-item custom" *ngIf="showCustomOption"
+               (mousedown)="$event.preventDefault()" (click)="useTypedMeal()">
+            <span class="option-name">Use "{{ searchText.trim() }}"</span>
+            <span class="option-calories">custom</span>
           </div>
         </div>
       </div>
 
-      <!-- Preview Displayed Directly Without Card Background/Container -->
+      <!-- Selected meal preview -->
       <div class="preview-selected-inline">
         <div class="preview-text" *ngIf="!isEditing">
           <h4>{{ selectedAlternativeMeal || 'No meal selected' }}</h4>
           <span class="calc-tag">Rough calories: ~{{ selectedCalories }}</span>
         </div>
-        
-        <!-- Inline Editing View when Pencil is clicked -->
+
         <div class="preview-edit-mode" *ngIf="isEditing">
-          <input type="text" [(ngModel)]="selectedAlternativeMeal" class="edit-input-field" />
-          <button class="save-btn" (click)="isEditing = false" type="button">Done</button>
+          <input type="text" [(ngModel)]="editName" class="edit-input-field" (keyup.enter)="saveEdit()" />
+          <button class="save-btn" (click)="saveEdit()" type="button">Save</button>
         </div>
 
-        <button class="edit-icon-btn" (click)="toggleEdit()" title="Edit meal" type="button">
-          <img src="assets/images/pen.png" alt="Swap Task" class="feature-icon-img" style="margin-right: 18px;" />
+        <button class="edit-icon-btn" *ngIf="!isEditing" (click)="toggleEdit()" title="Edit meal" type="button" aria-label="Edit meal">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/>
+            <path d="m15 5 4 4"/>
+          </svg>
         </button>
       </div>
     </div>
 
-    <!-- Note Input Field -->
-    <div class="input-group-field">
-      <label class="label-muted">Note for Rohan (optional)</label>
-      <textarea 
-        [(ngModel)]="swapNote" 
-        placeholder="Explain why you swapped or add details..."
-        rows="3"
-        class="note-textarea">
-      </textarea>
-    </div>
-
-    <!-- Submit Action Button -->
+    <!-- Done -->
     <div class="action-footer">
-      <button class="primary-action-btn" (click)="logSwap()" type="button">
-        Log Swap for Lunch
-      </button>
+      <button class="primary-action-btn" (click)="logSwap()" type="button" [disabled]="!selectedAlternativeMeal">Done</button>
     </div>
 
   </div>
-</ion-content>
+</div>

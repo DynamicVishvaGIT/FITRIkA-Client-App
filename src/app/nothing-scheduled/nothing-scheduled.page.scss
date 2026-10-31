@@ -1,0 +1,385 @@
+$navy: #111c33;
+$green: #12b57a;
+$green-light: #e3f6ee;
+$text-main: #0f172a;
+$text-muted: #6b7280;
+$border: #e5e7eb;
+
+.nst-content {
+  --background: #ffffff;
+  --padding-top: 0;
+  --padding-bottom: 0;
+  --padding-start: 0;
+  --padding-end: 0;
+}
+
+.nst-container {
+  position: relative;
+  min-height: 100vh;
+  background: #ffffff;
+  font-family: 'Plus Jakarta Sans', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  /* ---------- Header ---------- */
+  .header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: calc(env(safe-area-inset-top) + 16px) 16px 8px 16px;
+
+    .back-btn {
+      background: none;
+      border: none;
+      padding: 0;
+      color: $text-main;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    h1 {
+      font-size: 17px;
+      font-weight: 700;
+      color: $text-main;
+      margin: 0;
+    }
+  }
+
+  /* ---------- Empty state ---------- */
+  .empty-state {
+    padding: 22vh 10px 0 10px;
+    text-align: center;
+
+    h2 {
+      font-size: 17px;
+      font-weight: 700;
+      color: $text-main;
+      margin: 0 0 8px 0;
+    }
+
+    p {
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 1.5;
+      color: #374151;
+      margin: 0 0 24px 0;
+    }
+
+    .action-btn {
+      display: block;
+      width: 100%;
+      height: 42px;
+      border-radius: 16px;
+      font-size: 15px;
+      font-weight: 400;
+      cursor: pointer;
+      background: #ffffff;
+      color: $text-main;
+      border: 1px solid $navy;
+      margin-bottom: 10px;
+      transition: background 0.2s ease, color 0.2s ease;
+
+      &.active {
+        background: $navy;
+        color: #ffffff;
+      }
+    }
+  }
+
+  /* ---------- Backdrop ---------- */
+  .backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+    z-index: 100;
+
+    &.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+  }
+
+  /* ---------- Bottom sheet ---------- */
+  .bottom-sheet {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #ffffff;
+    border-top-left-radius: 24px;
+    border-top-right-radius: 24px;
+    padding: 12px 16px calc(env(safe-area-inset-bottom) + 28px) 16px;
+    transform: translateY(105%);
+    transition: transform 0.3s ease-in-out;
+    z-index: 110;
+    max-height: 85vh;
+    overflow-y: auto;
+
+    &.open {
+      transform: translateY(0);
+    }
+
+    .sheet-handle {
+      width: 32px;
+      height: 4px;
+      border-radius: 2px;
+      background: #d1d5db;
+      margin: 0 auto 22px auto;
+    }
+
+    .sheet-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+
+      h3 {
+        font-size: 20px;
+        font-weight: 600;
+        color: $text-main;
+        margin: 0;
+      }
+
+      .close-btn {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        border: none;
+        background: #f1f2f4;
+        color: $text-main;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+      }
+    }
+
+    /* Exercise sheet */
+    .sheet-search {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      height: 38px;
+      border: 1px solid #cfd4dc;
+      border-radius: 10px;
+      padding: 0 12px;
+      color: #8b93a7;
+      margin-bottom: 22px;
+
+      input {
+        flex: 1;
+        min-width: 0;
+        border: none;
+        outline: none;
+        background: transparent;
+        font-size: 15px;
+        color: $text-main;
+
+        &::placeholder {
+          color: #6b7280;
+        }
+      }
+    }
+
+    .section-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: $text-main;
+      margin: 0 0 12px 0;
+    }
+
+    .chip-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 26px;
+
+      .exercise-chip {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        height: 32px;
+        padding: 0 14px;
+        border-radius: 20px;
+        border: 1px solid #d5d9e0;
+        background: #ffffff;
+        color: #374151;
+        font-size: 14px;
+        cursor: pointer;
+        white-space: nowrap;
+
+        svg {
+          color: #2fd39a;
+          flex-shrink: 0;
+        }
+
+        &.selected {
+          background: $navy;
+          border-color: $navy;
+          color: #ffffff;
+          padding-right: 10px;
+        }
+      }
+    }
+
+    .apply-btn {
+      width: 100%;
+      height: 42px;
+      border: none;
+      border-radius: 10px;
+      background: $navy;
+      color: #ffffff;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    /* Template sheet */
+    .template-list {
+      margin-bottom: 26px;
+    }
+
+    .template-card {
+      border: 1px solid $border;
+      border-radius: 12px;
+      padding: 14px 14px 12px 14px;
+      box-shadow: 0 1px 4px rgba(15, 23, 42, 0.05);
+      cursor: pointer;
+
+      & + .template-card {
+        margin-top: 10px;
+      }
+
+      .tpl-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+
+        .tpl-title-row {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+
+          h5 {
+            font-size: 16px;
+            font-weight: 700;
+            color: $text-main;
+            margin: 0;
+          }
+        }
+
+        .focus-pill {
+          display: inline-flex;
+          align-items: center;
+          gap: 4px;
+          background: $green-light;
+          border: 1px solid #bfe9d8;
+          color: #0f9a68;
+          font-size: 8px;
+          font-weight: 500;
+          padding: 3px 8px 3px 6px;
+          border-radius: 6px;
+
+          .dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: $green;
+          }
+        }
+
+        .more-dots {
+          display: flex;
+          flex-direction: column;
+          gap: 2px;
+          padding: 2px 4px;
+
+          i {
+            width: 2.5px;
+            height: 2.5px;
+            border-radius: 50%;
+            background: #9ca3af;
+          }
+        }
+      }
+
+      .last-used {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 11px;
+        color: $text-muted;
+        margin: 6px 0 12px 0;
+      }
+
+      .tpl-divider {
+        border-top: 1px dashed #d9dde3;
+        margin-bottom: 10px;
+      }
+
+      .tpl-stats {
+        display: flex;
+        justify-content: space-between;
+        font-size: 8px;
+        color: $text-muted;
+        margin-bottom: 8px;
+      }
+
+      .tpl-chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin-bottom: 14px;
+
+        .tpl-chip {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          background: #f1f6f4;
+          border-radius: 6px;
+          padding: 5px 9px 5px 6px;
+          font-size: 12px;
+          color: #374151;
+
+          .bar {
+            width: 2.5px;
+            height: 10px;
+            border-radius: 2px;
+            background: $green;
+          }
+        }
+      }
+
+      .tpl-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .preview-hint {
+          font-size: 8px;
+          color: $text-muted;
+        }
+
+        .start-btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          height: 24px;
+          padding: 0 12px;
+          border: none;
+          border-radius: 6px;
+          background: $green;
+          color: #ffffff;
+          font-size: 12px;
+          font-weight: 600;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}

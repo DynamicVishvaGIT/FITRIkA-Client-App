@@ -1,87 +1,165 @@
-<!-- task-detail.page.html -->
-<div class="task-container" [style.padding-top]="safeAreaTop">
+<!-- task-detail-screen.page.html -->
+<div class="task-container">
+
   <!-- Header -->
   <header class="header">
-    <button class="back-btn" (click)="goBack()">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    <button class="back-btn" (click)="goBack()" type="button" aria-label="Back">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
     </button>
     <h1>Task Detail Screen</h1>
   </header>
 
   <main class="content">
-    <!-- Top Subheader Info -->
+
+    <!-- Session info -->
     <div class="session-info-bar">
       <div class="session-left">
-        <span class="sub-text">vs last leg day - 7 days ago</span>
-        <strong class="main-title">PRIYA S. - LEG DAY</strong>
+        <span class="sub-text">vs last leg day • 7 days ago</span>
+        <strong class="main-title">PRIYA S. • LEG DAY</strong>
       </div>
       <div class="session-right">
-        <span class="session-label">SESSION</span>
-        <strong class="timer-value">{{ timerDisplay }}</strong>
+        <div class="session-time">
+          <span class="session-label">SESSION</span>
+          <strong class="timer-value">{{ timerDisplay }}</strong>
+        </div>
+        <button *ngIf="!isVsLastActive" class="finish-btn" type="button" (click)="finishWorkout()">Finish</button>
       </div>
     </div>
 
-    <!-- Quick Preview Cards -->
-    <div class="preview-cards-row">
-      <div class="preview-card">
-        <span class="ex-name">Leg press</span>
-        <span class="ex-stat">top 140 × 10</span>
-      </div>
-      <div class="preview-card">
-        <span class="ex-name">Leg extension</span>
-        <span class="ex-stat">top 55 × 10</span>
-      </div>
+    <!-- Today's workout row -->
+    <div class="workout-row" *ngIf="!isVsLastActive">
+      <span class="workout-label">TODAY'S WORKOUT • {{ loggedCount }}/{{ totalExercises }} LOGGED</span>
+      <button class="edit-btn" [class.on]="editMode" type="button" (click)="toggleEditMode()" aria-label="Edit workout">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+          <path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"/>
+        </svg>
+      </button>
     </div>
 
-    <!-- Active Exercise Card with VS LAST toggle button -->
+    <!-- Quick preview cards -->
+    <div class="preview-cards-row" [class.scroll]="isVsLastActive">
+      <div class="preview-card" *ngFor="let ex of previewExercises; let i = index">
+        <button *ngIf="editMode && !isVsLastActive" class="remove-chip" type="button" (click)="removeExercise(i)" aria-label="Remove">×</button>
+        <span class="ex-name">{{ ex.name }}</span>
+        <span class="ex-stat">top {{ ex.top }}</span>
+      </div>
+
+      <!-- current exercise card (compare view) -->
+      <div class="preview-card" *ngIf="isVsLastActive">
+        <span class="ex-name">Leg curl</span>
+        <span class="ex-stat">top {{ currentTop }}</span>
+      </div>
+
+      <!-- add card (log view) -->
+      <button *ngIf="!isVsLastActive" class="preview-card add-card" type="button" (click)="addExercise()">+ Add</button>
+    </div>
+
+    <!-- Active exercise card -->
     <div class="active-exercise-card">
       <div class="exercise-header-row">
         <div class="ex-meta">
-          <span class="set-label">EXERCISE 4 • SET 1</span>
+          <span class="set-label">EXERCISE 4 • SET {{ currentSet }}</span>
           <div class="ex-title-row">
             <span class="current-exercise-name">Leg curl</span>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
           </div>
         </div>
-        <button class="vs-last-btn" [class.active]="isVsLastActive" (click)="toggleVsLast()">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-          VS LAST
+
+        <button class="vs-last-btn" [class.active]="isVsLastActive" type="button" (click)="toggleVsLast()">
+          <svg *ngIf="!isVsLastActive" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><polyline points="3 3 3 8 8 8"/><polyline points="12 7 12 12 15 14"/>
+          </svg>
+          <svg *ngIf="isVsLastActive" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/>
+            <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/>
+          </svg>
+          {{ isVsLastActive ? 'TODAY' : 'VS LAST' }}
         </button>
       </div>
     </div>
 
-    <!-- Counters Grid (Weight & Reps) -->
-    <div class="counters-grid">
-      <!-- Weight Counter -->
-      <div class="counter-card">
-        <span class="counter-title">WEIGHT</span>
-        <strong class="counter-value">{{ weight }}</strong>
-        <div class="slider-graphic">
-          <span></span><span></span><span></span><span></span><span></span>
+    <!-- LOG VIEW: today's sets -->
+    <div class="sets-card" *ngIf="!isVsLastActive">
+      <div class="set-row" *ngFor="let s of todaySets; let i = index" [class.editing]="editingIndex === i">
+        <span class="set-name">SET {{ i + 1 }}</span>
+        <span class="set-weight"><strong>{{ s.weight }}</strong> <small>kg</small></span>
+        <span class="set-x">×</span>
+        <strong class="set-reps">{{ s.reps }}</strong>
+
+        <ng-container *ngIf="getChip(i) as chip">
+          <span class="chip" [ngClass]="chip.kind">
+            <span *ngIf="chip.kind === 'up'" class="arrow">▲</span>
+            <span *ngIf="chip.kind === 'down'" class="arrow">▼</span>
+            {{ chip.text }}
+          </span>
+        </ng-container>
+
+        <button *ngIf="i !== todaySets.length - 1" class="pencil-btn" type="button" (click)="editSet(i)" aria-label="Edit set">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- COMPARE VIEW: today vs last week -->
+    <div class="compare-card" *ngIf="isVsLastActive">
+      <div class="compare-col today">
+        <div class="col-head">
+          <span class="head-left"><i class="live-dot"></i>TODAY</span>
+          <span class="badge live">LIVE</span>
         </div>
-        <span class="counter-unit">kg</span>
-        <div class="counter-actions">
-          <button class="count-btn" (click)="decrementWeight()">−</button>
-          <button class="count-btn" (click)="incrementWeight()">+</button>
+        <div class="cmp-row" *ngFor="let r of compareRows" [class.empty]="!todaySets[r]">
+          <span class="cmp-name">SET{{ r + 1 }}</span>
+          <span class="cmp-val" *ngIf="todaySets[r]">{{ todaySets[r].weight }} <em>×</em> {{ todaySets[r].reps }}</span>
+          <span class="cmp-val dash" *ngIf="!todaySets[r]">–</span>
         </div>
       </div>
 
-      <!-- Reps Counter -->
-      <div class="counter-card">
-        <span class="counter-title">REPS</span>
-        <strong class="counter-value">{{ reps }}</strong>
-        <div class="slider-graphic">
-          <span></span><span></span><span></span><span></span><span></span>
+      <div class="compare-col last">
+        <div class="col-head">
+          <span class="head-left">LAST WEEK</span>
+          <span class="badge old">-7d</span>
         </div>
-        <span class="counter-unit">reps</span>
-        <div class="counter-actions">
-          <button class="count-btn" (click)="decrementReps()">−</button>
-          <button class="count-btn" (click)="incrementReps()">+</button>
+        <div class="cmp-row" *ngFor="let r of compareRows" [class.empty]="!lastWeekSets[r]">
+          <span class="cmp-name">SET{{ r + 1 }}</span>
+          <span class="cmp-val" *ngIf="lastWeekSets[r]">{{ lastWeekSets[r].weight }} <em>×</em> {{ lastWeekSets[r].reps }}</span>
+          <span class="cmp-val dash" *ngIf="!lastWeekSets[r]">–</span>
         </div>
       </div>
     </div>
+
+    <!-- Counters -->
+    <div class="counters-grid">
+      <div class="counter-card">
+        <span class="counter-title">WEIGHT</span>
+        <strong class="counter-value">{{ weight }}</strong>
+        <div class="ruler"><i *ngFor="let t of ticks" [class.tall]="t === 4"></i></div>
+        <span class="counter-unit">kg</span>
+        <div class="counter-actions">
+          <button class="count-btn" type="button" (click)="decrementWeight()">−</button>
+          <button class="count-btn" type="button" (click)="incrementWeight()">+</button>
+        </div>
+      </div>
+
+      <div class="counter-card">
+        <span class="counter-title">REPS</span>
+        <strong class="counter-value">{{ reps }}</strong>
+        <div class="ruler"><i *ngFor="let t of ticks" [class.tall]="t === 4"></i></div>
+        <span class="counter-unit">reps</span>
+        <div class="counter-actions">
+          <button class="count-btn" type="button" (click)="decrementReps()">−</button>
+          <button class="count-btn" type="button" (click)="incrementReps()">+</button>
+        </div>
+      </div>
+    </div>
+
   </main>
 
-  <!-- Bottom Navigation Bar -->
-  
+  <!-- Log Set footer -->
+  <footer class="footer-action" *ngIf="!isVsLastActive">
+    <button class="log-btn" type="button" (click)="logSet()">{{ editingIndex !== null ? 'Update Set' : 'Log Set' }}</button>
+  </footer>
+
 </div>

@@ -1,10 +1,15 @@
+
 <ion-content class="ion-padding mobile-viewport-container" [scrollY]="false">
   <div class="auth-wrapper">
 
     <!-- Brand Logo Header -->
     <div class="brand-header">
       <div class="brand-logo-graphic">
-        <img src="assets/images/logo.png" alt="HYYND Logo" class="brand-logo-img" />
+        <img
+          src="assets/images/logo.png"
+          alt="HYYND Logo"
+          class="brand-logo-img"
+        />
       </div>
     </div>
 
@@ -14,6 +19,7 @@
         Your fitness,<br />
         personalized.
       </h2>
+
       <p class="hero-subtitle">
         Experience the precision of boutique coaching from the palm of your hand.
       </p>
@@ -23,47 +29,56 @@
     <div class="features-row">
       <div class="feature-card">
         <div class="icon-wrap">
-          <img src="assets/images/fast.png" alt="Fast Results" class="feature-icon-img" />
+          <img
+            src="assets/images/fast.png"
+            alt="Fast Results"
+            class="feature-icon-img"
+          />
         </div>
         <span class="feature-text">Fast Results</span>
       </div>
 
       <div class="feature-card">
         <div class="icon-wrap">
-          <img src="assets/images/smart.png" alt="Smart Data" class="feature-icon-img" />
+          <img
+            src="assets/images/smart.png"
+            alt="Smart Data"
+            class="feature-icon-img"
+          />
         </div>
         <span class="feature-text">Smart Data</span>
       </div>
     </div>
 
-    <!-- Phone Input -->
+    <!-- Phone Number or Email Input -->
     <div class="form-section">
-      <label class="input-label">Phone Number</label>
+      <label class="input-label">Phone Number or Email</label>
+
       <div class="input-box">
         <input
-          type="tel"
+          type="text"
           class="custom-text-input"
-          placeholder="1234567890"
+          placeholder="Enter mobile number or email"
           [(ngModel)]="phoneNumber"
-          maxlength="10"
-          inputmode="numeric"
+          autocomplete="username"
           (input)="onPhoneInput($event)"
         />
       </div>
 
       <div class="error-message" *ngIf="showError">
-        Invalid phone number
+        Please enter a valid 10-digit mobile number or email address.
       </div>
     </div>
 
-    <!-- Button -->
+    <!-- Get Started Button -->
     <div class="action-footer">
       <ion-button
         expand="block"
         class="brand-solid-btn"
         (click)="proceedToOtp()"
+        [disabled]="isSubmitting"
       >
-        Get Started
+        {{ isSubmitting ? 'Sending OTP...' : 'Get Started' }}
       </ion-button>
     </div>
 

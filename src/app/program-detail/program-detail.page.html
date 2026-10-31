@@ -1,7 +1,7 @@
 <div class="detail-container" [style.padding-top]="safeAreaTop">
   <header class="header">
-    <button class="back-btn" (click)="goBack()">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    <button class="back-btn" (click)="goBack()" type="button" aria-label="Back">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
     </button>
     <h1>Program Detail</h1>
   </header>
@@ -10,15 +10,15 @@
     <!-- Trending Badge -->
     <div class="trending-badge">Trending Program</div>
 
-    <!-- Title -->
-    <h2>{{ program?.name || '12-Week Strength Builder' }}</h2>
+    <!-- Title (tap -> Coaches Details : program view) -->
+    <h2 class="program-title" (click)="openProgramDetails()">{{ program?.name || '12-Week Strength Builder' }}</h2>
 
     <!-- Author & Location Info -->
     <div class="author-info">
       <span class="author-name">by {{ program?.trainer || 'Rohan Kapoor' }}</span>
       <span class="dot-separator">•</span>
       <span class="location-badge">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
           <circle cx="12" cy="10" r="3"></circle>
         </svg>
@@ -26,22 +26,22 @@
       </span>
     </div>
 
-    <!-- Separate 4-Column Metrics Card Grid -->
+    <!-- 4-Column Metrics Card -->
     <div class="metrics-bar">
       <div class="metric">
-        <strong>12wk</strong>
+        <strong>{{ program?.duration || '12wk' }}</strong>
         <span>Duration</span>
       </div>
       <div class="metric">
-        <strong>4d/wk</strong>
+        <strong>{{ program?.frequency || '4d/wk' }}</strong>
         <span>FREQ.</span>
       </div>
       <div class="metric">
-        <strong>Inter..</strong>
+        <strong>{{ program?.level || 'Inter..' }}</strong>
         <span>Level</span>
       </div>
       <div class="metric">
-        <strong>4.6</strong>
+        <strong>{{ program?.rating || '4.6' }}</strong>
         <span>Rating</span>
       </div>
     </div>
@@ -49,33 +49,33 @@
     <!-- About Section -->
     <div class="about-section">
       <h3>About Program</h3>
-      <p>{{ program?.description || 'A comprehensive training program designed to push your limits, build functional strength, and optimize muscle hypertrophy.' }}</p>
+      <p>{{ program?.description }}</p>
       <h4>AREA OF EXPERTISE</h4>
       <div class="tags">
         <span class="tag" *ngFor="let tag of program?.tags">{{ tag }}</span>
       </div>
     </div>
 
-    <!-- Coach Card -->
-    <div class="coach-card" (click)="openCoachDetails()">
+    <!-- Coach Card (tap -> Coaches Details : profile view) -->
+    <div class="coach-card" (click)="openCoachProfile()">
       <div class="coach-indicator-bar"></div>
       <img [src]="program?.coachImage || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150'" alt="Coach">
       <div class="info">
         <h4>{{ program?.trainer || 'Rohan Kapoor' }}</h4>
-        <span>Lead Strength Coach</span>
-        <a class="profile-link">View Profile </a>
+        <span>{{ program?.coachRole || 'Strength & Hypertrophy' }}</span>
+        <a class="profile-link">View Profile</a>
       </div>
     </div>
 
     <!-- Weeks Accordion -->
     <div class="weeks-accordion">
-      <div class="week-box" *ngFor="let week of weeks; let i = index">
+      <div class="week-box" *ngFor="let week of weeks; let i = index" [class.open]="week.open">
         <div class="week-header" (click)="toggleWeek(i)">
-          <div>
+          <div class="week-titles">
             <span class="sub">Week {{ i + 1 }}</span>
             <h4>{{ week.title }}</h4>
           </div>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <polyline [attr.points]="week.open ? '18 15 12 9 6 15' : '6 9 12 15 18 9'"></polyline>
           </svg>
         </div>
@@ -87,8 +87,7 @@
               <div class="details">
                 <strong>{{ w.name }}</strong>
                 <small>{{ w.desc }}</small>
-                
-                <!-- Workout Meta Row -->
+
                 <div class="workout-meta-info" *ngIf="w.exercises || w.calories">
                   <span class="meta-element" *ngIf="w.exercises">
                     <img src="assets/images/exer.png" alt="Exercises" />
@@ -99,7 +98,6 @@
                     {{ w.calories }} KCAL
                   </span>
                 </div>
-
               </div>
             </div>
           </div>
@@ -107,14 +105,14 @@
       </div>
     </div>
 
-    <!-- Choose Your Plan Section (Dynamic) -->
+    <!-- Choose Your Plan -->
     <div class="choose-plan-section">
       <div class="section-title-heading">CHOOSE YOUR PLAN</div>
-      
-      <div 
-        class="plan-selectable-card" 
-        *ngFor="let plan of availablePlans" 
-        [class.selected]="selectedPlanKey === plan.key" 
+
+      <div
+        class="plan-selectable-card"
+        *ngFor="let plan of availablePlans"
+        [class.selected]="selectedPlanKey === plan.key"
         (click)="selectPlan(plan)">
         <div class="plan-left-indicator"></div>
         <div class="plan-card-content">
@@ -129,7 +127,7 @@
               <span class="price-val">₹{{ plan.price | number }}</span>
               <span class="price-per">per month</span>
             </div>
-            <svg class="arrow-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <svg class="arrow-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M9 18l6-6-6-6"/>
             </svg>
           </div>
@@ -140,12 +138,12 @@
 
   <!-- Footer Action -->
   <footer class="footer-action" [style.padding-bottom]="safeAreaBottom">
-    <button class="subscribe-btn" (click)="subscribe()">
+    <button class="subscribe-btn" (click)="subscribe()" type="button">
       <div class="left-content">
         <span class="sub-label">START PROGRAM</span>
         <span class="sub-title">Subscribe & Start</span>
       </div>
-      <div class="price-tag">₹{{ currentPrice | number }} <small>/mo</small></div>
+      <div class="price-tag">₹{{ currentPrice }}<small>/mo</small></div>
     </button>
   </footer>
 </div>

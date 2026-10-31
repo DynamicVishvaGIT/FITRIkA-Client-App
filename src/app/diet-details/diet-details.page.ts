@@ -10,18 +10,17 @@ import { Location } from '@angular/common';
   standalone: false
 })
 export class DietDetailsPage implements OnInit {
-  safeAreaTop = 'env(safe-area-inset-top)';
-  safeAreaBottom = 'env(safe-area-inset-bottom)';
 
   meal: any;
   isCompleted = false;
-  activeBadge: string | null = 'category';
+
+  macros: { name: string; value: string; percent: number }[] = [];
 
   micronutrients = [
-    { name: 'Fiber', percent: '32%', color: '#00c853', sub: '8.5g / 25g' },
-    { name: 'Magnesium', percent: '15%', color: '#00c853', sub: '60mg / 400mg' },
-    { name: 'Iron', percent: '24%', color: '#00c853', sub: '4.3mg / 18mg' },
-    { name: 'Vitamin C', percent: '68%', color: '#00c853', sub: '61mg / 90mg' }
+    { name: 'Fiber', percent: '32%', color: '#00c875', sub: '8.5g / 25g' },
+    { name: 'Magnesium', percent: '15%', color: '#00c875', sub: '60mg / 400mg' },
+    { name: 'Iron', percent: '24%', color: '#00c875', sub: '4.3mg / 18mg' },
+    { name: 'Vitamin C', percent: '68%', color: '#00c875', sub: '61mg / 90mg' }
   ];
 
   ingredients = [
@@ -50,14 +49,17 @@ export class DietDetailsPage implements OnInit {
         macros: { protein: '142g', carbs: '198g', fat: '48g' }
       };
     }
+
+    const m = this.meal.macros || {};
+    this.macros = [
+      { name: 'Protein', value: m.protein || '142g', percent: 70 },
+      { name: 'Carbs', value: m.carbs || '198g', percent: 58 },
+      { name: 'Fat', value: m.fat || '48g', percent: 48 }
+    ];
   }
 
   goBack() {
     this.location.back();
-  }
-
-  onBadgeClick(type: string) {
-    this.activeBadge = this.activeBadge === type ? null : type;
   }
 
   markAsDone() {
